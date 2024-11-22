@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.model;
+package br.org.aumigos.model;
 
 public enum Gender {
 

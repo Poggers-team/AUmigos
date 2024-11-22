@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.servlets.filters;
+package br.org.aumigos.servlets.filters;
 
 import java.io.IOException;
 

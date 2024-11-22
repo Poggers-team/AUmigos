@@ -1,7 +1,7 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.model.dao;
+package br.org.aumigos.model.dao;
 
-import br.edu.ifsp.arq.tsi.arqweb2.assistencia.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.assistencia.utils.PasswordEncoder;
+import br.org.aumigos.model.User;
+import br.org.aumigos.utils.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.Date;

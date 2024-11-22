@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.utils;
+package br.org.aumigos.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

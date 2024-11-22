@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.utils;
+package br.org.aumigos.utils;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

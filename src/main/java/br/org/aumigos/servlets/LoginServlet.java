@@ -1,8 +1,8 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.servlets;
+package br.org.aumigos.servlets;
 
-import br.edu.ifsp.arq.tsi.arqweb2.assistencia.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.assistencia.model.dao.UserDao;
-import br.edu.ifsp.arq.tsi.arqweb2.assistencia.utils.DataSourceSearcher;
+import br.org.aumigos.model.User;
+import br.org.aumigos.model.dao.UserDao;
+import br.org.aumigos.utils.DataSourceSearcher;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

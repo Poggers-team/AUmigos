@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.assistencia.servlets;
+package br.org.aumigos.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
