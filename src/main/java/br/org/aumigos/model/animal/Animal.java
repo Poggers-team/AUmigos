@@ -16,7 +16,10 @@ public class Animal implements Serializable {
     private Gender gender;
     private Size size;
     private int age;
+    private double weight;
     private boolean castrated;
+    private String image;
+
 
     public Long getId() {
         return id;
@@ -24,6 +27,22 @@ public class Animal implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {
