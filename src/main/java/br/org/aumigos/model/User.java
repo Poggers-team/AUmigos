@@ -1,10 +1,11 @@
 package br.org.aumigos.model;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
