@@ -25,6 +25,8 @@ create table Animal
     age int not null,
     weight decimal(5,2) not null,
     castrated boolean not null,
-    image longtext not null
+    adopted boolean not null,
+    image longtext not null,
+    fileName varchar(50) not null
 ) engine = InnoDB
   default charset = utf8;
