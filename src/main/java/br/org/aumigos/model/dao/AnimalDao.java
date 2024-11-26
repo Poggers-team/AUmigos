@@ -19,7 +19,7 @@ public class AnimalDao {
 
     public Boolean save(Animal animal){
         String sql = "insert into animal (name, type, breed, "
-                + "gender, size, age, castrated) values (?,?,?,?,?,?, ?)";
+                + "gender, size, age, weight, castrated, image) values (?,?,?,?,?,?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             setString(animal, ps);
@@ -32,11 +32,11 @@ public class AnimalDao {
 
     public Boolean update(Animal animal){
         String sql = "update animal set name = ?, type = ?, breed = ?, gender = ?, "
-                + "size = ?, age = ?, castrated = ? where id = ?";
+                    + "size = ?, age = ?, weight = ?, castrated = ?, image = ? where id = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             setString(animal, ps);
-            ps.setLong(8, animal.getId());
+            ps.setLong(10, animal.getId());
         } catch(SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
@@ -55,7 +55,7 @@ public class AnimalDao {
     }
 
     public Animal getAnimalById(Long id){
-        String sql = "select * from Animal where id=?";
+        String sql = "select * from Animal where id = ?";
         Animal a = null;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -69,7 +69,9 @@ public class AnimalDao {
                     a.setBreed(rs.getString("breed"));
                     a.setGender(Gender.valueOf(rs.getString("gender")));
                     a.setAge(rs.getInt("age"));
+                    a.setWeight(rs.getDouble("weight"));
                     a.setCastrated(rs.getBoolean("castrated"));
+                    a.setImage(rs.getString("image"));
                 }
                 return a;
             }
@@ -85,6 +87,8 @@ public class AnimalDao {
         ps.setString(4, animal.getGender().toString());
         ps.setString(5, animal.getSize().toString());
         ps.setInt(6, animal.getAge());
-        ps.setBoolean(7, animal.isCastrated());
+        ps.setDouble(7, animal.getWeight());
+        ps.setBoolean(8, animal.isCastrated());
+        ps.setString(9, animal.getImage());
     }
 }

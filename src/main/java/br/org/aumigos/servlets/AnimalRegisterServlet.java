@@ -5,19 +5,24 @@ import br.org.aumigos.model.animal.Gender;
 import br.org.aumigos.model.animal.Size;
 import br.org.aumigos.model.animal.Type;
 import br.org.aumigos.model.dao.AnimalDao;
+import br.org.aumigos.utils.Base64Encoder;
 import br.org.aumigos.utils.DataSourceSearcher;
 import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serial;
 
 @WebServlet("/animalRegister")
+@MultipartConfig(maxFileSize = 16177215)
 public class AnimalRegisterServlet extends HttpServlet {
 
     @Serial
@@ -36,7 +41,16 @@ public class AnimalRegisterServlet extends HttpServlet {
         Gender gender = Gender.valueOf(req.getParameter("gender"));
         Size size = Size.valueOf(req.getParameter("size"));
         Integer age  = Integer.parseInt(req.getParameter("age"));
+        Double weight = Double.parseDouble(req.getParameter("weight"));
         String castrated = req.getParameter("castrated");
+        Part filePart = req.getPart("image");
+
+        byte[] imageBytes = null;
+        String base64Image = null;
+        try (InputStream inputStream = filePart.getInputStream()) {
+            imageBytes = inputStream.readAllBytes();
+            base64Image = Base64Encoder.encodeToBase64(imageBytes);
+        }
 
         Animal a = new Animal();
         a.setName(name);
@@ -45,8 +59,11 @@ public class AnimalRegisterServlet extends HttpServlet {
         a.setGender(gender);
         a.setSize(size);
         a.setAge(age);
-        if(!castrated.isEmpty()) a.setCastrated(true);
-        else a.setCastrated(false);
+        a.setWeight(weight);
+        if(castrated == null) a.setCastrated(false);
+        else a.setCastrated(true);
+        a.setImage(base64Image);
+
         RequestDispatcher dispatcher;
 
         AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
