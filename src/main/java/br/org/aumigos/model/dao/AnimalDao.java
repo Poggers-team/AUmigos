@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimalDao {
     private DataSource dataSource;
@@ -19,7 +21,7 @@ public class AnimalDao {
 
     public Boolean save(Animal animal){
         String sql = "insert into animal (name, type, breed, "
-                + "gender, size, age, weight, castrated, image) values (?,?,?,?,?,?, ?, ?, ?)";
+                + "gender, size, age, weight, castrated, adopted, image, fileName) values (?,?,?,?,?,?,?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             setString(animal, ps);
@@ -32,7 +34,7 @@ public class AnimalDao {
 
     public Boolean update(Animal animal){
         String sql = "update animal set name = ?, type = ?, breed = ?, gender = ?, "
-                    + "size = ?, age = ?, weight = ?, castrated = ?, image = ? where id = ?";
+                    + "size = ?, age = ?, weight = ?, castrated = ?, adopted = ?, image = ?, fileName = ? where id = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             setString(animal, ps);
@@ -63,21 +65,52 @@ public class AnimalDao {
             try(ResultSet rs = ps.executeQuery()) {
                 if(rs.next()) {
                     a = new Animal();
-                    a.setId(rs.getLong("id"));
-                    a.setName(rs.getString("name"));
-                    a.setType(Type.valueOf(rs.getString("type")));
-                    a.setBreed(rs.getString("breed"));
-                    a.setGender(Gender.valueOf(rs.getString("gender")));
-                    a.setAge(rs.getInt("age"));
-                    a.setWeight(rs.getDouble("weight"));
-                    a.setCastrated(rs.getBoolean("castrated"));
-                    a.setImage(rs.getString("image"));
+                    setAnimal(rs, a);
                 }
                 return a;
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a consulta", e);
         }
+    }
+
+    public List<Animal> getAnimalsByAdoptedStatus(int adopted) {
+        List<Animal> animals = new ArrayList<>();
+        boolean adoptedBool;
+
+        if(adopted == 1) adoptedBool = true;
+        else adoptedBool = false;
+
+        String sql = "select * from Animal where adopted = ?";
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setBoolean(1, adoptedBool);
+            try(ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    Animal a = new Animal();
+                    setAnimal(rs, a);
+                    animals.add(a);
+                }
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Erro durante a consulta", e);
+        }
+        return animals;
+
+    }
+
+    private void setAnimal(ResultSet rs, Animal a) throws SQLException {
+        a.setId(rs.getLong("id"));
+        a.setName(rs.getString("name"));
+        a.setType(Type.valueOf(rs.getString("type")));
+        a.setBreed(rs.getString("breed"));
+        a.setGender(Gender.valueOf(rs.getString("gender")));
+        a.setAge(rs.getInt("age"));
+        a.setWeight(rs.getDouble("weight"));
+        a.setCastrated(rs.getBoolean("castrated"));
+        a.setAdopted(rs.getBoolean("adopted"));
+        a.setImage(rs.getString("image"));
+        a.setFileName(rs.getString("fileName"));
     }
 
     private void setString(Animal animal, PreparedStatement ps) throws SQLException {
@@ -89,6 +122,8 @@ public class AnimalDao {
         ps.setInt(6, animal.getAge());
         ps.setDouble(7, animal.getWeight());
         ps.setBoolean(8, animal.isCastrated());
-        ps.setString(9, animal.getImage());
+        ps.setBoolean(9, animal.isAdopted());
+        ps.setString(10, animal.getImage());
+        ps.setString(11, animal.getFileName());
     }
 }
