@@ -18,8 +18,9 @@ public class Animal implements Serializable {
     private int age;
     private double weight;
     private boolean castrated;
+    private boolean adopted;
     private String image;
-
+    private String fileName;
 
     public Long getId() {
         return id;
@@ -43,6 +44,22 @@ public class Animal implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public boolean isAdopted() {
+        return adopted;
+    }
+
+    public void setAdopted(boolean adopted) {
+        this.adopted = adopted;
     }
 
     public String getName() {
