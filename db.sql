@@ -1,5 +1,7 @@
 create database aumigos;
 
+use aumigos;
+
 create table User
 (
     id bigint(20) primary key auto_increment,
@@ -21,6 +23,8 @@ create table Animal
     gender varchar(20) not null,
     size varchar(10) not null,
     age int not null,
-    castrated boolean not null
+    weight decimal(5,2) not null,
+    castrated boolean not null,
+    image longtext not null
 ) engine = InnoDB
   default charset = utf8;
