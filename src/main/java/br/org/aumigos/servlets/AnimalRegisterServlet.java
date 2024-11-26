@@ -7,7 +7,6 @@ import br.org.aumigos.model.animal.Type;
 import br.org.aumigos.model.dao.AnimalDao;
 import br.org.aumigos.utils.Base64Encoder;
 import br.org.aumigos.utils.DataSourceSearcher;
-import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -43,7 +42,9 @@ public class AnimalRegisterServlet extends HttpServlet {
         Integer age  = Integer.parseInt(req.getParameter("age"));
         Double weight = Double.parseDouble(req.getParameter("weight"));
         String castrated = req.getParameter("castrated");
+        String adopted = req.getParameter("adopted");
         Part filePart = req.getPart("image");
+        String fileName = filePart.getSubmittedFileName();
 
         byte[] imageBytes = null;
         String base64Image = null;
@@ -62,18 +63,16 @@ public class AnimalRegisterServlet extends HttpServlet {
         a.setWeight(weight);
         if(castrated == null) a.setCastrated(false);
         else a.setCastrated(true);
+        if(adopted == null) a.setAdopted(false);
+        else a.setAdopted(true);
         a.setImage(base64Image);
+        a.setFileName(fileName);
 
         RequestDispatcher dispatcher;
 
         AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if(id == 0) {
-            if(animalDao.save(a)) req.setAttribute("result", "registered");
-        } else {
-            a.setId(id);
-            if(animalDao.update(a)) req.setAttribute("result", "updated");
-        }
+        if(animalDao.save(a)) req.setAttribute("result", "registered");
 
         String url = "/animal-register.jsp";
 
@@ -83,34 +82,6 @@ public class AnimalRegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        Long id = Long.parseLong(req.getParameter("method-id"));
-        String url = null;
-
-        AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-        Animal animal = animalDao.getAnimalById(id);
-        RequestDispatcher dispatcher;
-
-        if(animal != null) {
-            switch(action) {
-                case "update":
-                    req.setAttribute("animal", animal);
-                    url = "/animal-register.jsp";
-                    dispatcher = req.getRequestDispatcher(url);
-                    dispatcher.forward(req, resp);
-                    break;
-                case "remove":
-                    Boolean response = animalDao.delete(animal);
-                    Gson gson = new Gson();
-                    String json = gson.toJson(response);
-                    resp.setContentType("application/json");
-                    resp.getWriter().write(json);
-                    break;
-            }
-        } else {
-            url = "/animalRegister";
-            dispatcher = req.getRequestDispatcher(url);
-            dispatcher.forward(req, resp);
-        }
+        doPost(req, resp);
     }
 }
