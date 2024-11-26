@@ -5,6 +5,10 @@
     <title>Registro de animal</title>
 </head>
 <body>
+
+<c:if test="${result == 'registered'}">
+        Animal salvo com sucesso.
+</c:if>
 <form action="animalRegister" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="0" required><br><br>
 
@@ -44,6 +48,9 @@
 
     <label for="castrated">Castrado:</label>
     <input type="checkbox" id="castrated" name="castrated"><br><br>
+
+    <label for="adopted">Adotado:</label>
+    <input type="checkbox" id="adopted" name="adopted"><br><br>
 
     <label for="image">Imagem:</label>
     <input type="file" id="image" name="image" accept="image/*" required><br><br>
