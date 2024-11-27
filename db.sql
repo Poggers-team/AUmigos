@@ -30,3 +30,13 @@ create table Animal
     fileName varchar(50) not null
 ) engine = InnoDB
   default charset = utf8;
+
+create table Voluntary (
+    id bigint(20) auto_increment primary key,
+    name varchar(50) not null,
+    email varchar(50) not null,
+    phone varchar(20) not null,
+    availability varchar(50) not null,
+    skills varchar(255)
+) engine = InnoDB
+  default charset = utf8;
