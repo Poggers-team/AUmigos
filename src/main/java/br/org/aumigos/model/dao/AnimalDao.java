@@ -1,129 +1,82 @@
 package br.org.aumigos.model.dao;
 
-import br.org.aumigos.model.animal.Animal;
-import br.org.aumigos.model.animal.Gender;
-import br.org.aumigos.model.animal.Type;
+import br.org.aumigos.model.Animal;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalDao {
-    private DataSource dataSource;
 
-    public AnimalDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/aumigos";
+    private static final String DB_USER = "joana";
+    private static final String DB_PASSWORD = "root";
 
-    public Boolean save(Animal animal){
-        String sql = "insert into animal (name, type, breed, "
-                + "gender, size, age, weight, castrated, adopted, image, fileName) values (?,?,?,?,?,?,?,?,?,?,?)";
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-            setString(animal, ps);
-            ps.executeUpdate();
-        }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
+    public void save(Animal animal) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+        String sql = "INSERT INTO pets (especie, genero, raca, cor, idade, porte, nome_pet, historia_pet, cidade, endereco, nome_contato, email_contato, telefone_contato, cuidados, temperamento, socializacao, foto, dias_atras) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        stmt.setString(1, animal.getEspecie());
+        stmt.setString(2, animal.getGenero());
+        stmt.setString(3, animal.getRaca());
+        stmt.setString(4, animal.getCor());
+        stmt.setString(5, animal.getIdade());
+        stmt.setString(6, animal.getPorte());
+        stmt.setString(7, animal.getNomePet());
+        stmt.setString(8, animal.getHistoriaPet());
+        stmt.setString(9, animal.getCidade());
+        stmt.setString(10, animal.getEndereco());
+        stmt.setString(11, animal.getNomeContato());
+        stmt.setString(12, animal.getEmailContato());
+        stmt.setString(13, animal.getTelefoneContato());
+        stmt.setString(14, animal.getCuidados());
+        stmt.setString(15, animal.getTemperamento());
+        stmt.setString(16, animal.getSocializacao());
+
+        if (animal.getFoto() != null) {
+            stmt.setBytes(17, animal.getFoto());
+        } else {
+            stmt.setNull(17, java.sql.Types.BLOB);
         }
-        return true;
+
+        LocalDate currentDate = LocalDate.now();
+        stmt.setDate(18, Date.valueOf(currentDate));
+
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
     }
 
-    public Boolean update(Animal animal){
-        String sql = "update animal set name = ?, type = ?, breed = ?, gender = ?, "
-                    + "size = ?, age = ?, weight = ?, castrated = ?, adopted = ?, image = ?, fileName = ? where id = ?";
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            setString(animal, ps);
-            ps.setLong(10, animal.getId());
-        } catch(SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
-        }
-        return true;
-    }
 
-    public boolean delete(Animal animal){
-        String sql = "delete from animal where id = ?";
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, animal.getId());
-        } catch(SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
-        }
-        return true;
-    }
-
-    public Animal getAnimalById(Long id){
-        String sql = "select * from Animal where id = ?";
-        Animal a = null;
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, id);
-            try(ResultSet rs = ps.executeQuery()) {
-                if(rs.next()) {
-                    a = new Animal();
-                    setAnimal(rs, a);
-                }
-                return a;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro durante a consulta", e);
-        }
-    }
-
-    public List<Animal> getAnimalsByAdoptedStatus(int adopted) {
+    public List<Animal> getAllAnimals() throws SQLException {
         List<Animal> animals = new ArrayList<>();
-        boolean adoptedBool;
 
-        if(adopted == 1) adoptedBool = true;
-        else adoptedBool = false;
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pets");
+             ResultSet rs = stmt.executeQuery()) {
 
-        String sql = "select * from Animal where adopted = ?";
-        try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setBoolean(1, adoptedBool);
-            try(ResultSet rs = ps.executeQuery()) {
-                while(rs.next()) {
-                    Animal a = new Animal();
-                    setAnimal(rs, a);
-                    animals.add(a);
-                }
+            while (rs.next()) {
+                String nome = rs.getString("nome_pet");
+                String cidade = rs.getString("cidade");
+                byte[] fotoBytes = rs.getBytes("foto");
+                LocalDate dataCriacao = rs.getDate("dias_atras") != null ? rs.getDate("dias_atras").toLocalDate() : null;
+
+                animals.add(new Animal(nome, cidade, fotoBytes, dataCriacao));
             }
-        } catch(SQLException e) {
-            throw new RuntimeException("Erro durante a consulta", e);
         }
         return animals;
-
     }
 
-    private void setAnimal(ResultSet rs, Animal a) throws SQLException {
-        a.setId(rs.getLong("id"));
-        a.setName(rs.getString("name"));
-        a.setType(Type.valueOf(rs.getString("type")));
-        a.setBreed(rs.getString("breed"));
-        a.setGender(Gender.valueOf(rs.getString("gender")));
-        a.setAge(rs.getInt("age"));
-        a.setWeight(rs.getDouble("weight"));
-        a.setCastrated(rs.getBoolean("castrated"));
-        a.setAdopted(rs.getBoolean("adopted"));
-        a.setImage(rs.getString("image"));
-        a.setFileName(rs.getString("fileName"));
-    }
-
-    private void setString(Animal animal, PreparedStatement ps) throws SQLException {
-        ps.setString(1, animal.getName());
-        ps.setString(2,animal.getType().toString());
-        ps.setString(3, animal.getBreed());
-        ps.setString(4, animal.getGender().toString());
-        ps.setString(5, animal.getSize().toString());
-        ps.setInt(6, animal.getAge());
-        ps.setDouble(7, animal.getWeight());
-        ps.setBoolean(8, animal.isCastrated());
-        ps.setBoolean(9, animal.isAdopted());
-        ps.setString(10, animal.getImage());
-        ps.setString(11, animal.getFileName());
-    }
 }

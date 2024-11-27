@@ -20,13 +20,13 @@
     </div>
     <div class="menu-container">
         <ul class="menu">
-            <li><a href="home.jsp">Home</a></li>
+            <li><a href="home">Home</a></li>
             <li>
                 <a href="#">Adoção</a>
                 <ul>
                     <li><a href="#">Pets para Adoção</a></li>
                     <li><a href="#">Pets Adotados</a></li>
-                    <li><a href="#">Cadastrar Pets</a></li>
+                    <li><a href="createPet.jsp">Cadastrar Pets</a></li>
                 </ul>
             </li>
             <li>

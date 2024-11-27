@@ -1,87 +1,71 @@
 package br.org.aumigos.servlets;
-
-import br.org.aumigos.model.animal.Animal;
-import br.org.aumigos.model.animal.Gender;
-import br.org.aumigos.model.animal.Size;
-import br.org.aumigos.model.animal.Type;
+import java.time.LocalDate;
+import br.org.aumigos.model.Animal;
 import br.org.aumigos.model.dao.AnimalDao;
-import br.org.aumigos.utils.Base64Encoder;
-import br.org.aumigos.utils.DataSourceSearcher;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serial;
 
-@WebServlet("/animalRegister")
-@MultipartConfig(maxFileSize = 16177215)
+@WebServlet("/createPet")
+@MultipartConfig
 public class AnimalRegisterServlet extends HttpServlet {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    public AnimalRegisterServlet() {
-        super();
-    }
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long id = Long.parseLong(req.getParameter("id"));
-        String name = req.getParameter("name");
-        Type type = Type.valueOf(req.getParameter("type"));
-        String breed = req.getParameter("breed");
-        Gender gender = Gender.valueOf(req.getParameter("gender"));
-        Size size = Size.valueOf(req.getParameter("size"));
-        Integer age  = Integer.parseInt(req.getParameter("age"));
-        Double weight = Double.parseDouble(req.getParameter("weight"));
-        String castrated = req.getParameter("castrated");
-        String adopted = req.getParameter("adopted");
-        Part filePart = req.getPart("image");
-        String fileName = filePart.getSubmittedFileName();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String especie = request.getParameter("especie");
+            String genero = request.getParameter("genero");
+            String raca = request.getParameter("raca");
+            String cor = request.getParameter("cor");
+            String idade = request.getParameter("idade");
+            String porte = request.getParameter("porte");
+            String nomePet = request.getParameter("nomePet");
+            String historiaPet = request.getParameter("historiaPet");
+            String cidade = request.getParameter("cidade");
+            String endereco = request.getParameter("endereco");
+            String nomeContato = request.getParameter("nomeContato");
+            String emailContato = request.getParameter("emailContato");
+            String telefoneContato = request.getParameter("telefoneContato");
 
-        byte[] imageBytes = null;
-        String base64Image = null;
-        try (InputStream inputStream = filePart.getInputStream()) {
-            imageBytes = inputStream.readAllBytes();
-            base64Image = Base64Encoder.encodeToBase64(imageBytes);
+            String[] cuidadosVeterinarios = request.getParameterValues("cuidadosVeterinarios");
+            String[] temperamento = request.getParameterValues("temperamento");
+            String[] socializacao = request.getParameterValues("socializacao");
+
+            String cuidados = String.join(", ", cuidadosVeterinarios != null ? cuidadosVeterinarios : new String[0]);
+            String temperamentoStr = String.join(", ", temperamento != null ? temperamento : new String[0]);
+            String socializacaoStr = String.join(", ", socializacao != null ? socializacao : new String[0]);
+
+            Part fotoPart = request.getPart("foto");
+
+            byte[] foto = null;
+            if (fotoPart != null) {
+                foto = new byte[(int) fotoPart.getSize()];
+                fotoPart.getInputStream().read(foto);
+            }
+
+            LocalDate dataCriacao = LocalDate.now();
+
+            Animal animal = new Animal(
+                    especie, genero, raca, cor, idade, porte,
+                    nomePet, historiaPet, cidade, endereco,
+                    nomeContato, emailContato, telefoneContato,
+                    cuidados, temperamentoStr, socializacaoStr,
+                    foto, dataCriacao
+            );
+
+            AnimalDao animalDao = new AnimalDao();
+            animalDao.save(animal);
+
+            response.sendRedirect("sucesso.jsp");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("erro.jsp");
         }
-
-        Animal a = new Animal();
-        a.setName(name);
-        a.setType(type);
-        a.setBreed(breed);
-        a.setGender(gender);
-        a.setSize(size);
-        a.setAge(age);
-        a.setWeight(weight);
-        if(castrated == null) a.setCastrated(false);
-        else a.setCastrated(true);
-        if(adopted == null) a.setAdopted(false);
-        else a.setAdopted(true);
-        a.setImage(base64Image);
-        a.setFileName(fileName);
-
-        RequestDispatcher dispatcher;
-
-        AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-
-        if(animalDao.save(a)) req.setAttribute("result", "registered");
-
-        String url = "/animal-register.jsp";
-
-        dispatcher = req.getRequestDispatcher(url);
-        dispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
     }
 }

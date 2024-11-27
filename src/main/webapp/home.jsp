@@ -49,6 +49,9 @@
     </div>
 </section>
 
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <section class="find-pet">
     <div class="container">
         <div class="section-header">
@@ -59,65 +62,27 @@
             <a href="#" class="link-region">Ver na minha região</a>
         </div>
         <div class="cards">
-            <div class="card">
-                <img src="assets/img/pet2.png" alt="Bob">
-                <div class="card-info">
-                    <div class="card-info-left">
-                        <h3>Bob</h3>
-                        <p>Vila Leopoldina</p>
-                    </div>
-                    <div class="card-icon">
-                        <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                        <span>5 dias atrás</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/img/pet2.png" alt="Bob">
-                <div class="card-info">
-                    <div class="card-info-left">
-                        <h3>Bob</h3>
-                        <p>Vila Leopoldina</p>
-                    </div>
-                    <div class="card-icon">
-                        <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                        <span>5 dias atrás</span>
+            <!-- Itera sobre a lista de animais -->
+            <c:forEach var="animal" items="${animais}">
+                <div class="card">
+                    <img src="data:image/jpeg;base64,${animal.fotoBase64}" alt="${animal.nomePet}">
+
+                    <div class="card-info">
+                        <div class="card-info-left">
+                            <h3>${animal.nomePet}</h3>
+                            <p>${animal.cidade}</p>
+                        </div>
+                        <div class="card-icon">
+                            <img src="assets/icons/star.svg" alt="Ícone de estrela">
+                            <span>${animal.diasAtras} dias atrás</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card">
-                <img src="assets/img/pet2.png" alt="Bob">
-                <div class="card-info">
-                    <div class="card-info-left">
-                        <h3>Bob</h3>
-                        <p>Vila Leopoldina</p>
-                    </div>
-                    <div class="card-icon">
-                        <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                        <span>5 dias atrás</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="assets/img/pet2.png" alt="Bob">
-                <div class="card-info">
-                    <div class="card-info-left">
-                        <h3>Bob</h3>
-                        <p>Vila Leopoldina</p>
-                    </div>
-                    <div class="card-icon">
-                        <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                        <span>5 dias atrás</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><br>
-        <div class="section-footer">
-            <a href="#" class="btn-primary">Ver todos os pets</a>
+            </c:forEach>
         </div>
     </div>
 </section>
+
 
 <br> <br>
 <section class="mission-section">
@@ -174,6 +139,7 @@
         </div>
     </div>
 </section>
+
 <br> <br><br> <br>
 
 <footer>
