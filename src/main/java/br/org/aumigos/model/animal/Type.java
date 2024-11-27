@@ -2,7 +2,8 @@ package br.org.aumigos.model.animal;
 
 public enum Type {
     CACHORRO("Cachorro"),
-    GATO("Gato");
+    GATO("Gato"),
+    OUTRO("Outro");
 
     private String description;
 

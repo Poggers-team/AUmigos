@@ -1,5 +1,4 @@
 package br.org.aumigos.servlets;
-
 import br.org.aumigos.model.animal.Animal;
 import br.org.aumigos.model.animal.Gender;
 import br.org.aumigos.model.animal.Size;
@@ -26,11 +25,9 @@ public class AnimalRegisterServlet extends HttpServlet {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
     public AnimalRegisterServlet() {
         super();
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.parseLong(req.getParameter("id"));

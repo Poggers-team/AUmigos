@@ -1,6 +1,5 @@
 package br.org.aumigos.model.dao;
 
-import br.org.aumigos.model.animal.Animal;
 import br.org.aumigos.model.voluntary.Voluntary;
 
 import javax.sql.DataSource;
