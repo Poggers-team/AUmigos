@@ -39,6 +39,7 @@ public class AnimalDao {
             PreparedStatement ps = conn.prepareStatement(sql)) {
             setString(animal, ps);
             ps.setLong(12, animal.getId());
+            ps.executeUpdate();
         } catch(SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
@@ -50,6 +51,7 @@ public class AnimalDao {
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, animal.getId());
+            ps.executeUpdate();
         } catch(SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
