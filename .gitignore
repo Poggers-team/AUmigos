@@ -60,5 +60,5 @@ build/
 ### Mac OS ###
 .DS_Store
 
-### .env file ###
-.env
+### properties file ###
+config.properties
