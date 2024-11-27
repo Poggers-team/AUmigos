@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setMaxInactiveInterval(600);
             session.setAttribute("user", user);
-            url = "/home.jsp";
+            url = "/home";
         }else {
             req.setAttribute("result", "loginError");
             url = "/login.jsp";
