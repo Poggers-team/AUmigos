@@ -85,6 +85,7 @@ public class AnimalUpdateServlet extends HttpServlet {
 
         if(animalDao.update(a)) req.setAttribute("result", "updated");
 
+        req.setAttribute("animal", a);
         String url = "/animal-update.jsp";
 
         dispatcher = req.getRequestDispatcher(url);
