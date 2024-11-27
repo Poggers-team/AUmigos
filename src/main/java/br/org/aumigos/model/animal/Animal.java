@@ -2,6 +2,7 @@ package br.org.aumigos.model.animal;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Animal implements Serializable {
@@ -19,8 +20,34 @@ public class Animal implements Serializable {
     private double weight;
     private boolean castrated;
     private boolean adopted;
+    private boolean vacinated;
+    private boolean dewormed;
+    private String temperament;
+    private String socialization;
+    private String address;
+    private String city;
+    private String contactName;
+    private String contactEmail;
+    private String contactPhone;
     private String image;
     private String fileName;
+    private String color;
+    private String story;
+    private LocalDate announcementDate;
+
+    public LocalDate getAnnouncementDate() {
+        return announcementDate;
+    }
+
+    public void setAnnouncementDate(LocalDate announcementDate) {
+        this.announcementDate = announcementDate;
+    }
+
+    public void setDaysAgo(int daysAgo) {
+        this.daysAgo = daysAgo;
+    }
+
+    private int daysAgo;
 
     public Long getId() {
         return id;
@@ -116,6 +143,94 @@ public class Animal implements Serializable {
 
     public void setCastrated(boolean castrated) {
         this.castrated = castrated;
+    }
+
+    public boolean isVacinated() {
+        return vacinated;
+    }
+
+    public void setVacinated(boolean vacinated) {
+        this.vacinated = vacinated;
+    }
+
+    public boolean isDewormed() {
+        return dewormed;
+    }
+
+    public void setDewormed(boolean dewormed) {
+        this.dewormed = dewormed;
+    }
+
+    public String getTemperament() {
+        return temperament;
+    }
+
+    public void setTemperament(String temperament) {
+        this.temperament = temperament;
+    }
+
+    public String getSocialization() {
+        return socialization;
+    }
+
+    public void setSocialization(String socialization) {
+        this.socialization = socialization;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
     }
 
     @Override

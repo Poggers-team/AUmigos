@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -49,9 +50,6 @@
     </div>
 </section>
 
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <section class="find-pet">
     <div class="container">
         <div class="section-header">
@@ -63,18 +61,18 @@
         </div>
         <div class="cards">
             <!-- Itera sobre a lista de animais -->
-            <c:forEach var="animal" items="${animais}">
+            <c:forEach var="animal" items="${animals}">
                 <div class="card">
-                    <img src="data:image/jpeg;base64,${animal.fotoBase64}" alt="${animal.nomePet}">
+                    <img src="data:image/jpeg;base64,${animal.fotoBase64}" alt="${animal.name}">
 
                     <div class="card-info">
                         <div class="card-info-left">
-                            <h3>${animal.nomePet}</h3>
-                            <p>${animal.cidade}</p>
+                            <h3>${animal.name}</h3>
+                            <p>${animal.city}</p>
                         </div>
                         <div class="card-icon">
                             <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                            <span>${animal.diasAtras} dias atrás</span>
+                            <span>${animal.daysAgo} dias atrás</span>
                         </div>
                     </div>
                 </div>

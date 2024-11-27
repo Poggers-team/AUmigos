@@ -14,8 +14,7 @@ create table User
 ) engine = InnoDB
   default charset = utf8;
 
-create table Animal
-(
+create table Animal (
     id bigint(20) primary key auto_increment,
     name varchar(20) not null,
     type varchar(10) not null,
@@ -23,13 +22,26 @@ create table Animal
     gender varchar(20) not null,
     size varchar(10) not null,
     age int not null,
-    weight decimal(5,2) not null,
+    weight decimal(5, 2) not null,
     castrated boolean not null,
     adopted boolean not null,
+    vacinated boolean not null,
+    dewormed boolean not null,
+    temperament varchar(50),
+    socialization varchar(50),
+    address varchar(100),
+    city varchar(50),
+    contactName varchar(50),
+    contactEmail varchar(100),
+    contactPhone varchar(20),
     image longtext not null,
-    fileName varchar(50) not null
+    fileName varchar(50) not null,
+    color varchar(20),
+    story text,
+    announcementDate date not null
 ) engine = InnoDB
   default charset = utf8;
+
 
 create table Voluntary (
     id bigint(20) auto_increment primary key,
