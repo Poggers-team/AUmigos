@@ -129,7 +129,7 @@
         </div>
         <div class="donate-call-to-action">
             <h3>Transformando vidas, uma pata de cada vez.</h3>
-            <a href="#" class="btn-donate">Doe Agora</a>
+            <a href="donate.jsp" class="btn-donate">Doe Agora</a>
         </div>
     </div>
 </section> <br> <br> <br>
