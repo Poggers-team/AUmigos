@@ -38,7 +38,7 @@ public class AnimalDao {
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             setString(animal, ps);
-            ps.setLong(10, animal.getId());
+            ps.setLong(12, animal.getId());
         } catch(SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
