@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -152,29 +153,28 @@
 
     <h2>Preencha o formulário abaixo para se inscrever:</h2><br>
     <div class="form-container">
-        <form id="volunteer-form">
+        <form id="volunteer-form" action="voluntaryRegister" method="post">
             <label for="name">Nome:</label>
-            <input type="text" id="name" name="name" placeholder="Digite seu nome completo" required>
+            <input type="text" id="name" name="name" value="${voluntary.name}" placeholder="Digite seu nome completo" required>
 
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            <input type="email" id="email" name="email" value="${voluntary.email}" placeholder="Digite seu e-mail" required>
 
-            <label for="phone">Telefone:</label>
-            <input type="text" id="phone" name="phone" placeholder="Digite seu número de telefone" required>
+            <label for="phone">Telefone (DDD + Número):</label>
+            <input type="text" id="phone" name="phone" value="${voluntary.phone}" placeholder="Digite seu número de telefone" required>
 
             <label for="availability">Disponibilidade:</label>
             <select id="availability" name="availability" required>
-                <option value="">Selecione...</option>
-                <option value="manhã">Manhã</option>
-                <option value="tarde">Tarde</option>
-                <option value="noite">Noite</option>
-                <option value="fim-de-semana">Finais de Semana</option>
+                <option value="MANHA" ${animal.gender == 'MANHA' ? "selected" : ""}>Manhã</option>
+                <option value="TARDE" ${animal.gender == 'TARDE' ? "selected" : ""}>Tarde</option>
+                <option value="NOITE" ${animal.gender == 'NOITE' ? "selected" : ""}>Noite</option>
+                <option value="FIM_DE_SEMANA" ${animal.gender == 'FIM_DE_SEMANA' ? "selected" : ""}>Finais de semana</option>
             </select>
 
             <label for="skills">Habilidades ou áreas de interesse:</label>
-            <textarea id="skills" name="skills" placeholder="Conte-nos como você pode ajudar"></textarea>
+            <textarea id="skills" name="skills" value="${voluntary.name}" placeholder="Conte-nos como você pode ajudar"></textarea>
 
-            <button type="button" id="submit-btn">Enviar</button>
+            <button type="submit" id="submit-btn">Enviar</button>
         </form>
     </div>
 </main>
@@ -183,12 +183,18 @@
     <%@ include file="components/footer.jsp" %>
 </footer>
 
-<script>
-    document.getElementById("submit-btn").addEventListener("click", () => {
+<c:if test="${result == 'notRegistered'}">
+    <script>
+        alert("O telefone cadastrado é inválido.");
+    </script>
+</c:if>
+<c:if test="${result == 'registered'}">
+    <script>
         alert("Obrigado por se inscrever! Entraremos em contato em breve.");
         document.getElementById("volunteer-form").reset();
-    });
-</script>
+    </script>
+</c:if>
+
 
 </body>
 </html>
