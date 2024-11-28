@@ -28,7 +28,7 @@
                 <ul>
                     <li><a href="adoption-animal-list.jsp">Pets para Adoção</a></li>
                     <li><a href="adopted-animal-list.jsp">Pets Adotados</a></li>
-                    <li><a href="animal-register.jsp">Cadastrar Pets</a></li>
+                    <li><a href="createPet.jsp">Cadastrar Pets</a></li>
                 </ul>
             </li>
             <li>

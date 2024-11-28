@@ -10,24 +10,23 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class LoginHelper implements Helper {
-    @Override
-    public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
 
-        String url;
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
-
         Optional<User> optional = userDao.getUserByEmailAndPassword(email, password);
+
         if (optional.isPresent()) {
             User user = optional.get();
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(600);
+            HttpSession session = req.getSession();
+            session.setMaxInactiveInterval(60);
             session.setAttribute("user", user);
-            return "/home.jsp";
+            return "/FrontController?action=home";
         } else {
-            request.setAttribute("result", "loginError");
+            req.setAttribute("result", "loginError");
             return "/login.jsp";
         }
     }

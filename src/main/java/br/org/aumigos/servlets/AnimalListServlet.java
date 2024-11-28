@@ -23,7 +23,7 @@ public class AnimalListServlet extends HttpServlet {
     public AnimalListServlet() {
         super();
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer adopted = Integer.parseInt(req.getParameter("adopted"));

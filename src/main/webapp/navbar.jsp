@@ -9,7 +9,7 @@
 <body>
   <nav>
     <div class="nav-container">
-      <a class="logo" href="home.jsp">
+      <a class="logo" href="home">
         <img src="logo.jpg" alt="Logo" class="logo-img">
         ONG AUmigos
       </a>

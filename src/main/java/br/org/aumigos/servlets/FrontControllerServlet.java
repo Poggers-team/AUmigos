@@ -16,7 +16,7 @@ import java.io.IOException;
 public class FrontControllerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public FrontControllerServlet(){
+    public FrontControllerServlet() {
         super();
     }
 
@@ -24,16 +24,20 @@ public class FrontControllerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Helper helper = new HelperFactory().getHelper(request);
 
-        try{
+        try {
             Object resp = helper.execute(request, response);
-            if(resp instanceof JsonObject){
+
+            if (resp instanceof JsonObject) {
                 response.setContentType("application/json");
                 response.getWriter().write(resp.toString());
-            }else{
-                RequestDispatcher dispatcher = request.getRequestDispatcher(response.toString());
+            } else if (resp instanceof String) {
+                String path = (String) resp;
+                RequestDispatcher dispatcher = request.getRequestDispatcher(path);
                 dispatcher.forward(request, response);
+            } else {
+                throw new ServletException("Tipo de retorno não suportado: " + resp.getClass());
             }
-        }catch(Exception error){
+        } catch (Exception error) {
             throw new ServletException(error);
         }
     }

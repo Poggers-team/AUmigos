@@ -20,6 +20,17 @@
     </header>
 </header>
 
+<c:choose>
+    <c:when test="${result == 'registered'}">
+        <div class="alert alert-success alert-dismissible fade show"
+             role="alert">
+            Usuário cadastrado com sucesso. Faça o login.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+        </div>
+    </c:when>
+</c:choose>
+
 
 <section class="hero">
     <div class="container hero-container">
@@ -35,7 +46,7 @@
                         <small>Conheça os animais esperando por um lar.</small>
                     </span>
                 </a>
-                <a href="#" class="btn btn-secondary">
+                <a href="frontController?action=" class="btn btn-secondary">
                     <img src="assets/icons/hand.svg" alt="Ícone de ajuda">
                     <span>
                         Cadastrar Pet

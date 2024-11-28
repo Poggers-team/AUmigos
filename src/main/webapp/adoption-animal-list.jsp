@@ -217,8 +217,6 @@
 <c:if test="${empty animals || animals == null}">
     <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
 </c:if>
-
-        
         <c:if test="${not empty animals}">
             <c:forEach var="animal" items="${animals}">
                 <div class="ad">
