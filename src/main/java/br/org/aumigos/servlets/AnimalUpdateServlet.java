@@ -67,7 +67,6 @@ public class AnimalUpdateServlet extends HttpServlet {
         a.setGender(gender);
         a.setSize(size);
         a.setAge(age);
-        a.setWeight(weight);
         if(castrated == null) a.setCastrated(false);
         else a.setCastrated(true);
         if(adopted == null) a.setAdopted(false);

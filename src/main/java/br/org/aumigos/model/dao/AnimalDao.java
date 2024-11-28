@@ -22,10 +22,10 @@ public class AnimalDao {
     }
 
     public Boolean save(Animal animal) {
-        String sql = "INSERT INTO Animal (name, breed, type, gender, size, age, weight, castrated, adopted, " +
-                "vacinated, dewormed, temperament, socialization, address, city, contactName, " +
+        String sql = "insert into Animal (name, breed, type, gender, size, age, castrated, adopted, " +
+                "vaccinated, dewormed, temperament, socialization, address, city, contactName, " +
                 "contactEmail, contactPhone, image, fileName, color, story, announcementDate) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -38,14 +38,14 @@ public class AnimalDao {
     }
 
     public Boolean update(Animal animal) {
-        String sql = "UPDATE Animal SET name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, weight = ?, " +
-                "castrated = ?, adopted = ?, vacinated = ?, dewormed = ?, temperament = ?, socialization = ?, " +
+        String sql = "update Animal set name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, " +
+                "castrated = ?, adopted = ?, vaccinated = ?, dewormed = ?, temperament = ?, socialization = ?, " +
                 "address = ?, city = ?, contactName = ?, contactEmail = ?, contactPhone = ?, image = ?, " +
-                "fileName = ?, color = ?, story = ?, announcementDate = ? WHERE id = ?";
+                "fileName = ?, color = ?, story = ?, announcementDate = ? where id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             setString(animal, ps);
-            ps.setLong(24, animal.getId());
+            ps.setLong(23, animal.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -109,7 +109,7 @@ public class AnimalDao {
     public List<Animal> getAllAnimals() {
         List<Animal> animals = new ArrayList<>();
 
-        String sql = "select * from animal";
+        String sql = "select * from Animal";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -133,10 +133,9 @@ public class AnimalDao {
         a.setGender(Gender.valueOf(rs.getString("gender")));
         a.setSize(Size.valueOf(rs.getString("size")));
         a.setAge(rs.getInt("age"));
-        a.setWeight(rs.getDouble("weight"));
         a.setCastrated(rs.getBoolean("castrated"));
         a.setAdopted(rs.getBoolean("adopted"));
-        a.setVacinated(rs.getBoolean("vacinated"));
+        a.setVaccinated(rs.getBoolean("vaccinated"));
         a.setDewormed(rs.getBoolean("dewormed"));
         a.setTemperament(rs.getString("temperament"));
         a.setSocialization(rs.getString("socialization"));
@@ -159,22 +158,21 @@ public class AnimalDao {
         ps.setString(4, animal.getGender().toString());
         ps.setString(5, animal.getSize().toString());
         ps.setInt(6, animal.getAge());
-        ps.setDouble(7, animal.getWeight());
-        ps.setBoolean(8, animal.isCastrated());
-        ps.setBoolean(9, animal.isAdopted());
-        ps.setBoolean(10, animal.isVacinated());
-        ps.setBoolean(11, animal.isDewormed());
-        ps.setString(12, animal.getTemperament());
-        ps.setString(13, animal.getSocialization());
-        ps.setString(14, animal.getAddress());
-        ps.setString(15, animal.getCity());
-        ps.setString(16, animal.getContactName());
-        ps.setString(17, animal.getContactEmail());
-        ps.setString(18, animal.getContactPhone());
-        ps.setString(19, animal.getImage());
-        ps.setString(20, animal.getFileName());
-        ps.setString(21, animal.getColor());
-        ps.setString(22, animal.getStory());
-        ps.setDate(23, Date.valueOf(animal.getAnnouncementDate()));
+        ps.setBoolean(7, animal.isCastrated());
+        ps.setBoolean(8, animal.isAdopted());
+        ps.setBoolean(9, animal.isVaccinated());
+        ps.setBoolean(10, animal.isDewormed());
+        ps.setString(11, animal.getTemperament());
+        ps.setString(12, animal.getSocialization());
+        ps.setString(13, animal.getAddress());
+        ps.setString(14, animal.getCity());
+        ps.setString(15, animal.getContactName());
+        ps.setString(16, animal.getContactEmail());
+        ps.setString(17, animal.getContactPhone());
+        ps.setString(18, animal.getImage());
+        ps.setString(19, animal.getFileName());
+        ps.setString(20, animal.getColor());
+        ps.setString(21, animal.getStory());
+        ps.setDate(22, Date.valueOf(animal.getAnnouncementDate()));
     }
 }
