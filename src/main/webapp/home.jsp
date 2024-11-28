@@ -63,7 +63,7 @@
             <!-- Itera sobre a lista de animais -->
             <c:forEach var="animal" items="${animals}">
                 <div class="card">
-                    <img src="data:image/jpeg;base64,${animal.fotoBase64}" alt="${animal.name}">
+                    <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
 
                     <div class="card-info">
                         <div class="card-info-left">

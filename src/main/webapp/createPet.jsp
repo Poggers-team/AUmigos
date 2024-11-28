@@ -174,7 +174,7 @@
             border-color: #7a025b;
         }
 
-        #foto {
+        #image {
             display: none; /
         }
 
@@ -269,23 +269,23 @@
     </div>
 
     <div class="form-container">
-        <form id="multiStepForm" action="createPet" method="POST" enctype="multipart/form-data">
+        <form id="multiStepForm" action="animalRegister" method="POST" enctype="multipart/form-data">
             <!-- Etapa 1 -->
             <div class="form-step active">
                 <p class="form-title">Vamos começar com algumas informações básicas.</p>
                 <div class="form-group">
-                    <label for="especie">Espécie</label>
-                    <select id="especie" name="especie" required>
-                        <option value="Cachorro">Cachorro</option>
-                        <option value="Gato">Gato</option>
-                        <option value="Outro">Outro</option>
+                    <label for="type">Espécie</label>
+                    <select id="type" name="type" required>
+                        <option value="CACHORRO">Cachorro</option>
+                        <option value="GATO">Gato</option>
+                        <option value="OUTRO">Outro</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="genero">Gênero</label>
-                    <select id="genero" name="genero" required>
-                        <option value="Macho">Macho</option>
-                        <option value="Fêmea">Fêmea</option>
+                    <label for="gender">Gênero</label>
+                    <select id="gender" name="gender" required>
+                        <option value="MACHO">Macho</option>
+                        <option value="FEMEA">Fêmea</option>
                     </select>
                 </div>
             </div>
@@ -296,9 +296,9 @@
                    Usaremos essa foto em todas as ferramentas de divulgação, como cartazes, posts em redes sociais e anúncios.
                 </div>
                 <div class="form-group">
-                    <label for="foto">Foto do pet</label>
+                    <label for="image">Foto do pet</label>
                     <div class="upload-area" id="uploadArea">
-                        <input type="file" id="foto" name="foto" accept="image/*" required>
+                        <input type="file" id="image" name="image" accept="image/*" required>
                         <div class="upload-placeholder" id="uploadPlaceholder">
                             <span>Arraste uma imagem nesta área, ou clique para selecionar uma imagem.</span>
                         </div>
@@ -309,32 +309,36 @@
             <div class="form-step">
                 <p class="form-title">Preencha as informações adicionais do pet</p>
                 <div class="form-group">
-                    <label for="raca">Raça</label>
-                    <input type="text" id="raca" name="raca" placeholder="Digite a raça do pet" required>
+                    <label for="breed">Raça</label>
+                    <input type="text" id="breed" name="breed" placeholder="Digite a raça do pet" required>
                 </div>
                 <div class="form-group">
-                    <label for="cor">Cor</label>
-                    <input type="text" id="cor" name="cor" placeholder="Digite a cor do pet" required>
+                    <label for="color">Cor</label>
+                    <input type="text" id="color" name="color" placeholder="Digite a cor do pet" required>
                 </div>
                 <div class="form-group">
-                    <label for="idade">Idade</label>
-                    <input type="text" id="idade" name="idade" placeholder="Digite a idade do pet" required>
+                    <label for="age">Idade</label>
+                    <input type="text" id="age" name="age" placeholder="Digite a idade do pet" required>
                 </div>
                 <div class="form-group">
-                    <label for="porte">Porte</label>
-                    <input type="text" id="porte" name="porte" placeholder="Digite o porte do pet (ex: pequeno, médio, grande)" required>
+                    <label for="size">Porte</label>
+                    <select id="size" name="size" required>
+                        <option value="PEQUENO">Pequeno</option>
+                        <option value="MEDIO">Médio</option>
+                        <option value="GRANDE">Grande</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-step">
                 <p class="form-title">Adicione mais informações sobre o pet</p>
                 <div class="form-group">
-                    <label for="nomePet">Nome do pet <span style="font-size: 0.8rem; color: #9e9e9e;">(Opcional)</span></label>
-                    <input type="text" id="nomePet" name="nomePet" placeholder="Deixe em branco se não tiver nome">
+                    <label for="name">Nome do pet <span style="font-size: 0.8rem; color: #9e9e9e;">(Opcional)</span></label>
+                    <input type="text" id="name" name="name" placeholder="Deixe em branco se não tiver nome">
                 </div>
                 <div class="form-group">
-                    <label for="historiaPet">História do pet <span style="font-size: 0.8rem; color: #9e9e9e;">(Opcional)</span></label>
-                    <textarea id="historiaPet" name="historiaPet" rows="5" placeholder="Conte a história do pet, como ele foi encontrado, como está sendo cuidado, etc."></textarea>
+                    <label for="story">História do pet <span style="font-size: 0.8rem; color: #9e9e9e;">(Opcional)</span></label>
+                    <textarea id="story" name="story" rows="5" placeholder="Conte a história do pet, como ele foi encontrado, como está sendo cuidado, etc."></textarea>
                 </div>
             </div>
 
@@ -347,14 +351,14 @@
                 <div class="form-group">
                     <label>Cuidados Veterinários</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="vacinado" name="cuidadosVeterinarios" value="Vacinado">
-                        <label for="vacinado">Vacinado</label>
+                        <input type="checkbox" id="vaccinated" name="vaccinated" value="Vacinado">
+                        <label for="vaccinated">Vacinado</label>
 
-                        <input type="checkbox" id="castrado" name="cuidadosVeterinarios" value="Castrado">
-                        <label for="castrado">Castrado</label>
+                        <input type="checkbox" id="castrated" name="castrated" value="Castrado">
+                        <label for="castrated">Castrado</label>
 
-                        <input type="checkbox" id="vermifugado" name="cuidadosVeterinarios" value="Vermifugado">
-                        <label for="vermifugado">Vermifugado</label>
+                        <input type="checkbox" id="dewormed" name="dewormed" value="Vermifugado">
+                        <label for="dewormed">Vermifugado</label>
 
                     </div>
                 </div>
@@ -363,28 +367,28 @@
                 <div class="form-group">
                     <label>Temperamento</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="docil" name="temperamento" value="Dócil">
+                        <input type="checkbox" id="docil" name="temperament" value="Dócil">
                         <label for="docil">Dócil</label>
 
-                        <input type="checkbox" id="agressivo" name="temperamento" value="Agressivo">
+                        <input type="checkbox" id="agressivo" name="temperament" value="Agressivo">
                         <label for="agressivo">Agressivo</label>
 
-                        <input type="checkbox" id="brincalhao" name="temperamento" value="Brincalhão">
+                        <input type="checkbox" id="brincalhao" name="temperament" value="Brincalhão">
                         <label for="brincalhao">Brincalhão</label>
 
-                        <input type="checkbox" id="calmo" name="temperamento" value="Calmo">
+                        <input type="checkbox" id="calmo" name="temperament" value="Calmo">
                         <label for="calmo">Calmo</label>
 
-                        <input type="checkbox" id="sociavel" name="temperamento" value="Sociável">
+                        <input type="checkbox" id="sociavel" name="temperament" value="Sociável">
                         <label for="sociavel">Sociável</label>
 
-                        <input type="checkbox" id="timido" name="temperamento" value="Tímido">
+                        <input type="checkbox" id="timido" name="temperament" value="Tímido">
                         <label for="timido">Tímido</label>
 
-                        <input type="checkbox" id="independente" name="temperamento" value="Independente">
+                        <input type="checkbox" id="independente" name="temperament" value="Independente">
                         <label for="independente">Independente</label>
 
-                        <input type="checkbox" id="carente" name="temperamento" value="Carente">
+                        <input type="checkbox" id="carente" name="temperament" value="Carente">
                         <label for="carente">Carente</label>
                     </div>
                 </div>
@@ -393,16 +397,16 @@
                 <div class="form-group">
                     <label>Socialização</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="criancas" name="socializacao" value="Sociável com crianças">
+                        <input type="checkbox" id="criancas" name="socialization" value="Sociável com crianças">
                         <label for="criancas">Sociável com crianças</label>
 
-                        <input type="checkbox" id="gatos" name="socializacao" value="Sociável com gatos">
+                        <input type="checkbox" id="gatos" name="socialization" value="Sociável com gatos">
                         <label for="gatos">Sociável com gatos</label>
 
-                        <input type="checkbox" id="caes" name="socializacao" value="Sociável com cães">
+                        <input type="checkbox" id="caes" name="socialization" value="Sociável com cães">
                         <label for="caes">Sociável com cães</label>
 
-                        <input type="checkbox" id="estranhos" name="socializacao" value="Sociável com estranhos">
+                        <input type="checkbox" id="estranhos" name="socialization" value="Sociável com estranhos">
                         <label for="estranhos">Sociável com estranhos</label>
                     </div>
                 </div>
@@ -415,10 +419,10 @@
                     Se você não encontrar o endereço, forneça um endereço próximo.
                 </div>
                 <div class="form-group">
-                    <label for="endereco">Cidade</label>
-                    <input type="text" id="cidade" name="cidade" placeholder="Insira o endereço onde o pet se encontra" required><br><br>
-                    <label for="endereco">Endereço</label>
-                    <input type="text" id="endereco" name="endereco" placeholder="Insira o endereço onde o pet se encontra" required>
+                    <label for="city">Cidade</label>
+                    <input type="text" id="city" name="city" placeholder="Insira o endereço onde o pet se encontra" required><br><br>
+                    <label for="address">Endereço</label>
+                    <input type="text" id="address" name="address" placeholder="Insira o endereço onde o pet se encontra" required>
                 </div>
             </div>
 
@@ -429,14 +433,14 @@
                     Forneça seus dados de contato para que possamos ajudar em casos de dúvidas ou para os interessados entrarem em contato.
                 </div>
                 <div class="form-group">
-                    <label for="nomeContato">Seu Nome</label>
-                    <input type="text" id="nomeContato" name="nomeContato" placeholder="Digite seu nome" required><br><br>
+                    <label for="contactName">Seu Nome</label>
+                    <input type="text" id="contactName" name="contactName" placeholder="Digite seu nome" required><br><br>
 
-                    <label for="emailContato">Seu Email</label>
-                    <input type="email" id="emailContato" name="emailContato" placeholder="Digite seu email" required><br><br>
+                    <label for="contactEmail">Seu Email</label>
+                    <input type="email" id="contactEmail" name="contactEmail" placeholder="Digite seu email" required><br><br>
 
-                    <label for="telefoneContato">Seu Telefone</label>
-                    <input type="tel" id="telefoneContato" name="telefoneContato" placeholder="Digite seu telefone com DDD" required>
+                    <label for="contactPhone">Seu Telefone</label>
+                    <input type="tel" id="contactPhone" name="contactPhone" placeholder="Digite seu telefone com DDD" required>
                 </div>
             </div>
 
@@ -512,7 +516,7 @@
         updateStep();
     });
 
-    const fileInput = document.getElementById('foto');
+    const fileInput = document.getElementById('image');
     const uploadArea = document.getElementById('uploadArea');
     const uploadPlaceholder = document.getElementById('uploadPlaceholder');
 
