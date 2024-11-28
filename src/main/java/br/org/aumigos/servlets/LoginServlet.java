@@ -33,16 +33,17 @@ public class LoginServlet extends HttpServlet {
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 
         Optional<User> optional = userDao.getUserByEmailAndPassword(email, password);
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             User user = optional.get();
             HttpSession session = req.getSession();
             session.setMaxInactiveInterval(600);
             session.setAttribute("user", user);
-            url = "/home";
-        }else {
+            url = "/home.jsp";
+        } else {
             req.setAttribute("result", "loginError");
             url = "/login.jsp";
         }
+
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }

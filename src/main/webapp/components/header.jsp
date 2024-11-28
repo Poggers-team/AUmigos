@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -20,7 +19,7 @@
     </div>
     <div class="menu-container">
         <ul class="menu">
-            <li><a href="home">Home</a></li>
+            <li><a href="home.jsp">Home</a></li>
             <li>
                 <a href="#">Adoção</a>
                 <ul>
@@ -45,7 +44,23 @@
                 </ul>
             </li>
         </ul>
-        <a href="#" class="btn-login">Entrar</a>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.user}">
+        <a href="login.jsp">
+            <button id="loginButton" class="btn-login" style="border: none; cursor: pointer;">Entrar</button>
+        </a>
+    </c:when>
+    <c:otherwise>
+        <a href="logout">
+            <button id="logoutButton" class="btn-login" style="border: none; cursor: pointer;">Sair</button>
+        </a>
+    </c:otherwise>
+</c:choose>
+
+
     </div>
 </nav>
 </body>
