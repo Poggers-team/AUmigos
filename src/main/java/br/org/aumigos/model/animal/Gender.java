@@ -1,8 +1,8 @@
 package br.org.aumigos.model.animal;
 
 public enum Gender {
-    MASCULINO("Masculino"),
-    FEMININO("Feminino");
+    MACHO("Macho"),
+    FEMEA("Fêmea");
 
     private String description;
 

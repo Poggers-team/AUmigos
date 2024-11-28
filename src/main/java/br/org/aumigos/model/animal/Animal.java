@@ -17,10 +17,9 @@ public class Animal implements Serializable {
     private Gender gender;
     private Size size;
     private int age;
-    private double weight;
     private boolean castrated;
     private boolean adopted;
-    private boolean vacinated;
+    private boolean vaccinated;
     private boolean dewormed;
     private String temperament;
     private String socialization;
@@ -55,14 +54,6 @@ public class Animal implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 
     public String getImage() {
@@ -145,12 +136,12 @@ public class Animal implements Serializable {
         this.castrated = castrated;
     }
 
-    public boolean isVacinated() {
-        return vacinated;
+    public boolean isVaccinated() {
+        return vaccinated;
     }
 
-    public void setVacinated(boolean vacinated) {
-        this.vacinated = vacinated;
+    public void setVaccinated(boolean vaccinated) {
+        this.vaccinated = vaccinated;
     }
 
     public boolean isDewormed() {
