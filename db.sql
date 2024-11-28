@@ -1,3 +1,4 @@
+drop database aumigos;
 create database aumigos;
 
 use aumigos;
@@ -14,26 +15,26 @@ create table User
 ) engine = InnoDB
   default charset = utf8;
 
+drop table Animal;
 create table Animal (
     id bigint(20) primary key auto_increment,
-    name varchar(20) not null,
+    name varchar(20),
     type varchar(10) not null,
     breed varchar(20) not null,
     gender varchar(20) not null,
     size varchar(10) not null,
     age int not null,
-    weight decimal(5, 2) not null,
     castrated boolean not null,
     adopted boolean not null,
-    vacinated boolean not null,
+    vaccinated boolean not null,
     dewormed boolean not null,
-    temperament varchar(50),
-    socialization varchar(50),
-    address varchar(100),
-    city varchar(50),
-    contactName varchar(50),
-    contactEmail varchar(100),
-    contactPhone varchar(20),
+    temperament varchar(255) not null,
+    socialization varchar(50) not null,
+    address varchar(100) not null,
+    city varchar(50) not null,
+    contactName varchar(50) not null,
+    contactEmail varchar(100) not null,
+    contactPhone varchar(20) not null,
     image longtext not null,
     fileName varchar(50) not null,
     color varchar(20),
