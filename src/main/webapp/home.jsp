@@ -119,14 +119,40 @@
 
                 <div class="swiper-slide">
                     <div class="user-container">
-                        <img src="assets/img/testimonial.png" alt="Usuário">
+                        <img src="assets/img/testimonial2.jpg" alt="Usuário">
                         <div class="user-info">
-                            <h3>Melyna E. Trice</h3>
-                            <p>Indaiatuba, SP</p>
+                            <h3>Wagner Souza</h3>
+                            <p>Ibaté, SP</p>
                         </div>
                     </div>
                     <blockquote>
-                        "Em menos de uma semana de divulgação, o novo tutor do Logan entrou em contato e veio conhecê-lo e buscá-lo. Com tanto amor e mimo, é claro que ele já se adaptou ao novo lar, está super feliz e muito bem cuidado."
+                        "A Mel encontrou um lar cheio de carinho e brincadeiras! Em poucos dias, sua nova família se encantou por ela, e agora vive cercada de amor, com muitos passeios e diversão garantida."
+                    </blockquote>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="user-container">
+                        <img src="assets/img/testimonial3.jpeg" alt="Usuário">
+                        <div class="user-info">
+                            <h3>Elton S. Zinato</h3>
+                            <p>Araraquara, SP</p>
+                        </div>
+                    </div>
+                    <blockquote>
+                        "O Max não poderia estar mais feliz! Assim que chegou à sua nova casa, foi recebido com abraços e já se tornou o centro das atenções. Ele agora aproveita cada momento ao lado de sua família."
+                    </blockquote>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="user-container">
+                        <img src="assets/img/testimonial4.jpg" alt="Usuário">
+                        <div class="user-info">
+                            <h3>Elizabeth Rodrigues</h3>
+                            <p>Bauru, SP</p>
+                        </div>
+                    </div>
+                    <blockquote>
+                        "A Luna encontrou o lugar perfeito para chamar de lar. Com muito afeto e cuidados, ela se adaptou rapidamente e agora é a companheira inseparável de todos, espalhando alegria e amor pela casa."
                     </blockquote>
                 </div>
 

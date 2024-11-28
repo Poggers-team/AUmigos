@@ -12,11 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = {"/home.jsp","/client-list.jsp",
-        "/client-register.jsp", "/payment-method-list.jsp",
-        "/payment-method-register.jsp","/service-order-list.jsp", "/service-order-register.jsp",
-        "/service-order-update.jsp", "/clientList", "/clientRegister", "/paymentMethodList",
-        "/paymentMethodRegister", "/serviceOrderList", "/serviceOrderRegister", "/serviceOrderUpdate"},
+@WebFilter(urlPatterns = {"/createPet.jsp"},
         filterName = "Authorization")
 public class ValidationFilter implements Filter {
 
