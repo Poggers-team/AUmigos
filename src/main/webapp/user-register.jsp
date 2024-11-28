@@ -182,7 +182,7 @@
                 <h2 class="display-6">Registre-se</h2>
             </div>
 
-            <form action="userRegister" method="post" id="form1">
+            <form action="FrontController" method="post" id="form1">
                 <div class="form-outline mb-4">
                     <label class="form-label" for="name">Nome completo*</label>
                     <input type="text" id="name" name="name" class="form-control form-control-lg" minlength="3" maxlength="50" required />
@@ -226,7 +226,7 @@
                 </div>
 
                 <div class="d-grid gap-1 mb-3">
-                    <button type="submit" class="btn-login">Salvar</button>
+                    <button type="submit" class="btn-login" name="action" value="userRegister">Salvar</button>
                 </div>
                 <br>
             </form>

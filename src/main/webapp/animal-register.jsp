@@ -9,7 +9,7 @@
 <c:if test="${result == 'registered'}">
         Animal salvo com sucesso.
 </c:if>
-<form action="animalRegister" method="post" enctype="multipart/form-data">
+<form action="FrontController" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="0" required><br><br>
 
     <label for="name">Nome:</label>
@@ -55,7 +55,7 @@
     <label for="image">Imagem:</label>
     <input type="file" id="image" name="image" accept="image/*" required><br><br>
 
-    <button type="submit">Enviar</button>
+    <button type="submit" name="action" value="animalRegister">Enviar</button>
 </form>
 </body>
 </html>

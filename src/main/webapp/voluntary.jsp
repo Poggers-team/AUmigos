@@ -153,7 +153,7 @@
 
     <h2>Preencha o formulário abaixo para se inscrever:</h2><br>
     <div class="form-container">
-        <form id="volunteer-form" action="voluntaryRegister" method="post">
+        <form id="volunteer-form" action="FrontController" method="post">
             <label for="name">Nome:</label>
             <input type="text" id="name" name="name" value="${voluntary.name}" placeholder="Digite seu nome completo" required>
 
@@ -174,7 +174,7 @@
             <label for="skills">Habilidades ou áreas de interesse:</label>
             <textarea id="skills" name="skills" value="${voluntary.name}" placeholder="Conte-nos como você pode ajudar"></textarea>
 
-            <button type="submit" id="submit-btn">Enviar</button>
+            <button type="submit" id="submit-btn" name="action" value="voluntaryRegister">Enviar</button>
         </form>
     </div>
 </main>
