@@ -5,7 +5,6 @@ import br.org.aumigos.model.User;
 import br.org.aumigos.model.dao.UserDao;
 import br.org.aumigos.utils.DataSourceSearcher;
 import br.org.aumigos.utils.PasswordEncoder;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

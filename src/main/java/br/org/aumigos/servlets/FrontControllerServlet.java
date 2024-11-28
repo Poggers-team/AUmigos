@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/ControllerServlet")
+@WebServlet("/FrontController")
 public class FrontControllerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class FrontControllerServlet extends HttpServlet {
             Object resp = helper.execute(request, response);
             if(resp instanceof JsonObject){
                 response.setContentType("application/json");
-                response.getWriter().write(response.toString());
+                response.getWriter().write(resp.toString());
             }else{
                 RequestDispatcher dispatcher = request.getRequestDispatcher(response.toString());
                 dispatcher.forward(request, response);
