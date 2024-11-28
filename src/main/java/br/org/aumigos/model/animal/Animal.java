@@ -33,6 +33,7 @@ public class Animal implements Serializable {
     private String color;
     private String story;
     private LocalDate announcementDate;
+    private int daysAgo;
 
     public LocalDate getAnnouncementDate() {
         return announcementDate;
@@ -42,11 +43,13 @@ public class Animal implements Serializable {
         this.announcementDate = announcementDate;
     }
 
+    public int getDaysAgo() {
+        return daysAgo;
+    }
+
     public void setDaysAgo(int daysAgo) {
         this.daysAgo = daysAgo;
     }
-
-    private int daysAgo;
 
     public Long getId() {
         return id;
