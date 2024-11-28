@@ -59,22 +59,24 @@ public class AnimalRegisterServlet extends HttpServlet {
             base64Image = Base64Encoder.encodeToBase64(imageBytes);
         }
 
-        StringBuilder temperamentString = new StringBuilder();
-        StringBuilder socializationString = new StringBuilder();
-
-        for (String t : temperament) temperamentString.append(t).append(", ");
-
-
-        for (String s : socialization) socializationString.append(s).append(", ");
-
-
-        temperamentString = new StringBuilder(temperamentString.substring(0, temperamentString.length() - 2));
-        socializationString = new StringBuilder(socializationString.substring(0, socializationString.length() - 2));
-
-
         Animal a = new Animal();
+
+        if(temperament != null) {
+            StringBuilder temperamentString = new StringBuilder();
+            for (String t : temperament) temperamentString.append(t).append(", ");
+            temperamentString = new StringBuilder(temperamentString.substring(0, temperamentString.length() - 2));
+            a.setTemperament(temperamentString.toString());
+        } else a.setTemperament("Sem temperamento específicado");
+
+        if(socialization != null) {
+            StringBuilder socializationString = new StringBuilder();
+            for (String s : socialization) socializationString.append(s).append(", ");
+            socializationString = new StringBuilder(socializationString.substring(0, socializationString.length() - 2));
+            a.setSocialization(socializationString.toString());
+        } else a.setSocialization("Sem socialização específicada");
+
         if(!name.isEmpty()) a.setName(name);
-        else a.setName(null);
+        else a.setName("Sem nome");
         a.setName(name);
         a.setType(type);
         a.setBreed(breed);
@@ -83,7 +85,7 @@ public class AnimalRegisterServlet extends HttpServlet {
         a.setAge(age);
         a.setColor(color);
         if(!story.isEmpty()) a.setStory(story);
-        else a.setStory(null);
+        else a.setStory("Sem história específicada");
         a.setCity(city);
         a.setAddress(address);
         a.setContactName(contactName);
@@ -93,8 +95,6 @@ public class AnimalRegisterServlet extends HttpServlet {
         a.setVaccinated(vaccinated != null);
         a.setCastrated(castrated != null);
         a.setDewormed(dewormed != null);
-        a.setTemperament(temperamentString.toString());
-        a.setSocialization(socializationString.toString());
         a.setAnnouncementDate(LocalDate.now());
         a.setImage(base64Image);
         a.setFileName(fileName);
