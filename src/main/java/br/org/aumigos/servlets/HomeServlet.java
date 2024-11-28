@@ -15,10 +15,14 @@ import java.time.Period;
 import java.util.List;
 
 @WebServlet("/home")
+
 public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String url;
+
         AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
         List<Animal> animals = animalDao.getAllAnimals();
 
@@ -26,11 +30,11 @@ public class HomeServlet extends HttpServlet {
             animal.setDaysAgo(Period.between(animal.getAnnouncementDate(), LocalDate.now()).getDays());
         }
 
-        RequestDispatcher dispatcher;
-
         req.setAttribute("animals", animals);
 
-        dispatcher = req.getRequestDispatcher("/home.jsp");
+        url = "/home.jsp";
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }
 

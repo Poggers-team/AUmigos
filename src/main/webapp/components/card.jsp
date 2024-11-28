@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,19 +14,18 @@
 </head>
 
 <body>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- components/card.jsp -->
 <div class="card">
-    <img src="${animal.foto}" alt="${animal.nomePet}">
+    <img src="${animal.image}" alt="${animal.fileName}">
     <div class="card-info">
         <div class="card-info-left">
-            <h3>${animal.nomePet}</h3>
-            <p>${animal.cidade}</p>
+            <h3>${animal.name}</h3>
+            <p>${animal.city}</p>
         </div>
         <div class="card-icon">
             <img src="assets/icons/star.svg" alt="Ícone de estrela">
-            <span>${animal.diasAtras} dias atrás</span>
+            <span>${animal.daysAgo} dias atrás</span>
         </div>
     </div>
 </div>

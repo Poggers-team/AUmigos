@@ -181,6 +181,7 @@
         .form-group input[type="text"],
         .form-group input[type="email"],
         .form-group input[type="tel"],
+        .form-group input[type="number"],
         .form-group select {
             width: 100%;
             padding: 12px;
@@ -192,6 +193,11 @@
         }
 
         .form-group input[type="text"]::placeholder {
+            color: #9e9e9e;
+            font-size: 0.9rem;
+        }
+
+        .form-group input[type="number"]::placeholder {
             color: #9e9e9e;
             font-size: 0.9rem;
         }
@@ -318,7 +324,7 @@
                 </div>
                 <div class="form-group">
                     <label for="age">Idade</label>
-                    <input type="text" id="age" name="age" placeholder="Digite a idade do pet" required>
+                    <input type="number" id="age" name="age" placeholder="Digite a idade do pet" required>
                 </div>
                 <div class="form-group">
                     <label for="size">Porte</label>

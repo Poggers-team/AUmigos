@@ -72,7 +72,12 @@
                         </div>
                         <div class="card-icon">
                             <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                            <span>${animal.daysAgo} dias atrás</span>
+                            <c:if test="${animal.daysAgo == 0}">
+                                <span>Hoje</span>
+                            </c:if>
+                            <c:if test="${animal.daysAgo != 0}">
+                                <span>${animal.daysAgo} dias atrás</span>
+                            </c:if>
                         </div>
                     </div>
                 </div>
