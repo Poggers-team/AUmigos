@@ -186,9 +186,9 @@
             <div class="row d-flex align-items-center justify-content-center h-100 login-form">
                 <div class="col-md-8 col-lg-7 col-xl-6">
                     <img src="assets/img/img-login.jpg"
-                         class="img-fluid" alt="Phone image" width="105%">
+                         class="img-fluid" alt="Phone image" width="80%">
                 </div>
-                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" id="forms">
                     <h2>Entre com sua conta!</h2>
                     <br>
                     <form action="login" method="post">

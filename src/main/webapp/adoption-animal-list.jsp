@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
+         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+         <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+         
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -213,9 +214,10 @@
     </aside>
     
     <main class="ads">
-        <c:if test="${empty animals}">
-            <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
-        </c:if>
+<c:if test="${empty animals || animals == null}">
+    <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
+</c:if>
+
         
         <c:if test="${not empty animals}">
             <c:forEach var="animal" items="${animals}">

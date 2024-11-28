@@ -46,6 +46,18 @@ public class AnimalListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        String adoptedParam = req.getParameter("adopted");
+        
+        int adopted = (adoptedParam != null) ? Integer.parseInt(adoptedParam) : 0;
+        
+        AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
+        List<Animal> animals = animalDao.getAnimalsByAdoptedStatus(adopted);
+    
+        req.setAttribute("animals", animals.isEmpty() ? null : animals);
+    
+        String url = (adopted == 1) ? "/adopted-animal-list.jsp" : "/adoption-animal-list.jsp";
+        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+        dispatcher.forward(req, resp);
     }
+    
 }

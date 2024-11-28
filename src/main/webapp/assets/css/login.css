@@ -3,7 +3,9 @@
 .login-form {
     background-color: #f8f9fa;
     margin-bottom: 50px;
-    margin-top: 40px;
+    margin-top: 1px;
+    width: 1200px;
+    margin-right: 120px;
 
 }
 
@@ -84,19 +86,6 @@ input:focus, textarea:focus, select:focus {
     padding-top: 80px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.img-fluid {
+    margin-left: 120px;
+}
