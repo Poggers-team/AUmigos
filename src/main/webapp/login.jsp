@@ -191,7 +191,7 @@
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" id="forms">
                     <h2>Entre com sua conta!</h2>
                     <br>
-                    <form action="login" method="post">
+                    <form action="FrontController" method="post">
                         <!-- Email input -->
                         <div data-mdb-input-init class="form-outline mb-4">
                             <label class="form-label" for="email">Email:</label>
@@ -205,11 +205,12 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn-login">Entrar</button>
+                        <button type="submit" class="btn-login" name="action" value="login">Entrar</button>
                     </form>
                     <br>
-                    <p>Não possui cadastro? <a href="user-register.jsp"
-                                                                                  class="link-primary">Registre-se!</a></p>
+                    <p>Não possui cadastro?
+                        <a href="user-register.jsp" class="link-primary">Registre-se!</a>
+                    </p>
                 </div>
             </div>
         </div>
