@@ -15,7 +15,6 @@ create table User
 ) engine = InnoDB
   default charset = utf8;
 
-drop table Animal;
 create table Animal (
     id bigint(20) primary key auto_increment,
     name varchar(20),
