@@ -474,7 +474,8 @@
                     <li><strong>Idade:</strong> <span id="modal-animal-age"></span></li>
                     <li><strong>Gênero:</strong> <span id="modal-animal-gender"></span></li>
                 </ul>
-                <button id="adopt-button">Quero Adotar!</button>
+                <button onclick="window.location.href='adoptionPet?idPet=${animal.id}'">Adotar</button>
+
             </div>
         </div>
     </div>

@@ -1,11 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Anúncio Pet</title>
+    <title>Adotar Pet</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         * {
@@ -270,14 +272,31 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h1>nome do pet</h1>
-        <p>
-            informações do pet
-        </p>
-    </div>
+    <div class="container">
+    
+        <!--<c:forEach var="animal" items="${animals}">
+            <div class="sidebar">
+                <div class="animal-info">
+                    <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
+                    
+                    <h3>${animal.name}</h3>
+                    
+                    <p><strong>Raça:</strong> ${animal.breed}</p>
+                    
+                    <p><strong>Idade:</strong> ${animal.age} anos</p>
+                    
+                    <p><strong>Descrição:</strong> ${animal.description}</p>
+                </div>
+            </div>
+        </c:forEach>-->
+
+        <div class="sidebar">
+            <h1>nome do pet</h1>
+            <p>
+                infos do pet
+            </p>
+        </div>
+        
 
     <div class="form-container">
         <form id="multiStepForm" action="FrontController" method="POST" enctype="multipart/form-data">
