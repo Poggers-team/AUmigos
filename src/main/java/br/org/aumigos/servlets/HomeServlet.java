@@ -36,6 +36,9 @@ public class HomeServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
+
+        req.setAttribute("animals", animals);
+
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

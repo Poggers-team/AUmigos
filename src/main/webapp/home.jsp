@@ -39,7 +39,7 @@
             <h1>Ajude um pet a ter uma casa!</h1>
             <p>Ajude a reunir famílias e seus amigos peludos! Encontre ou divulgue um pet agora mesmo.</p>
             <div class="buttons">
-                <a href="frontController?action=animalList&adopted=1" class="btn btn-primary">
+                <a href="animalList?adopted=0" class="btn btn-primary">
                     <img src="assets/icons/search.svg" alt="Ícone de busca">
                     <span>
                         Adotar um Pet
@@ -73,27 +73,35 @@
         </div>
         <div class="cards">
             <!-- Itera sobre a lista de animais -->
+            <c:set var="counter" value="0" />
             <c:forEach var="animal" items="${animals}">
-                <div class="card">
-                    <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
-
-                    <div class="card-info">
-                        <div class="card-info-left">
-                            <h3>${animal.name}</h3>
-                            <p>${animal.city}</p>
-                        </div>
-                        <div class="card-icon">
-                            <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                            <c:if test="${animal.daysAgo == 0}">
-                                <span>Hoje</span>
-                            </c:if>
-                            <c:if test="${animal.daysAgo != 0}">
-                                <span>${animal.daysAgo} dias atrás</span>
-                            </c:if>
+                <c:if test="${counter lt 4}">
+                    <div class="card">
+                        <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
+                        <div class="card-info">
+                            <div class="card-info-left">
+                                <h3>${animal.name}</h3>
+                                <p>${animal.city}</p>
+                            </div>
+                            <div class="card-icon">
+                                <img src="assets/icons/star.svg" alt="Ícone de estrela">
+                                <c:if test="${animal.daysAgo == 0}">
+                                    <span>Hoje</span>
+                                </c:if>
+                                <c:if test="${animal.daysAgo != 0}">
+                                    <span>${animal.daysAgo} dias atrás</span>
+                                </c:if>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <c:set var="counter" value="${counter + 1}" />
+                </c:if>
             </c:forEach>
+
+        </div>
+        <br><br>
+        <div class="section-footer">
+            <a href="animalList?adopted=0" class="btn-primary">Ver todos os pets</a>
         </div>
     </div>
 </section>
