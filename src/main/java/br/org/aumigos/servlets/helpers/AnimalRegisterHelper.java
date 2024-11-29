@@ -90,6 +90,6 @@ public class AnimalRegisterHelper implements Helper {
 
         if(animalDao.save(a)) request.setAttribute("result", "registered");
 
-        return "/createPet.jsp";
+        return "/FrontController?action=home";
     }
 }

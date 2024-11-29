@@ -275,7 +275,8 @@
     </div>
 
     <div class="form-container">
-        <form id="multiStepForm" action="animalRegister" method="POST" enctype="multipart/form-data">
+        <form id="multiStepForm" action="FrontController" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="animalRegister">
             <!-- Etapa 1 -->
             <div class="form-step active">
                 <p class="form-title">Vamos começar com algumas informações básicas.</p>
@@ -469,7 +470,7 @@
 
         const formData = new FormData(document.getElementById('multiStepForm'));
 
-        fetch('createPet', {
+        fetch('frontController?action=animalRegister', {
             method: 'POST',
             body: formData
         })

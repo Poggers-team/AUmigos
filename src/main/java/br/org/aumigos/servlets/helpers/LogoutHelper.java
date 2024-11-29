@@ -9,6 +9,6 @@ public class LogoutHelper implements Helper {
     public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         session.invalidate();
-        return "home.jsp";
+        return "FrontController?action=home";
     }
 }
