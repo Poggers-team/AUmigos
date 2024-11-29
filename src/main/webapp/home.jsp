@@ -39,7 +39,7 @@
             <h1>Ajude um pet a ter uma casa!</h1>
             <p>Ajude a reunir famílias e seus amigos peludos! Encontre ou divulgue um pet agora mesmo.</p>
             <div class="buttons">
-                <a href="animalList?adopted=0" class="btn btn-primary">
+                <a href="FrontController?action=animalList&adopted=0" class="btn btn-primary">
                     <img src="assets/icons/search.svg" alt="Ícone de busca">
                     <span>
                         Adotar um Pet
