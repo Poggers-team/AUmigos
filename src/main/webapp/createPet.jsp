@@ -276,7 +276,7 @@
 
     <div class="form-container">
         <form id="multiStepForm" action="FrontController" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="animalRegister">
+<%--            <input type="hidden" name="action" value="animalRegister">--%>
             <!-- Etapa 1 -->
             <div class="form-step active">
                 <p class="form-title">Vamos começar com algumas informações básicas.</p>
@@ -504,7 +504,18 @@
         });
 
         prevBtn.disabled = currentStep === 0;
-        nextBtn.textContent = currentStep === steps.length - 1 ? 'Enviar' : 'Prosseguir';
+
+        if (currentStep === steps.length - 1) {
+            nextBtn.textContent = 'Enviar';
+            nextBtn.setAttribute('name', 'action');
+            nextBtn.setAttribute('value', 'animalRegister');
+            nextBtn.setAttribute('type', 'submit');
+        } else {
+            nextBtn.textContent = 'Prosseguir';
+            nextBtn.removeAttribute('name');
+            nextBtn.removeAttribute('value');
+            nextBtn.setAttribute('type', 'button'); // Define como botão padrão nos outros steps
+        }
     }
 
     nextBtn.addEventListener('click', () => {
