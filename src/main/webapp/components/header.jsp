@@ -17,17 +17,17 @@
 <body>
 <nav class="container">
     <div class="logo">
-        <a href="home.jsp"><img src="assets/img/logopata.png" alt="Logo ONG AUmigos"></a>
-        <span href="home.jsp">ONG AUmigos</span>
+        <a href="home"><img src="assets/img/logopata.png" alt="Logo ONG AUmigos"></a>
+        <span href="home">ONG AUmigos</span>
     </div>
     <div class="menu-container">
         <ul class="menu">
-            <li><a href="home.jsp">Home</a></li>
+            <li><a href="home">Home</a></li>
             <li>
                 <a href="#">Adoção</a>
                 <ul>
-                    <li><a href="adoption-animal-list.jsp">Pets para Adoção</a></li>
-                    <li><a href="adopted-animal-list.jsp">Pets Adotados</a></li>
+                    <li><a href="animalList?adopted=0">Pets para Adoção</a></li>
+                    <li><a href="animalList?adopted=1">Pets Adotados</a></li>
                     <li><a href="createPet.jsp">Cadastrar Pets</a></li>
                 </ul>
             </li>

@@ -31,6 +31,8 @@ public class AnimalRegisterServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Parâmetro action recebido: " + req.getParameter("action"));
+
         String name = req.getParameter("name");
         Type type = Type.valueOf(req.getParameter("type"));
         String breed = req.getParameter("breed");
@@ -109,6 +111,9 @@ public class AnimalRegisterServlet extends HttpServlet {
 
         dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
+
+        System.out.println("Parâmetro action recebido: " + req.getParameter("action"));
+
     }
 
     @Override
