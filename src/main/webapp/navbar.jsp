@@ -4,13 +4,13 @@
   <title>Menu Navbar</title>
   <link href='https://fonts.googleapis.com/css?family=Fredoka One' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
 </head>
 <body>
   <nav>
     <div class="nav-container">
       <a class="logo" href="home">
-        <img src="logo.jpg" alt="Logo" class="logo-img">
+        <img src="assets/icons/logo.jpg" alt="Logo" class="logo-img">
         ONG AUmigos
       </a>
       <div class="menu">
