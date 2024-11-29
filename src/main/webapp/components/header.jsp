@@ -17,7 +17,7 @@
 <body>
 <nav class="container">
     <div class="logo">
-        <a href="home"><img src="assets/img/logopata.png" alt="Logo ONG AUmigos"></a>
+        <a href="FrontController?action=home"><img src="assets/img/logopata.png" alt="Logo ONG AUmigos"></a>
         <span href="home">ONG AUmigos</span>
     </div>
     <div class="menu-container">
