@@ -22,7 +22,7 @@ public class AnimalDao {
     }
 
     public Boolean save(Animal animal) {
-        String sql = "insert into Animal (name, breed, type, gender, size, age, castrated, adopted, " +
+        String sql = "insert into animal (name, breed, type, gender, size, age, castrated, adopted, " +
                 "vaccinated, dewormed, temperament, socialization, address, city, contactName, " +
                 "contactEmail, contactPhone, image, fileName, color, story, announcementDate) " +
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -38,7 +38,7 @@ public class AnimalDao {
     }
 
     public Boolean update(Animal animal) {
-        String sql = "update Animal set name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, " +
+        String sql = "update animal set name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, " +
                 "castrated = ?, adopted = ?, vaccinated = ?, dewormed = ?, temperament = ?, socialization = ?, " +
                 "address = ?, city = ?, contactName = ?, contactEmail = ?, contactPhone = ?, image = ?, " +
                 "fileName = ?, color = ?, story = ?, announcementDate = ? where id = ?";
@@ -109,7 +109,7 @@ public class AnimalDao {
     public List<Animal> getAllAnimals() {
         List<Animal> animals = new ArrayList<>();
 
-        String sql = "select * from Animal";
+        String sql = "select * from animal";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {

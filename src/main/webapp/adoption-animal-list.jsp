@@ -470,11 +470,11 @@
                 <h2 id="modal-animal-name"></h2>
                 <p id="modal-animal-description"></p>
                 <ul>
-                    <li><strong>Porte:</strong> <span id="modal-animal-size"></span></li>
                     <li><strong>Idade:</strong> <span id="modal-animal-age"></span></li>
+                    <li><strong>Porte:</strong> <span id="modal-animal-size"></span></li>
                     <li><strong>Gênero:</strong> <span id="modal-animal-gender"></span></li>
                 </ul>
-                <button onclick="window.location.href='adoptionPet?idPet=${animal.id}'">Adotar</button>
+                <button id="adopt-button">Adotar</button>
 
             </div>
         </div>

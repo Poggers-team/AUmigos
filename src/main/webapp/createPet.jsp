@@ -455,7 +455,7 @@
 
 
             <div class="button-group">
-                <button type="button" class="btn btn-back" id="prevBtn" disabled>Voltar</button>
+                <button type="button" class="btn btn-back" id="prevBtn" >Voltar</button>
                 <button type="button" class="btn btn-next" id="nextBtn">Prosseguir</button>
             </div>
         </form>
@@ -503,8 +503,17 @@
             step.classList.toggle('active', index === currentStep);
         });
 
-        prevBtn.disabled = currentStep === 0;
-        nextBtn.textContent = currentStep === steps.length - 1 ? 'Enviar' : 'Prosseguir';
+        if (currentStep === steps.length - 1) {
+            nextBtn.textContent = 'Enviar';
+            nextBtn.setAttribute('name', 'action');
+            nextBtn.setAttribute('value', 'animalRegister');
+            nextBtn.setAttribute('type', 'submit');
+        } else {
+            nextBtn.textContent = 'Prosseguir';
+            nextBtn.removeAttribute('name');
+            nextBtn.removeAttribute('value');
+            nextBtn.setAttribute('type', 'button'); // Define como botão padrão nos outros steps
+        }
     }
 
     nextBtn.addEventListener('click', () => {
@@ -519,9 +528,12 @@
     prevBtn.addEventListener('click', () => {
         if (currentStep > 0) {
             currentStep--;
+            updateStep();
+        } else {
+            window.location.href = "home";
         }
-        updateStep();
     });
+
 
     const fileInput = document.getElementById('image');
     const uploadArea = document.getElementById('uploadArea');

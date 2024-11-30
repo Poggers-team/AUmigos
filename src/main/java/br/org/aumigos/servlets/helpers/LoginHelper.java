@@ -22,7 +22,7 @@ public class LoginHelper implements Helper {
         if (optional.isPresent()) {
             User user = optional.get();
             HttpSession session = req.getSession();
-            session.setMaxInactiveInterval(60);
+            session.setMaxInactiveInterval(6000);
             session.setAttribute("user", user);
             return "/FrontController?action=home";
         } else {
