@@ -1,11 +1,12 @@
-body {
-    background-color: #37517e;
-}
+
 
 .login-form {
-    background-color: #2e2e2e;
-    border-radius: 50px;
-    color: white;
+    background-color: #f8f9fa;
+    margin-bottom: 50px;
+    margin-top: 1px;
+    width: 1200px;
+    margin-right: 120px;
+
 }
 
 .back {
@@ -16,4 +17,75 @@ body {
 
 span {
     color: red;
+}
+
+.form-label {
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+
+.btn-login {
+    text-decoration: none;
+    background-color: #230735;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-login:hover {
+    background-color: #9C0376;
+}
+
+a { color: inherit; } 
+
+p a.link-primary {
+    color: #9C0376 !important;
+    text-decoration-color: #9C0376 !important;
+}
+
+p a.link-primary:hover {
+    color: #230735 !important;
+    text-decoration-color: #230735 !important;
+}
+
+
+.form-outline {
+    min-height: 10px;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #9C0376;
+    outline: none;
+}
+
+.display-6 {
+    margin-bottom: 60px;
+    margin-top: 140px;
+} 
+
+#formtable {
+    margin-bottom: 360px;
+    margin-top: 400px;
+}
+
+
+.login-form {
+    background-color: #f8f9fa;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    padding-top: 80px;
+}
+
+.img-fluid {
+    margin-left: 120px;
 }
