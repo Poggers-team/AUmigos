@@ -30,14 +30,14 @@
             <div class="footer-column">
                 <h4>Categorias</h4>
                 <ul  class="categories">
-                    <li><a href="../about.jsp">Quem Somos</a></li>
-                    <li><a href="#">Adoção</a></li>
-                    <li><a href="#">Doações</a></li>
-                    <li><a href="#">Histórias de Adoção</a></li>
-                    <li><a href="#">Como Ajudar</a></li>
-                    <li><a href="#">Recursos Educativos</a></li>
-                    <li><a href="#">Acesso Rápido </a></li>
-                    <li><a href="#">Perguntas Frequentes</a></li>
+                    <li><a href="about.jsp">Quem Somos</a></li>
+                    <li><a href="FrontController?action=animalList&adopted=0">Adoção</a></li>
+                    <li><a href="donate.jsp">Doações</a></li>
+                    <li><a href="FrontController?action=home">Histórias de Adoção</a></li>
+                    <li><a href="voluntary.jsp">Como Ajudar</a></li>
+                    <!--<li><a href="#">Recursos Educativos</a></li>
+                    <li><a href="#">Acesso Rápido </a></li>-->
+                    <li><a href="FAQ.jsp">Perguntas Frequentes</a></li>
                 </ul>
             </div>
 

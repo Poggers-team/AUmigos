@@ -276,7 +276,7 @@
 
     <div class="form-container">
         <form id="multiStepForm" action="FrontController" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="animalRegister">
+<%--            <input type="hidden" name="action" value="animalRegister">--%>
             <!-- Etapa 1 -->
             <div class="form-step active">
                 <p class="form-title">Vamos começar com algumas informações básicas.</p>
@@ -530,10 +530,9 @@
             currentStep--;
             updateStep();
         } else {
-            window.location.href = "home";
+            window.location.href = "FrontController?action=home";
         }
     });
-
 
     const fileInput = document.getElementById('image');
     const uploadArea = document.getElementById('uploadArea');

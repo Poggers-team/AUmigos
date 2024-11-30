@@ -21,7 +21,8 @@ public class SendSms {
         String authKey = properties.getProperty("AUTH-KEY");
 
         SmsPayload payload = new SmsPayload("AUmigos", receiver, "Muito obrigado por se voluntariar " +
-                "a ONG AUmigos " + name + " :)");
+                "a ONG AUmigos " + name + " :)\r\n" +
+                "Entraremos em contato em breve!");
 
         Gson gson = new Gson();
 
