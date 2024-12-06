@@ -101,7 +101,7 @@
         </div>
         <br><br>
         <div class="section-footer">
-            <a href="animalList?adopted=0" class="btn-primary">Ver todos os pets</a>
+            <a href="FrontController?action=animalList&adopted=0" class="btn-primary">Ver todos os pets</a>
         </div>
     </div>
 </section>

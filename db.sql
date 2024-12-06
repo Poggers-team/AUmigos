@@ -28,7 +28,7 @@ create table Animal (
     vaccinated boolean not null,
     dewormed boolean not null,
     temperament varchar(255) not null,
-    socialization varchar(50) not null,
+    socialization varchar(255) not null,
     address varchar(100) not null,
     city varchar(50) not null,
     contactName varchar(50) not null,
