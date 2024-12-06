@@ -56,8 +56,8 @@
         </a>
     </c:when>
     <c:otherwise>
-        <a href="logout">
-            <button id="logoutButton" class="btn-login" style="border: none; cursor: pointer;" href="FrontController?action=logout">Sair</button>
+        <a href="FrontController?action=logout">
+            <button id="logoutButton" class="btn-login" style="border: none; cursor: pointer;">Sair</button>
         </a>
     </c:otherwise>
 </c:choose>
