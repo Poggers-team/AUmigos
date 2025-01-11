@@ -16,7 +16,7 @@ public class VoluntaryDao {
     }
 
     public Boolean save(Voluntary voluntary){
-        String sql = "insert into voluntary (name, email, phone, availability, skills) values (?,?,?,?,?)";
+        String sql = "insert into Voluntary (name, email, phone, availability, skills) values (?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             setString(voluntary, ps);

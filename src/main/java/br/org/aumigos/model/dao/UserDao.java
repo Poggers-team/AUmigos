@@ -24,7 +24,7 @@ public class UserDao {
         if(optional.isPresent()) {
             return false;
         }
-        String sql = "insert into user (name, email, password, "
+        String sql = "insert into User (name, email, password, "
                 + "dateOfBirth, gender, active) values (?,?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -42,7 +42,7 @@ public class UserDao {
     }
 
     public Optional<User> getUserByEmail(String email){
-        String sql = "select id,name,email from user where email=?";
+        String sql = "select id,name,email from User where email=?";
         Optional<User> optional = Optional.empty();
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -65,7 +65,7 @@ public class UserDao {
     public Optional<User> getUserByEmailAndPassword(String email, String password) {
         String passwordEncripted = PasswordEncoder.encode(password);
 
-        String sql = "select id,name,email from user where email=? and password=?";
+        String sql = "select id,name,email from User where email=? and password=?";
         Optional<User> optional = Optional.empty();
         try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, email);

@@ -22,7 +22,7 @@ public class AnimalDao {
     }
 
     public Boolean save(Animal animal) {
-        String sql = "insert into animal (name, breed, type, gender, size, age, castrated, adopted, " +
+        String sql = "insert into Animal (name, breed, type, gender, size, age, castrated, adopted, " +
                 "vaccinated, dewormed, temperament, socialization, address, city, contactName, " +
                 "contactEmail, contactPhone, image, fileName, color, story, announcementDate) " +
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -38,7 +38,7 @@ public class AnimalDao {
     }
 
     public Boolean update(Animal animal) {
-        String sql = "update animal set name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, " +
+        String sql = "update Animal set name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, " +
                 "castrated = ?, adopted = ?, vaccinated = ?, dewormed = ?, temperament = ?, socialization = ?, " +
                 "address = ?, city = ?, contactName = ?, contactEmail = ?, contactPhone = ?, image = ?, " +
                 "fileName = ?, color = ?, story = ?, announcementDate = ? where id = ?";
@@ -54,7 +54,7 @@ public class AnimalDao {
     }
 
     public boolean delete(Animal animal) {
-        String sql = "delete from animal where id = ?";
+        String sql = "delete from Animal where id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, animal.getId());
@@ -66,7 +66,7 @@ public class AnimalDao {
     }
 
     public Animal getAnimalById(Long id) {
-        String sql = "select * from animal where id = ?";
+        String sql = "select * from Animal where id = ?";
         Animal a = null;
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -89,7 +89,7 @@ public class AnimalDao {
         if (adopted == 1) adoptedBool = true;
         else adoptedBool = false;
 
-        String sql = "select * from animal where adopted = ?";
+        String sql = "select * from Animal where adopted = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setBoolean(1, adoptedBool);
@@ -109,7 +109,7 @@ public class AnimalDao {
     public List<Animal> getAllAnimals() {
         List<Animal> animals = new ArrayList<>();
 
-        String sql = "select * from animal";
+        String sql = "select * from Animal";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
