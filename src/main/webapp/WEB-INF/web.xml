@@ -34,6 +34,10 @@
   </context-param>
   <context-param>
     <param-name>animalUpdate</param-name>
-    <param-value>br.org.aumigos.servlets.helpers.AnimalUpdateHelper</param-value>
+    <param-value>br.org.aumigos.servlets.helpers.AnimalAdoptHelper</param-value>
+  </context-param>
+  <context-param>
+    <param-name>animalAdopt</param-name>
+    <param-value>br.org.aumigos.servlets.helpers.GetAnimalToAdoptHelper</param-value>
   </context-param>
 </web-app>
