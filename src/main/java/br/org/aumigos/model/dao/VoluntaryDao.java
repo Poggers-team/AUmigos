@@ -19,7 +19,7 @@ public class VoluntaryDao {
         String sql = "insert into Voluntary (name, email, phone, availability, skills) values (?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            setString(voluntary, ps);
+            populatePreparedStatementForVoluntary(voluntary, ps);
             ps.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -27,7 +27,7 @@ public class VoluntaryDao {
         return true;
     }
 
-    private void setString(Voluntary voluntary, PreparedStatement ps) throws SQLException {
+    private void populatePreparedStatementForVoluntary(Voluntary voluntary, PreparedStatement ps) throws SQLException {
         ps.setString(1, voluntary.getName());
         ps.setString(2,voluntary.getEmail());
         ps.setString(3, voluntary.getPhone());

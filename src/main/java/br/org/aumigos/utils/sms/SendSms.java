@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class SendSms {
 
-    public void send(String receiver, String name) throws IOException, InterruptedException {
+    public void send(String receiver, String content) throws IOException, InterruptedException {
         Properties properties = new Properties();
 
         try (InputStream input = SendSms.class.getClassLoader().getResourceAsStream("config.properties")) {
@@ -20,9 +20,7 @@ public class SendSms {
 
         String authKey = properties.getProperty("AUTH-KEY");
 
-        SmsPayload payload = new SmsPayload("AUmigos", receiver, "Muito obrigado por se voluntariar " +
-                "a ONG AUmigos " + name + " :)\r\n" +
-                "Entraremos em contato em breve!");
+        SmsPayload payload = new SmsPayload("AUmigos", receiver, content);
 
         Gson gson = new Gson();
 
@@ -38,7 +36,5 @@ public class SendSms {
                 .build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        System.out.println(response.statusCode());
     }
 }

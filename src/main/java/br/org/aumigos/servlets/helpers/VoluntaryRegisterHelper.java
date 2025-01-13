@@ -6,7 +6,6 @@ import br.org.aumigos.model.voluntary.Voluntary;
 import br.org.aumigos.utils.DataSourceSearcher;
 import br.org.aumigos.utils.PhoneVerifier;
 import br.org.aumigos.utils.sms.SendSms;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -39,9 +38,13 @@ public class VoluntaryRegisterHelper implements Helper {
         VoluntaryDao voluntaryDao = new VoluntaryDao(DataSourceSearcher.getInstance().getDataSource());
         SendSms sendSms = new SendSms();
 
+        StringBuilder builder = new StringBuilder();
+        builder.append("Muito obrigado por se voluntariar a ONG AUmigos " + name + " :)\r\n");
+        builder.append("Entraremos em contato em breve!");
+
         if(voluntaryDao.save(voluntary)){
             request.setAttribute("result", "registered");
-            sendSms.send(phone, name);
+            sendSms.send(phone, builder.toString());
         }
         return "/voluntary.jsp";
     }
