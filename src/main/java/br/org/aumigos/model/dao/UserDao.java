@@ -1,6 +1,6 @@
 package br.org.aumigos.model.dao;
 
-import br.org.aumigos.model.User;
+import br.org.aumigos.model.user.User;
 import br.org.aumigos.utils.PasswordEncoder;
 
 import javax.sql.DataSource;

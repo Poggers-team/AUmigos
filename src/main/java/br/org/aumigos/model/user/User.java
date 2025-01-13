@@ -1,4 +1,4 @@
-package br.org.aumigos.model;
+package br.org.aumigos.model.user;
 
 import java.io.Serial;
 import java.io.Serializable;
