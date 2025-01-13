@@ -31,7 +31,7 @@
                 <h4>Categorias</h4>
                 <ul  class="categories">
                     <li><a href="about.jsp">Quem Somos</a></li>
-                    <li><a href="FrontController?action=animalList&adopted=0">Adoção</a></li>
+                    <li><a href="FrontController?action=animalList&adopted=false">Adoção</a></li>
                     <li><a href="donate.jsp">Doações</a></li>
                     <li><a href="FrontController?action=home">Histórias de Adoção</a></li>
                     <li><a href="voluntary.jsp">Como Ajudar</a></li>

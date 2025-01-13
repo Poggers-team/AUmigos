@@ -12,14 +12,13 @@ public class AnimalListHelper implements Helper {
 
     @Override
     public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String adoptedParam = request.getParameter("adopted");
-        int adopted = (adoptedParam != null) ? Integer.parseInt(adoptedParam) : 0;
+        Boolean adopted = Boolean.parseBoolean(request.getParameter("adopted"));
 
         AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
         List<Animal> animals = animalDao.getAnimalsByAdoptedStatus(adopted);
 
         request.setAttribute("animals", animals.isEmpty() ? null : animals);
 
-        return (adopted == 1) ? "/adopted-animal-list.jsp" : "/adoption-animal-list.jsp";
+        return adopted ? "/adopted-animal-list.jsp" : "/adoption-animal-list.jsp";
     }
 }

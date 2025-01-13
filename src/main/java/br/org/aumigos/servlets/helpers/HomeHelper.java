@@ -14,7 +14,7 @@ public class HomeHelper implements Helper {
     @Override
     public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-        List<Animal> animals = animalDao.getAllAnimals();
+        List<Animal> animals = animalDao.getAnimalsByAdoptedStatus(false);
 
         for(Animal animal : animals) {
             animal.setDaysAgo(Period.between(animal.getAnnouncementDate(), LocalDate.now()).getDays());
