@@ -21,7 +21,7 @@ public class AnimalDao {
         this.dataSource = dataSource;
     }
 
-    public Boolean save(Animal animal) {
+    public boolean save(Animal animal) {
         String sql = "insert into Animal (name, breed, type, gender, size, age, castrated, adopted, " +
                 "vaccinated, dewormed, temperament, socialization, address, city, contactName, " +
                 "contactEmail, contactPhone, image, fileName, color, story, announcementDate) " +
@@ -29,7 +29,7 @@ public class AnimalDao {
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            setString(animal, ps);
+            populatePreparedStatementForAnimal(animal, ps);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -37,15 +37,12 @@ public class AnimalDao {
         return true;
     }
 
-    public Boolean update(Animal animal) {
-        String sql = "update Animal set name = ?, breed = ?, type = ?, gender = ?, size = ?, age = ?, " +
-                "castrated = ?, adopted = ?, vaccinated = ?, dewormed = ?, temperament = ?, socialization = ?, " +
-                "address = ?, city = ?, contactName = ?, contactEmail = ?, contactPhone = ?, image = ?, " +
-                "fileName = ?, color = ?, story = ?, announcementDate = ? where id = ?";
+    public boolean setAnimalAsAdopted(Long animalId) {
+        String sql = "update Animal set adopted = ? where id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            setString(animal, ps);
-            ps.setLong(23, animal.getId());
+            ps.setBoolean(1, true);
+            ps.setLong(2, animalId);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -74,7 +71,7 @@ public class AnimalDao {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     a = new Animal();
-                    setAnimal(rs, a);
+                    mapAnimalFromResultSet(rs, a);
                 }
                 return a;
             }
@@ -83,20 +80,17 @@ public class AnimalDao {
         }
     }
 
-    public List<Animal> getAnimalsByAdoptedStatus(int adopted) {
+    public List<Animal> getAnimalsByAdoptedStatus(boolean adopted) {
         List<Animal> animals = new ArrayList<>();
-        boolean adoptedBool;
-        if (adopted == 1) adoptedBool = true;
-        else adoptedBool = false;
 
         String sql = "select * from Animal where adopted = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setBoolean(1, adoptedBool);
+            ps.setBoolean(1, adopted);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Animal a = new Animal();
-                    setAnimal(rs, a);
+                    mapAnimalFromResultSet(rs, a);
                     animals.add(a);
                 }
             }
@@ -115,7 +109,7 @@ public class AnimalDao {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Animal a = new Animal();
-                    setAnimal(rs, a);
+                    mapAnimalFromResultSet(rs, a);
                     animals.add(a);
                 }
             }
@@ -125,7 +119,7 @@ public class AnimalDao {
         return animals;
     }
 
-    private void setAnimal(ResultSet rs, Animal a) throws SQLException {
+    private void mapAnimalFromResultSet(ResultSet rs, Animal a) throws SQLException {
         a.setId(rs.getLong("id"));
         a.setName(rs.getString("name"));
         a.setBreed(rs.getString("breed"));
@@ -151,7 +145,7 @@ public class AnimalDao {
         a.setAnnouncementDate(rs.getDate("announcementDate").toLocalDate());
     }
 
-    private void setString(Animal animal, PreparedStatement ps) throws SQLException {
+    private void populatePreparedStatementForAnimal(Animal animal, PreparedStatement ps) throws SQLException {
         ps.setString(1, animal.getName());
         ps.setString(2, animal.getBreed());
         ps.setString(3, animal.getType().toString());

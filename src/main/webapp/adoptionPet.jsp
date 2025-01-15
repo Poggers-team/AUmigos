@@ -273,34 +273,76 @@
 </head>
 <body>
     <div class="container">
-    
-        <!--<c:forEach var="animal" items="${animals}">
-            <div class="sidebar">
-                <div class="animal-info">
-                    <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
-                    
-                    <h3>${animal.name}</h3>
-                    
-                    <p><strong>Raça:</strong> ${animal.breed}</p>
-                    
-                    <p><strong>Idade:</strong> ${animal.age} anos</p>
-                    
-                    <p><strong>Descrição:</strong> ${animal.description}</p>
-                </div>
-            </div>
-        </c:forEach>-->
 
         <div class="sidebar">
-            <h1>nome do pet</h1>
-            <p>
-                infos do pet
+            <h1>${animal.name}</h1>
+            <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
+
+            <p>Espécie:
+                <c:if test="${animal.type == 'CACHORRO'}">
+                    Cachorro
+                </c:if>
+                <c:if test="${animal.type == 'GATO'}">
+                    Gato
+                </c:if>
+                <c:if test="${animal.type == 'OUTRO'}">
+                    Outro
+                </c:if>
             </p>
+
+            <p>Raça: ${animal.breed}</p>
+
+            <p>Gênero:
+                <c:if test="${animal.gender == 'MACHO'}">
+                    Macho
+                </c:if>
+                <c:if test="${animal.gender == 'FEMEA'}">
+                    Fêmea
+                </c:if>
+            </p>
+
+            <p>Porte:
+                <c:if test="${animal.size == 'PEQUENO'}">
+                    Pequeno
+                </c:if>
+                <c:if test="${animal.size == 'MEDIO'}">
+                    Médio
+                </c:if>
+                <c:if test="${animal.size == 'GRANDE'}">
+                    Grande
+                </c:if>
+            </p>
+
+            <p>Idade: ${animal.age}</p>
+
+            <h2>Características:</h2>
+
+            <c:if test="${animal.castrated == true}">
+                <p>Castrado</p>
+            </c:if>
+
+            <c:if test="${animal.vaccinated == true}">
+                <p>Vacinado</p>
+            </c:if>
+
+            <c:if test="${animal.dewormed == true}">
+                <p>Vermifugado</p>
+            </c:if>
+
+            <p>Temperamento: ${animal.temperament}</p>
+
+            <p>Socialização: ${animal.socialization}</p>
+
+            <p>Cor: ${animal.color}</p>
+
+            <p>História: ${animal.story}</p>
+
         </div>
         
 
     <div class="form-container">
-        <form id="multiStepForm" action="FrontController" method="POST" enctype="multipart/form-data">
-<%--            <input type="hidden" name="action" value="animalRegister">--%>
+        <form id="multiStepForm" action="FrontController?action=animalUpdate" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="animal-id" name="animal-id" value="${animal.id}">
             <!-- Etapa 1 -->
             <div class="form-step active">
                 <h1>Precisamos te conhecer!</h1>
@@ -313,7 +355,7 @@
                 <p class="form-title">Somente maiores de 21 anos podem adotar, ok?</p>
                 <div class="form-group">
                     <label for="age">Idade:</label>
-                    <input type="text" id="age" name="age" placeholder="Digite sua idade..." required>
+                    <input type="number" id="age" name="age" placeholder="Digite sua idade..." required>
                 </div>
                 <p class="form-title">Essencial para mantermos a comunicação com você!</p>
                 <div class="form-group">
@@ -327,7 +369,7 @@
                 <br>
                 <div class="form-group">
                     <label for="zipcode">CEP:</label>
-                    <input type="number" id="zipcode" name="zipcode" placeholder="Digite seu nome..." max="8" required>
+                    <input type="text" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="10" required>
                 </div>
                 <p class="form-title">(Rua, número, bairro, cidade, estado)</p>
                 <div class="form-group">
@@ -363,10 +405,10 @@
                     <label>Sua casa possui portão automático?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="automaticGate" value="SIM" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="automaticGate" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="automaticGate" value="NAO" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="automaticGate" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
@@ -375,22 +417,22 @@
                     <label>Sua casa possui piscina?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="pool" value="SIM" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="pool" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="pool" value="NAO" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="pool" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
             
                 <div class="form-group">
-                    <label>Sua casa possui redinha nas janelas?</label>
+                    <label>Sua casa possui rede nas janelas?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="windowNet" value="SIM" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="windowNet" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="windowNet" value="NAO" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="windowNet" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
@@ -409,41 +451,41 @@
                     <label>Existem outros animais na casa? Se sim, quantos?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsinhouse" value="0" required style="margin-right: 10px; font-weight: 100;"> 0
+                            <input type="radio" name="animalsInHouse" value="0" required style="margin-right: 10px; font-weight: 100;"> 0
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsinhouse" value="1" style="margin-right: 10px; font-weight: 100;"> 1
+                            <input type="radio" name="animalsInHouse" value="1" style="margin-right: 10px; font-weight: 100;"> 1
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsinhouse" value="2" style="margin-right: 10px; font-weight: 100;"> 2
+                            <input type="radio" name="animalsInHouse" value="2" style="margin-right: 10px; font-weight: 100;"> 2
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsinhouse" value="3" style="margin-right: 10px; font-weight: 100;"> 3
+                            <input type="radio" name="animalsInHouse" value="3" style="margin-right: 10px; font-weight: 100;"> 3
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsinhouse" value="4more" style="margin-right: 10px; font-weight: 100;"> 4 ou mais
+                            <input type="radio" name="animalsInHouse" value="4" style="margin-right: 10px; font-weight: 100;"> 4 ou mais
                         </label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="animalsexperience">Como foram suas experiências com outros animais?</label>
-                    <input type="text" id="animalsexperience" name="animalsexperience" required>
+                    <label for="animalsExperience">Como foram suas experiências com outros animais?</label>
+                    <input type="text" id="animalsExperience" name="animalsExperience" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="animalsexperience">O animal irá viver no quintal ou dentro de casa?</label>
-                    <input type="text" id="animalsexperience" name="animalsexperience" required>
+                    <label for="animalPlace">O animal irá viver no quintal ou dentro de casa?</label>
+                    <input type="text" id="animalPlace" name="animalPlace" required>
                 </div>
 
                 <div class="form-group">
                     <label>Você será o responsável pelo animal adotado?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalresponse" value="0" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="animalResponsible" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalresponse" value="1" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="animalResponsible" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
@@ -452,10 +494,10 @@
                     <label>Você está ciente dos custos relacionados ao animal?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalcost" value="0" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="awareOfCosts" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalcost" value="1" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="awareOfCosts" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
@@ -469,19 +511,19 @@
                     <label>Quantas outras pessoas moram com você?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesinhouse" value="0" required style="margin-right: 10px; font-weight: 100;"> 0
+                            <input type="radio" name="peopleInHouse" value="0" required style="margin-right: 10px; font-weight: 100;"> 0
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesinhouse" value="1" style="margin-right: 10px; font-weight: 100;"> 1
+                            <input type="radio" name="peopleInHouse" value="1" style="margin-right: 10px; font-weight: 100;"> 1
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesinhouse" value="2" style="margin-right: 10px; font-weight: 100;"> 2
+                            <input type="radio" name="peopleInHouse" value="2" style="margin-right: 10px; font-weight: 100;"> 2
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesinhouse" value="3" style="margin-right: 10px; font-weight: 100;"> 3
+                            <input type="radio" name="peopleInHouse" value="3" style="margin-right: 10px; font-weight: 100;"> 3
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesinhouse" value="4more" style="margin-right: 10px; font-weight: 100;"> 4 ou mais
+                            <input type="radio" name="peopleInHouse" value="4" style="margin-right: 10px; font-weight: 100;"> 4 ou mais
                         </label>
                     </div>
                 </div>
@@ -490,10 +532,10 @@
                     <label>Essas pessoas estão cientes e concordam com a adoção?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesadoption" value="0" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="peopleAdoption" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peoplesadoption" value="1" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="peopleAdoption" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
@@ -502,18 +544,18 @@
                     <label>Existem crianças que frequentam sua casa?</label>
                     <div style="display: block;">
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="kidsinhouse" value="0" required style="margin-right: 10px; font-weight: 100;"> Sim
+                            <input type="radio" name="childrenInHouse" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
                         </label>
                         <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="kidsinhouse" value="1" style="margin-right: 10px; font-weight: 100;"> Não
+                            <input type="radio" name="childrenInHouse" value="false" style="margin-right: 10px; font-weight: 100;"> Não
                         </label>
                     </div>
                 </div>
 
                 <p class="form-title">Um animal não suporta muito tempo sozinho. Ele precisa de você!</p>
                 <div class="form-group">
-                    <label for="comments">Quanto tempo o animal ficará sozinho?</label>
-                    <input type="text" id="comments" name="comments" required>
+                    <label for="aloneTime">Quanto tempo o animal ficará sozinho?</label>
+                    <input type="text" id="aloneTime" name="aloneTime" required>
                 </div>
             </div>
 
@@ -525,6 +567,12 @@
     </div>
 </div>
 
+<c:if test="${result == 'notRegistered'}">
+    <script>
+        alert("O telefone cadastrado é inválido.");
+    </script>
+</c:if>
+
 <script>
     function submitForm(event) {
         event.preventDefault();
@@ -533,7 +581,7 @@
 
         const formData = new FormData(document.getElementById('multiStepForm'));
 
-        fetch('frontController?action=animalRegister', {
+        fetch('frontController?action=animalUpdate', {
             method: 'POST',
             body: formData
         })

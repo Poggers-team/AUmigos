@@ -52,3 +52,34 @@ create table Voluntary (
     skills varchar(255)
 ) engine = InnoDB
   default charset = utf8;
+
+create table Adoption (
+    id bigint(20) auto_increment primary key,
+    adopterName varchar(50) not null,
+    adopterAge varchar(50) not null,
+    adopterEmail varchar(50) not null,
+    adopterZipcode varchar(50) not null,
+    adopterAddress varchar(100) not null,
+    adopterPhone varchar(20) not null,
+    adopterTypeOfResidence varchar(50) not null,
+    adopterHouseHasAutomaticGate boolean not null,
+    adopterHouseHasPool boolean not null,
+    adopterHouseHasNetOnWindows boolean not null,
+    adopterComments varchar(255),
+    adopterQtyAnimals int not null,
+    adopterExperiences varchar(255),
+    animalPlace varchar(20) not null,
+    adopterIsResponsible boolean not null,
+    adopterIsAwareOfTheCosts boolean not null,
+    peopleLivingInAdopterHouse int not null,
+    peopleIsAwareOfAdoption boolean not null,
+    hasChildrenAtHouse boolean not null,
+    animalAloneTime varchar (20) not null,
+    adoptionDate date not null,
+    animalId bigint(20) not null,
+
+    foreign key (animalId) references Animal(id)
+) engine = InnoDB
+  default charset = utf8;
+
+update animal set adopted = 0 where Id = 1

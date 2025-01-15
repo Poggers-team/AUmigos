@@ -26,8 +26,8 @@
             <li>
                 <a href="#">Adoção</a>
                 <ul>
-                    <li><a href="FrontController?action=animalList&adopted=0">Pets para Adoção</a></li>
-                    <li><a href="FrontController?action=animalList&adopted=1">Pets Adotados</a></li>
+                    <li><a href="FrontController?action=animalList&adopted=false">Pets para Adoção</a></li>
+                    <li><a href="FrontController?action=animalList&adopted=true">Pets Adotados</a></li>
                     <li><a href="createPet.jsp">Cadastrar Pets</a></li>
                 </ul>
             </li>
