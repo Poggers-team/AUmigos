@@ -61,6 +61,7 @@
       margin-bottom: 20px;
     }
   </style>
+  <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 

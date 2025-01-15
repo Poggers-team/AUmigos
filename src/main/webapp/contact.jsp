@@ -197,10 +197,9 @@
                 transform: rotate(360deg);
             }
         }
-
-
-
     </style>
+
+    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 

@@ -270,6 +270,8 @@
         }
 
     </style>
+
+    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
     <div class="container">

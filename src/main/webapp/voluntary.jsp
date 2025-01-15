@@ -135,8 +135,8 @@
         ul li {
             margin-bottom: 8px;
         }
-
     </style>
+    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 

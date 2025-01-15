@@ -354,6 +354,7 @@
             }
         }
     </style>
+    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 <header>
@@ -504,9 +505,9 @@
             document.getElementById('modal-animal-image').src = animalData.image;
             document.getElementById('modal-animal-name').innerText = animalData.name;
             document.getElementById('modal-animal-description').innerText = animalData.description;
-            document.getElementById('modal-animal-size').innerText = animalData.size;
+            document.getElementById('modal-animal-size').innerText = animalData.size.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
             document.getElementById('modal-animal-age').innerText = animalData.age;
-            document.getElementById('modal-animal-gender').innerText = animalData.gender;
+            document.getElementById('modal-animal-gender').innerText = animalData.gender.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
 
             document.getElementById('adopt-button').onclick = () => {
                 window.location.href = 'FrontController?action=animalAdopt&id=' + animalData.id;

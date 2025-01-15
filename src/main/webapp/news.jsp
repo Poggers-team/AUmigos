@@ -136,8 +136,9 @@
             padding: 1px 100px;
 
         }
-
     </style>
+
+    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 <header>
@@ -153,7 +154,7 @@
     <%@ include file="components/footer.jsp" %>
 </footer>
 <script>
-    const url = `https://newsapi.org/v2/everything?q=pets AND animais -política -tecnologia -morte&language=pt&sortBy=relevancy&apiKey=45a0adc539714a30b2b0a59c8aec57e0`;
+    const url = `https://newsapi.org/v2/everything?q=pets AND animais AND animal AND pet -política -tecnologia -morte -tortura&language=pt&sortBy=relevancy&apiKey=45a0adc539714a30b2b0a59c8aec57e0`;
     const EIGHT_HOURS = 8 * 60 * 60 * 1000;
 
     function renderArticles(articles) {
