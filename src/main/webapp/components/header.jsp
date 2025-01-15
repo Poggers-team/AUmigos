@@ -46,6 +46,7 @@
                     <li><a href="voluntary.jsp">Voluntário</a></li>
                 </ul>
             </li>
+            <li><a href="news.jsp">Noticias</a></li>
         </ul>
 
 
