@@ -6,19 +6,18 @@ import br.org.aumigos.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
-
-public class AnimalListHelper implements Helper {
+public class GetAnimalToAdoptHelper implements Helper {
 
     @Override
     public Object execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Boolean adopted = Boolean.parseBoolean(request.getParameter("adopted"));
+
+        Long id = Long.parseLong(request.getParameter("id"));
 
         AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-        List<Animal> animals = animalDao.getAnimalsByAdoptedStatus(adopted);
+        Animal animal = animalDao.getAnimalById(id);
 
-        request.setAttribute("animals", animals.isEmpty() ? null : animals);
+        request.setAttribute("animal", animal);
 
-        return adopted ? "/adopted-animal-list.jsp" : "/adoption-animal-list.jsp";
+        return "/adoptionPet.jsp";
     }
 }

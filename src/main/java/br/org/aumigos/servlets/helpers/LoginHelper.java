@@ -1,6 +1,6 @@
 package br.org.aumigos.servlets.helpers;
 
-import br.org.aumigos.model.User;
+import br.org.aumigos.model.user.User;
 import br.org.aumigos.model.dao.UserDao;
 import br.org.aumigos.utils.DataSourceSearcher;
 import jakarta.servlet.http.HttpServletRequest;

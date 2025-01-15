@@ -444,6 +444,7 @@
 
         <c:forEach var="animal" items="${animals}">
             <div class="card"
+                 data-id="${animal.id}"
                  data-image="data:image/jpeg;base64,${animal.image}"
                  data-name="${animal.name}"
                  data-description="${animal.story}"
@@ -491,6 +492,7 @@
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', () => {
             const animalData = {
+                id: card.dataset.id,
                 image: card.dataset.image,
                 name: card.dataset.name,
                 description: card.dataset.description,
@@ -502,10 +504,13 @@
             document.getElementById('modal-animal-image').src = animalData.image;
             document.getElementById('modal-animal-name').innerText = animalData.name;
             document.getElementById('modal-animal-description').innerText = animalData.description;
-
             document.getElementById('modal-animal-size').innerText = animalData.size;
             document.getElementById('modal-animal-age').innerText = animalData.age;
             document.getElementById('modal-animal-gender').innerText = animalData.gender;
+
+            document.getElementById('adopt-button').onclick = () => {
+                window.location.href = 'FrontController?action=animalAdopt&id=' + animalData.id;
+            };
 
             document.getElementById('animal-modal').style.display = 'flex';
         });
