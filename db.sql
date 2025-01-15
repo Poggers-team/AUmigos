@@ -81,5 +81,3 @@ create table Adoption (
     foreign key (animalId) references Animal(id)
 ) engine = InnoDB
   default charset = utf8;
-
-update animal set adopted = 0 where Id = 1
