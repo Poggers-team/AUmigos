@@ -18,8 +18,9 @@
 <nav class="container">
     <div class="logo">
         <a href="FrontController?action=home"><img src="assets/img/logopata.png" alt="Logo ONG AUmigos"></a>
-        <span href="home">ONG AUmigos</span>
+        <span>ONG AUmigos</span>
     </div>
+    <button class="menu-toggle" aria-label="Abrir menu">☰</button>
     <div class="menu-container">
         <ul class="menu">
             <li><a href="FrontController?action=home">Home</a></li>
@@ -46,25 +47,31 @@
                     <li><a href="voluntary.jsp">Voluntário</a></li>
                 </ul>
             </li>
-            <li><a href="news.jsp">Noticias</a></li>
+            <li><a href="news.jsp">Notícias</a></li>
         </ul>
-
-
-<c:choose>
-    <c:when test="${empty sessionScope.user}">
-        <a href="login.jsp">
-            <button id="loginButton" class="btn-login" style="border: none; cursor: pointer;">Entrar</button>
-        </a>
-    </c:when>
-    <c:otherwise>
-        <a href="FrontController?action=logout">
-            <button id="logoutButton" class="btn-login" style="border: none; cursor: pointer;">Sair</button>
-        </a>
-    </c:otherwise>
-</c:choose>
-
-
+        <c:choose>
+            <c:when test="${empty sessionScope.user}">
+                <a href="login.jsp">
+                    <button id="loginButton" class="btn-login" style="border: none; cursor: pointer;">Entrar</button>
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a href="FrontController?action=logout">
+                    <button id="logoutButton" class="btn-login" style="border: none; cursor: pointer;">Sair</button>
+                </a>
+            </c:otherwise>
+        </c:choose>
     </div>
 </nav>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menuContainer = document.querySelector('.menu-container');
+
+    menuToggle.addEventListener('click', () => {
+        menuContainer.classList.toggle('active');
+    });
+</script>
+
 </body>
 </html>

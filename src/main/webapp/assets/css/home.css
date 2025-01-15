@@ -63,10 +63,23 @@ nav ul li {
     margin-left: 20px;
 }
 
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #230735;
+}
+
 .menu-container {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.menu-container.active {
+    display: flex;
 }
 
 .menu {
@@ -96,7 +109,7 @@ nav ul li {
 
 .menu li ul {
     display: none;
-    position: absolute;
+    position: static;
     top: 100%;
     left: 0;
     background-color: #ffffff;
@@ -859,4 +872,36 @@ footer {
 
 .icon-twitter img:hover {
     transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .menu-container {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #ffffff;
+        width: 100%;
+        padding: 10px 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .menu-container.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu li {
+        margin: 10px 0;
+    }
+
+    .menu li ul {
+        position: static;
+    }
 }
