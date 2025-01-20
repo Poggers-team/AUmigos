@@ -154,7 +154,7 @@
     <%@ include file="components/footer.jsp" %>
 </footer>
 <script>
-    const url = `https://newsapi.org/v2/everything?q=pets AND animais AND animal AND pet -política -tecnologia -morte -tortura&language=pt&sortBy=relevancy&apiKey=45a0adc539714a30b2b0a59c8aec57e0`;
+    const url = `https://newsapi.org/v2/everything?q=pets || animais || animal || pet -política -tecnologia -morte -tortura&language=pt&sortBy=relevancy&apiKey=45a0adc539714a30b2b0a59c8aec57e0`;
     const EIGHT_HOURS = 8 * 60 * 60 * 1000;
 
     function renderArticles(articles) {
@@ -162,32 +162,34 @@
         newsContainer.innerHTML = '';
 
         articles.forEach(article => {
-            const articleElement = document.createElement('div');
-            articleElement.className = 'article';
 
-            const image = document.createElement('img');
-            image.src = article.urlToImage;
-            image.alt = 'Imagem do artigo';
+            if(article.title !== '[Removed]') {
+                const articleElement = document.createElement('div');
+                articleElement.className = 'article';
 
-            const title = document.createElement('h2');
-            title.textContent = article.title;
+                const image = document.createElement('img');
+                image.src = article.urlToImage;
+                image.alt = 'Imagem do artigo';
 
-            const description = document.createElement('p');
-            description.textContent = article.description;
+                const title = document.createElement('h2');
+                title.textContent = article.title;
 
-            const link = document.createElement('a');
-            link.href = article.url;
-            link.target = '_blank';
-            link.textContent = 'Leia mais';
+                const description = document.createElement('p');
+                description.textContent = article.description;
 
-            articleElement.appendChild(image);
-            articleElement.appendChild(title);
-            articleElement.appendChild(description);
-            articleElement.appendChild(link);
+                const link = document.createElement('a');
+                link.href = article.url;
+                link.target = '_blank';
+                link.textContent = 'Leia mais';
 
-            newsContainer.appendChild(articleElement);
+                articleElement.appendChild(image);
+                articleElement.appendChild(title);
+                articleElement.appendChild(description);
+                articleElement.appendChild(link);
+
+                newsContainer.appendChild(articleElement);
+            }
         });
-
 
         const observerOptions = {
             root: null,
