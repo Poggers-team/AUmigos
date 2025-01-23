@@ -62,10 +62,11 @@ public class UserDao {
 
         String sql = "select id,name,email from User where email=? and password=?";
         Optional<User> optional = Optional.empty();
-        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, email);
-            ps.setString(2, passwordEncripted);
-            try (ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = dataSource.getConnection();
+             CallableStatement cs = conn.prepareCall("{call user_admin.get_user_by_email_and_password(?,?)}")) {
+            cs.setString(1, email);
+            cs.setString(2, passwordEncripted);
+            try (ResultSet rs = cs.executeQuery()) {
                 if (rs.next()) {
                     User user = new User();
                     user.setId(rs.getLong(1));
