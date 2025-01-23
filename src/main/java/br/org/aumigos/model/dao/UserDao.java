@@ -4,11 +4,7 @@ import br.org.aumigos.model.user.User;
 import br.org.aumigos.utils.PasswordEncoder;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class UserDao {
@@ -20,21 +16,20 @@ public class UserDao {
     }
 
     public Boolean save(User user){
-        Optional<User> optional = getUserByEmail(user.getEmail());
-        if(optional.isPresent()) {
-            return false;
-        }
-        String sql = "insert into User (name, email, password, "
-                + "dateOfBirth, gender, active) values (?,?,?,?,?,?)";
+//        Optional<User> optional = getUserByEmail(user.getEmail());
+//        if(optional.isPresent()) {
+//            return false;
+//        }
+//        String sql = "insert into app_user (name, email, password, "
+//                + "dateOfBirth, gender) values (?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
-            ps.setDate(4, Date.valueOf(user.getDateOfBirth()));
-            ps.setString(5, user.getGender().toString());
-            ps.setBoolean(6, true);
-            ps.executeUpdate();
+            CallableStatement cs = conn.prepareCall("{call user_admin.save_user(?,?,?,?,?)}")){
+            cs.setString(1, user.getName());
+            cs.setString(2, user.getEmail());
+            cs.setString(3, user.getPassword());
+            cs.setDate(4, Date.valueOf(user.getDateOfBirth()));
+            cs.setString(5, user.getGender().toString());
+            cs.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
