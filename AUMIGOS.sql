@@ -9,8 +9,7 @@ CREATE TABLE app_user(
     email VARCHAR2(50) NOT NULL,
     user_password VARCHAR2(50) NOT NULL,
     dateOfBirth DATE NOT NULL,
-    gender VARCHAR2(20) NOT NULL,
-    active NUMBER(1) NOT NULL
+    gender VARCHAR2(20) NOT NULL
 );
 
 CREATE TABLE animal (
@@ -108,3 +107,75 @@ FOR EACH ROW
 BEGIN
   :NEW.adoption_id := adoption_seq.nextval;
 END;
+
+CREATE OR REPLACE PACKAGE BODY user_admin AS
+    PROCEDURE save_user (
+        p_name_user IN VARCHAR2,
+        p_email IN VARCHAR2,
+        p_password IN VARCHAR2,
+        p_dateOfBirth IN DATE,
+        p_gender IN VARCHAR2
+    ) AS
+        v_count NUMBER;
+    BEGIN
+        v_count := user_exists(p_email);
+    
+        IF v_count > 0 THEN
+            DBMS_OUTPUT.PUT_LINE('Usuário já cadastrado.');
+        ELSE 
+            INSERT INTO app_user(user_id, user_name, email, user_password, dateOfBirth, gender)
+            VALUES(user_seq.nextval, p_name_user, p_email, p_password, p_dateOfBirth, p_gender);
+        
+            DBMS_OUTPUT.PUT_LINE('Usuário cadastrado com sucesso.');
+        END IF;
+    END save_user;
+    
+    FUNCTION user_exists (
+        p_user_email IN VARCHAR2
+    ) RETURN NUMBER IS
+        v_count NUMBER;
+    BEGIN
+        SELECT COUNT(*)
+        INTO v_count
+        FROM app_user
+        WHERE email = p_user_email;
+
+        RETURN v_count;
+    END user_exists;
+END user_admin;
+
+CREATE OR REPLACE PACKAGE user_admin AS
+    PROCEDURE save_user (
+        p_name_user IN VARCHAR2,
+        p_email IN VARCHAR2,
+        p_password IN VARCHAR2,
+        p_dateOfBirth IN DATE,
+        p_gender IN VARCHAR2
+    );
+
+    FUNCTION user_exists (
+        p_user_email IN VARCHAR2
+    ) RETURN NUMBER;
+END user_admin;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
