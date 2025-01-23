@@ -130,6 +130,19 @@ CREATE OR REPLACE PACKAGE BODY user_admin AS
         END IF;
     END save_user;
     
+    PROCEDURE get_user_by_email_and_password (
+        p_email IN VARCHAR2,
+        p_password IN VARCHAR2
+    ) IS
+    BEGIN
+        SELECT 
+            user_id,
+            user_name,
+            email
+        FROM app_user
+        WHERE email = p_email AND user_password = p_password;
+    END;
+    
     FUNCTION user_exists (
         p_user_email IN VARCHAR2
     ) RETURN NUMBER IS
@@ -152,13 +165,16 @@ CREATE OR REPLACE PACKAGE user_admin AS
         p_dateOfBirth IN DATE,
         p_gender IN VARCHAR2
     );
+    
+    PROCEDURE get_user_by_email_and_password (
+        p_email IN VARCHAR2,
+        p_password IN VARCHAR2
+    );
 
     FUNCTION user_exists (
         p_user_email IN VARCHAR2
     ) RETURN NUMBER;
 END user_admin;
-
-
 
 
 
