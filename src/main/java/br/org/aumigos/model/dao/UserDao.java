@@ -60,13 +60,16 @@ public class UserDao {
     public Optional<User> getUserByEmailAndPassword(String email, String password) {
         String passwordEncripted = PasswordEncoder.encode(password);
 
-        String sql = "select id,name,email from User where email=? and password=?";
+//        String sql = "select id,name,email from User where email=? and password=?";
         Optional<User> optional = Optional.empty();
         try (Connection conn = dataSource.getConnection();
-             CallableStatement cs = conn.prepareCall("{call user_admin.get_user_by_email_and_password(?,?)}")) {
+             CallableStatement cs = conn.prepareCall("{call user_admin.get_user_by_email_and_password(?,?,?)}")) {
             cs.setString(1, email);
             cs.setString(2, passwordEncripted);
-            try (ResultSet rs = cs.executeQuery()) {
+            cs.registerOutParameter(3, java.sql.Types.REF_CURSOR);
+            cs.execute();
+
+            try (ResultSet rs = (ResultSet) cs.getObject(3)) {
                 if (rs.next()) {
                     User user = new User();
                     user.setId(rs.getLong(1));
@@ -75,10 +78,10 @@ public class UserDao {
                     optional = Optional.of(user);
                 }
             }
-            return optional;
+
         } catch (SQLException sqlException) {
             throw new RuntimeException("Erro durante a consulta no BD", sqlException);
         }
+        return optional;
     }
-
 }
