@@ -3,6 +3,7 @@ package br.org.aumigos.model.dao;
 import br.org.aumigos.model.voluntary.Voluntary;
 
 import javax.sql.DataSource;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,22 +17,22 @@ public class VoluntaryDao {
     }
 
     public Boolean save(Voluntary voluntary){
-        String sql = "insert into Voluntary (name, email, phone, availability, skills) values (?,?,?,?,?)";
+//        String sql = "insert into Voluntary (name, email, phone, availability, skills) values (?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-            populatePreparedStatementForVoluntary(voluntary, ps);
-            ps.executeUpdate();
+            CallableStatement cs = conn.prepareCall("{call voluntary_admin.save_voluntary(?,?,?,?,?)}")){
+            populatePreparedStatementForVoluntary(voluntary, cs);
+            cs.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
         return true;
     }
 
-    private void populatePreparedStatementForVoluntary(Voluntary voluntary, PreparedStatement ps) throws SQLException {
-        ps.setString(1, voluntary.getName());
-        ps.setString(2,voluntary.getEmail());
-        ps.setString(3, voluntary.getPhone());
-        ps.setString(4, voluntary.getAvailability().toString());
-        ps.setString(5, voluntary.getSkills());
+    private void populatePreparedStatementForVoluntary(Voluntary voluntary, PreparedStatement cs) throws SQLException {
+        cs.setString(1, voluntary.getName());
+        cs.setString(2,voluntary.getEmail());
+        cs.setString(3, voluntary.getPhone());
+        cs.setString(4, voluntary.getAvailability().toString());
+        cs.setString(5, voluntary.getSkills());
     }
 }
