@@ -6,11 +6,7 @@ import br.org.aumigos.model.animal.Size;
 import br.org.aumigos.model.animal.Type;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +18,15 @@ public class AnimalDao {
     }
 
     public boolean save(Animal animal) {
-        String sql = "insert into Animal (name, breed, type, gender, size, age, castrated, adopted, " +
-                "vaccinated, dewormed, temperament, socialization, address, city, contactName, " +
-                "contactEmail, contactPhone, image, fileName, color, story, announcementDate) " +
-                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//        String sql = "insert into Animal (name, breed, type, gender, size, age, castrated, adopted, " +
+//                "vaccinated, dewormed, temperament, socialization, address, city, contactName, " +
+//                "contactEmail, contactPhone, image, fileName, color, story, announcementDate) " +
+//                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            populatePreparedStatementForAnimal(animal, ps);
-            ps.executeUpdate();
+             CallableStatement cs = conn.prepareCall("{call animal_admin.save_animal(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}")) {
+            populatePreparedStatementForAnimal(animal, cs);
+            cs.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
@@ -38,12 +34,11 @@ public class AnimalDao {
     }
 
     public boolean setAnimalAsAdopted(Long animalId) {
-        String sql = "update Animal set adopted = ? where id = ?";
+//        String sql = "update Animal set adopted = ? where id = ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setBoolean(1, true);
-            ps.setLong(2, animalId);
-            ps.executeUpdate();
+             CallableStatement cs = conn.prepareCall("{call animal_admin.set_animal_as_adopted(?)}")) {
+            cs.setLong(1, animalId);
+            cs.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }
@@ -64,16 +59,18 @@ public class AnimalDao {
 
     public Animal getAnimalById(Long id) {
         String sql = "select * from Animal where id = ?";
-        Animal a = null;
+        Animal animal = null;
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+             CallableStatement cs = conn.prepareCall("{call animal_admin.get_animal_by_id(?,?)}")) {
+            cs.setLong(1, id);
+            cs.registerOutParameter(2, Types.REF_CURSOR);
+            cs.execute();
+            try (ResultSet rs = (ResultSet) cs.getObject(2)) {
                 if (rs.next()) {
-                    a = new Animal();
-                    mapAnimalFromResultSet(rs, a);
+                    animal = new Animal();
+                    mapAnimalFromResultSet(rs, animal);
                 }
-                return a;
+                return animal;
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a consulta", e);
@@ -85,9 +82,11 @@ public class AnimalDao {
 
         String sql = "select * from Animal where adopted = ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setBoolean(1, adopted);
-            try (ResultSet rs = ps.executeQuery()) {
+             CallableStatement cs = conn.prepareCall("{call animal_admin.get_animals_by_adopted_status(?, ?)}")) {
+            cs.setInt(1, adopted ? 1 : 0);
+            cs.registerOutParameter(2, Types.REF_CURSOR);
+            cs.execute();
+            try (ResultSet rs = (ResultSet) cs.getObject(2)) {
                 while (rs.next()) {
                     Animal a = new Animal();
                     mapAnimalFromResultSet(rs, a);
@@ -120,12 +119,12 @@ public class AnimalDao {
     }
 
     private void mapAnimalFromResultSet(ResultSet rs, Animal a) throws SQLException {
-        a.setId(rs.getLong("id"));
-        a.setName(rs.getString("name"));
+        a.setId(rs.getLong("animal_id"));
+        a.setName(rs.getString("animal_name"));
+        a.setType(Type.valueOf(rs.getString("animal_type")));
         a.setBreed(rs.getString("breed"));
-        a.setType(Type.valueOf(rs.getString("type")));
         a.setGender(Gender.valueOf(rs.getString("gender")));
-        a.setSize(Size.valueOf(rs.getString("size")));
+        a.setSize(Size.valueOf(rs.getString("animal_size")));
         a.setAge(rs.getInt("age"));
         a.setCastrated(rs.getBoolean("castrated"));
         a.setAdopted(rs.getBoolean("adopted"));
@@ -145,28 +144,28 @@ public class AnimalDao {
         a.setAnnouncementDate(rs.getDate("announcementDate").toLocalDate());
     }
 
-    private void populatePreparedStatementForAnimal(Animal animal, PreparedStatement ps) throws SQLException {
-        ps.setString(1, animal.getName());
-        ps.setString(2, animal.getBreed());
-        ps.setString(3, animal.getType().toString());
-        ps.setString(4, animal.getGender().toString());
-        ps.setString(5, animal.getSize().toString());
-        ps.setInt(6, animal.getAge());
-        ps.setBoolean(7, animal.isCastrated());
-        ps.setBoolean(8, animal.isAdopted());
-        ps.setBoolean(9, animal.isVaccinated());
-        ps.setBoolean(10, animal.isDewormed());
-        ps.setString(11, animal.getTemperament());
-        ps.setString(12, animal.getSocialization());
-        ps.setString(13, animal.getAddress());
-        ps.setString(14, animal.getCity());
-        ps.setString(15, animal.getContactName());
-        ps.setString(16, animal.getContactEmail());
-        ps.setString(17, animal.getContactPhone());
-        ps.setString(18, animal.getImage());
-        ps.setString(19, animal.getFileName());
-        ps.setString(20, animal.getColor());
-        ps.setString(21, animal.getStory());
-        ps.setDate(22, Date.valueOf(animal.getAnnouncementDate()));
+    private void populatePreparedStatementForAnimal(Animal animal, PreparedStatement cs) throws SQLException {
+        cs.setString(1, animal.getName());
+        cs.setString(3, animal.getType().toString());
+        cs.setString(2, animal.getBreed());
+        cs.setString(4, animal.getGender().toString());
+        cs.setString(5, animal.getSize().toString());
+        cs.setInt(6, animal.getAge());
+        cs.setBoolean(7, animal.isCastrated());
+        cs.setBoolean(8, animal.isAdopted());
+        cs.setBoolean(9, animal.isVaccinated());
+        cs.setBoolean(10, animal.isDewormed());
+        cs.setString(11, animal.getTemperament());
+        cs.setString(12, animal.getSocialization());
+        cs.setString(13, animal.getAddress());
+        cs.setString(14, animal.getCity());
+        cs.setString(15, animal.getContactName());
+        cs.setString(16, animal.getContactEmail());
+        cs.setString(17, animal.getContactPhone());
+        cs.setString(18, animal.getImage());
+        cs.setString(19, animal.getFileName());
+        cs.setString(20, animal.getColor());
+        cs.setString(21, animal.getStory());
+        cs.setDate(22, Date.valueOf(animal.getAnnouncementDate()));
     }
 }
