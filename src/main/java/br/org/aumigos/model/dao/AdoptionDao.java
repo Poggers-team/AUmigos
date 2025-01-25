@@ -31,6 +31,8 @@ public class AdoptionDao {
             populateCallableStatementForAdoption(adoption, cs);
             conn.setAutoCommit(false);
 
+            AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
+            if(!animalDao.setAnimalAsAdopted(adoption.getAnimal().getId())) throw new SQLException();
             cs.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
@@ -38,8 +40,6 @@ public class AdoptionDao {
             throw new RuntimeException("Error ao salvar dados", e);
         } finally {
             conn.setAutoCommit(true);
-            AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-            animalDao.setAnimalAsAdopted(adoption.getAnimal().getId());
         }
 
         return true;

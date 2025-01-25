@@ -59,6 +59,7 @@ public class AnimalAdoptHelper implements Helper {
         adoption.setPeopleLivingInHouse(peopleInHouse);
         adoption.setPeopleAwareOfAdoption(peopleAdoption);
         adoption.setAnimalAloneTime(aloneTime);
+        adoption.setChildrenAtHouse(childrenInHouse);
         adoption.setAdoptionDate(LocalDate.now());
 
         Animal animal = new Animal();

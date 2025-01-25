@@ -42,7 +42,7 @@ public class AnimalDao {
     public boolean setAnimalAsAdopted(Long animalId) {
 //        String sql = "update Animal set adopted = ? where id = ?";
         try (Connection conn = dataSource.getConnection();
-             CallableStatement cs = conn.prepareCall("{call animal_admin.set_animal_as_adopted(?,?)}")) {
+             CallableStatement cs = conn.prepareCall("{call animal_admin.set_animal_as_adopted(?)}")) {
             cs.setLong(1, animalId);
             cs.executeUpdate();
         } catch (SQLException e) {
