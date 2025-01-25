@@ -31,12 +31,13 @@ public class UserRegisterHelper implements Helper {
         UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 
         // salvar o novo usuário
-        if(userDao.save(user)) {
+        try {
+            userDao.save(user);
             request.setAttribute("result", "registered");
             return "/login.jsp";
-        }else {
+        } catch (RuntimeException e) {
             request.setAttribute("result", "notRegistered");
-            return "user-register.jsp";
+            return "/user-register.jsp";
         }
     }
 }
