@@ -153,12 +153,17 @@
         }
 
         .filters {
-            flex: 1;
-            background-color: #fff;
+            width: 600px;
+            max-width: 300px;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+            height: 100%;
+            position: sticky;
+            top: 0;
+            border-radius: 4px;
         }
+
 
         .filters h2 {
             margin-bottom: 20px;
@@ -175,8 +180,7 @@
         }
 
         .filters input[type="text"],
-        .filters select,
-        .filters input[type="range"] {
+        .filters select {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -234,7 +238,7 @@
         .filters .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
+            width: 60px;
             height: 24px;
         }
 
@@ -334,25 +338,73 @@
             height: 25px;
         }
 
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .filters {
-                max-width: 100%;
-            }
-
-            .cards {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-
-            .filters button {
-                width: auto;
-                margin-top: 10px;
-            }
+        .range-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
         }
+
+        .range-min, .range-max {
+            font-size: 14px;
+            color: #333;
+            padding-top: 3px;
+        }
+
+        .range-min {
+            padding-right: 7px;
+        }
+
+        .range-max {
+            padding-left: 7px;
+        }
+
+    .cleanbutton:hover {
+        transform: scale(1.015);
+        transition: 0.2s;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+      width: 25rem;
+    }
+
+    input[type="range"]:focus {
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      background-color: #cacaca99;
+      border-radius: 0.5rem;
+      height: 0.5rem;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      margin-top: -5px;
+      background-color: #362b3d;
+      border-radius: 2rem;
+      height: 1.2rem;
+      width: 1.2rem;
+    }
+
+    input[type="range"]::-moz-range-track {
+        background-color: #362b3d;
+      border-radius: 0.5rem;
+      height: 0.5rem;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        background-color: #cacaca99;
+      border: none;
+      border-radius: 2rem;
+      height: 1.2rem;
+      width: 1.2rem;
+    }
     </style>
     <link rel="icon" href="assets/img/favicon.png">
 </head>
@@ -365,93 +417,85 @@
     <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
 </c:if>
 <div class="main-content">
-    <!-- Filtros -->
-    <aside class="filters">
-        <h2>Filtros</h2>
-        <label for="cidade">Cidade:</label>
-        <input type="text" id="cidade" name="cidade">
+<aside class="filters">
+    <h2>Filtros</h2>
+    <label for="cidade">Cidade:</label>
+    <input type="text" id="cidade" name="cidade" placeholder="Digite a cidade">
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome">
-        <br>
-        <label for="cidade">Especie:</label>
-        <div class="filter-option">
-            <div class="switch-container">
-                <label class="switch">
-                    <input type="radio" name="especie" value="cachorro" id="cachorro">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <span>Cachorro</span>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" placeholder="Digite o nome">
+    <label>Espécie:</label>
+    <div class="filter-option">
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" name="especie" value="cachorro" id="cachorro">
+                <span class="slider"></span>
+            </label>
         </div>
-
-        <div class="filter-option">
-            <div class="switch-container">
-                <label class="switch">
-                    <input type="radio" name="especie" value="gato" id="gato">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <span>Gato</span>
+        <span>Cachorro</span>
+    </div>
+    <div class="filter-option">
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" name="especie" value="gato" id="gato">
+                <span class="slider"></span>
+            </label>
         </div>
-        <br>
-        <label for="cidade">Genero:</label>
-        <div class="filter-option">
-            <div class="switch-container">
-                <label class="switch">
-                    <input type="radio" name="genero" value="macho" id="macho">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <span>Macho</span>
+        <span>Gato</span>
+    </div>
+
+    <label>Gênero:</label>
+    <div class="filter-option">
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" name="genero" value="macho" id="macho">
+                <span class="slider"></span>
+            </label>
         </div>
-
-        <div class="filter-option">
-            <div class="switch-container">
-                <label class="switch">
-                    <input type="radio" name="genero" value="femea" id="femea">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <span>Fêmea</span>
+        <span>Macho</span>
+    </div>
+    <div class="filter-option">
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" name="genero" value="femea" id="femea">
+                <span class="slider"></span>
+            </label>
         </div>
+        <span>Fêmea</span>
+    </div>
 
-        <label for="porte">Porte:</label>
-        <select id="porte" name="porte">
-            <option value="pequeno">Pequeno</option>
-            <option value="medio">Médio</option>
-            <option value="grande">Grande</option>
-        </select>
+    <label for="porte">Porte:</label>
+    <select id="porte" name="porte" class="porte">
+        <option value="">Todos</option>
+        <option value="pequeno">Pequeno</option>
+        <option value="medio">Médio</option>
+        <option value="grande">Grande</option>
+    </select>
 
-        <label for="pelagem">Pelagem:</label>
-        <select id="pelagem" name="pelagem">
-            <option value="branco">Branco</option>
-            <option value="loiro">Loiro</option>
-            <option value="preto">Preto</option>
-        </select>
+<label for="idade">Idade Máxima: <span id="idade-valor">8</span> anos</label>
+<div class="range-container">
+    <span class="range-min">1</span>
+    <input type="range" id="idade" name="idade" min="1" max="15" value="8" class="custom-slider">
+    <span class="range-max">15</span>
+</div>
+    <br>
+    <button type="button" id="limpar-filtros" class="cleanbutton">Limpar Filtros</button>
+</aside>
 
-        <label for="idade">Idade Máxima: <span id="idade-valor">8</span> anos</label>
-        <input type="range" id="idade" name="idade" min="1" max="15" value="8" class="custom-slider">
-
-        <br><br>
-        <label for="distancia">Distância: <span id="distancia-valor">50</span> Km</label>
-        <input type="range" id="distancia" name="distancia" min="1" max="100" value="50" class="custom-slider">
-
-        <button class="apply-button">Aplicar Filtros</button>
-        <button class="clean-button">Limpar Filtros</button>
-    </aside>
 
     <div class="cards">
 
         <c:forEach var="animal" items="${animals}">
             <div class="card"
-                 data-id="${animal.id}"
                  data-image="data:image/jpeg;base64,${animal.image}"
+                 data-id="${animal.id}"
                  data-name="${animal.name}"
                  data-description="${animal.story}"
                  data-gender="${animal.gender}"
                  data-size="${animal.size}"
-                 data-age="${animal.age}">
+                 data-type="${animal.type}"
+                 data-age="${animal.age}"
+                 data-city="${animal.city}">
                 <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
                 <div class="card-info">
                     <h3>${animal.name}</h3>
@@ -527,6 +571,124 @@
             }
         });
     });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const animals = document.querySelectorAll('.card');
+
+const filters = {
+     cidade: document.getElementById('cidade'), 
+     nome: document.getElementById('nome'),
+     genero: document.getElementsByName('genero'),
+     especie: document.getElementsByName('especie'),
+     porte: document.getElementById('porte'),
+     idade: document.getElementById('idade'),
+ };
+
+ const filterAnimals = () => {
+     animals.forEach(card => {
+         const city = card.dataset.city.toLowerCase();
+         const name = card.dataset.name.toLowerCase();
+         const gender = card.dataset.gender.toLowerCase();
+         const type = card.dataset.type.toLowerCase();
+         const size = card.dataset.size.toLowerCase();
+         const age = parseInt(card.dataset.age, 10);
+
+         const cidadeFilter = filters.cidade?.value.toLowerCase() || '';
+         const nomeFilter = filters.nome?.value.toLowerCase() || '';
+         const generoFilter = Array.from(filters.genero).find(r => r.checked)?.value.toLowerCase() || '';
+         const especieFilter = Array.from(filters.especie).find(r => r.checked)?.value.toLowerCase() || '';
+         const porteFilter = filters.porte?.value.toLowerCase() || '';
+         const idadeFilter = parseInt(filters.idade?.value || 0, 10);
+
+         let isVisible = true;
+
+         if (cidadeFilter && !city.includes(cidadeFilter)) isVisible = false;
+         if (nomeFilter && !name.includes(nomeFilter)) isVisible = false;
+         if (generoFilter && gender !== generoFilter) isVisible = false;
+         if (especieFilter && type !== especieFilter) isVisible = false;
+         if (porteFilter && size !== porteFilter) isVisible = false;
+         if (idadeFilter && age > idadeFilter) isVisible = false;
+
+         card.style.display = isVisible ? 'block' : 'none';
+     });
+ };
+
+
+    filters.cidade?.addEventListener('input', filterAnimals);
+    filters.nome?.addEventListener('input', filterAnimals);
+    filters.genero?.forEach(r => r.addEventListener('change', filterAnimals));
+    filters.especie?.forEach(r => r.addEventListener('change', filterAnimals));
+    filters.porte?.addEventListener('change', filterAnimals);
+    filters.idade?.addEventListener('input', () => {
+        document.getElementById('idade-valor').textContent = filters.idade.value;
+        filterAnimals();
+    });
+
+    filterAnimals();
+
+    document.getElementById('limpar-filtros').addEventListener('click', function() {
+
+        document.getElementById('cidade').value = '';
+        document.getElementById('nome').value = '';
+
+        document.querySelectorAll('input[name="especie"]').forEach(radio => {
+            radio.checked = false;
+        });
+
+        document.querySelectorAll('input[name="genero"]').forEach(radio => {
+            radio.checked = false;
+        });
+
+        document.getElementById('porte').value = '';
+
+        document.getElementById('idade').value = 8;
+        document.getElementById('idade-valor').textContent = 8;
+        filterAnimals();
+    });
+
+});
+
+
+function toggleSpeciesSelection(selectedSpecies) {
+    const speciesOptions = document.querySelectorAll('input[name="especie"]');
+    speciesOptions.forEach(species => {
+        if (species !== selectedSpecies) {
+            species.checked = false;
+        }
+    });
+}
+
+function toggleGenderSelection(selectedGender) {
+    const genderOptions = document.querySelectorAll('input[name="genero"]');
+    genderOptions.forEach(gender => {
+        if (gender !== selectedGender) {
+            gender.checked = false;
+        }
+    });
+}
+
+document.getElementById('cachorro').addEventListener('change', function() {
+    if (this.checked) {
+        toggleSpeciesSelection(this);
+    }
+});
+document.getElementById('gato').addEventListener('change', function() {
+    if (this.checked) {
+        toggleSpeciesSelection(this);
+    }
+});
+
+document.getElementById('macho').addEventListener('change', function() {
+    if (this.checked) {
+        toggleGenderSelection(this);
+    }
+});
+document.getElementById('femea').addEventListener('change', function() {
+    if (this.checked) {
+        toggleGenderSelection(this);
+    }
+});
+
 </script>
 </body>
 </html>

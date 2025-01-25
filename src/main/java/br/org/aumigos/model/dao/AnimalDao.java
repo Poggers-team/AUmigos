@@ -6,7 +6,13 @@ import br.org.aumigos.model.animal.Size;
 import br.org.aumigos.model.animal.Type;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +64,7 @@ public class AnimalDao {
     }
 
     public Animal getAnimalById(Long id) {
-        String sql = "select * from Animal where id = ?";
+//        String sql = "select * from Animal where id = ?";
         Animal animal = null;
         try (Connection conn = dataSource.getConnection();
              CallableStatement cs = conn.prepareCall("{call animal_admin.get_animal_by_id(?,?)}")) {
@@ -146,8 +152,8 @@ public class AnimalDao {
 
     private void populatePreparedStatementForAnimal(Animal animal, PreparedStatement cs) throws SQLException {
         cs.setString(1, animal.getName());
-        cs.setString(3, animal.getType().toString());
-        cs.setString(2, animal.getBreed());
+        cs.setString(2, animal.getType().toString());
+        cs.setString(3, animal.getBreed());
         cs.setString(4, animal.getGender().toString());
         cs.setString(5, animal.getSize().toString());
         cs.setInt(6, animal.getAge());

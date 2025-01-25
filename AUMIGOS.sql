@@ -1,7 +1,7 @@
 DROP TABLE app_user;
+DROP TABLE adoption;
 DROP TABLE animal;
 DROP TABLE voluntary;
-DROP TABLE adoption;
 
 CREATE TABLE app_user(
     user_id NUMBER(20) PRIMARY KEY,
@@ -141,12 +141,12 @@ CREATE OR REPLACE PACKAGE BODY user_admin AS
         v_count := user_exists(p_email);
     
         IF v_count > 0 THEN
-            DBMS_OUTPUT.PUT_LINE('Usuário já cadastrado.');
+            RAISE_APPLICATION_ERROR(-400, 'UsuÃ¡rio jÃ¡ cadastrado.');
         ELSE 
             INSERT INTO app_user(user_id, user_name, email, user_password, dateOfBirth, gender)
             VALUES(user_seq.nextval, p_name_user, p_email, p_password, p_dateOfBirth, p_gender);
         
-            DBMS_OUTPUT.PUT_LINE('Usuário cadastrado com sucesso.');
+            DBMS_OUTPUT.PUT_LINE('Usuï¿½rio cadastrado com sucesso.');
         END IF;
     END save_user;
     
@@ -203,12 +203,12 @@ CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
         v_count := voluntary_exists(p_email);
     
         IF v_count > 0 THEN
-            DBMS_OUTPUT.PUT_LINE('Voluntário já cadastrado.');
+            DBMS_OUTPUT.PUT_LINE('Voluntï¿½rio jï¿½ cadastrado.');
         ELSE 
             INSERT INTO voluntary(voluntary_id, voluntary_name, email, phone, voluntary_availability, skills)
             VALUES(voluntary_seq.nextval, p_voluntary_name, p_email, p_phone, p_availability, p_skills);
         
-            DBMS_OUTPUT.PUT_LINE('Voluntário cadastrado com sucesso.');
+            DBMS_OUTPUT.PUT_LINE('Voluntï¿½rio cadastrado com sucesso.');
         END IF;
     END save_voluntary;
     
@@ -226,7 +226,7 @@ CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
     END voluntary_exists;
 END voluntary_admin;
 
-CREATE OR REPLACE PACKAGE animal_admin AS 
+CREATE OR REPLACE PACKAGE animal_admin AS
     PROCEDURE save_animal(
         p_animal_name IN VARCHAR2,
         p_animal_type IN VARCHAR2,
@@ -251,16 +251,16 @@ CREATE OR REPLACE PACKAGE animal_admin AS
         p_story IN CLOB,
         p_announcementDate IN DATE
     );
-    
+
     PROCEDURE set_animal_as_adopted (
         p_animal_id IN NUMBER
     );
-    
+
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
         p_result OUT SYS_REFCURSOR
     );
-    
+
     PROCEDURE get_animals_by_adopted_status (
         p_adopted IN NUMBER,
         p_result OUT SYS_REFCURSOR
@@ -301,10 +301,10 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
                 p_castrated, p_adopted, p_vaccinated, p_dewormed, p_temperament, p_socialization, p_address,
                 p_city, p_contactName, p_contactEmail, p_contactPhone, p_image, p_fileName, p_color,
                 p_story, p_announcementDate);
-                
+
         DBMS_OUTPUT.PUT_LINE('Animal cadastrado com sucesso.');
     END save_animal;
-    
+
     PROCEDURE set_animal_as_adopted (
         p_animal_id IN NUMBER
     ) AS
@@ -313,51 +313,104 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
         SET adopted = 1
         WHERE animal_id = p_animal_id;
     END set_animal_as_adopted;
-    
+
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
         p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
         OPEN p_result FOR
-        SELECT * 
+        SELECT *
         FROM animal
        WHERE animal_id = p_animal_id;
     END get_animal_by_id;
-    
+
     PROCEDURE get_animals_by_adopted_status (
         p_adopted IN NUMBER,
         p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
         OPEN p_result FOR
-        SELECT * 
+        SELECT *
         FROM animal
         WHERE adopted = p_adopted;
     END get_animals_by_adopted_status;
 END animal_admin;
 
+CREATE OR REPLACE PACKAGE adoption_admin AS
+    PROCEDURE save_adoption(
+        p_adopterName IN VARCHAR2,
+        p_adopterAge IN VARCHAR2,
+        p_adopterEmail IN VARCHAR2,
+        p_adopterZipcode IN VARCHAR2,
+        p_adopterAddress IN VARCHAR2,
+        p_adopterPhone IN VARCHAR2,
+        p_adopterTypeOfResidence IN VARCHAR2,
+        p_adopterHouseHasAutomaticGate IN NUMBER,
+        p_adopterHouseHasPool IN NUMBER,
+        p_adopterHouseHasNetOnWindows IN NUMBER,
+        p_adopterComments IN VARCHAR2,
+        p_adopterQtyAnimals IN INT,
+        p_adopterExperiences IN VARCHAR2,
+        p_animalPlace IN VARCHAR2,
+        p_adopterIsResponsible IN NUMBER,
+        p_adopterIsAwareOfTheCosts IN NUMBER,
+        p_peopleLivingInAdopterHouse IN INT,
+        p_peopleIsAwareOfAdoption IN NUMBER,
+        p_hasChildrenAtHouse IN NUMBER,
+        p_animalAloneTime IN VARCHAR2,
+        p_adoptionDate IN DATE,
+        p_animalId IN NUMBER
+    );
+
+END adoption_admin;
+
+CREATE OR REPLACE PACKAGE BODY adoption_admin AS
+    PROCEDURE save_adoption(
+        p_adopterName IN VARCHAR2,
+        p_adopterAge IN VARCHAR2,
+        p_adopterEmail IN VARCHAR2,
+        p_adopterZipcode IN VARCHAR2,
+        p_adopterAddress IN VARCHAR2,
+        p_adopterPhone IN VARCHAR2,
+        p_adopterTypeOfResidence IN VARCHAR2,
+        p_adopterHouseHasAutomaticGate IN NUMBER,
+        p_adopterHouseHasPool IN NUMBER,
+        p_adopterHouseHasNetOnWindows IN NUMBER,
+        p_adopterComments IN VARCHAR2,
+        p_adopterQtyAnimals IN INT,
+        p_adopterExperiences IN VARCHAR2,
+        p_animalPlace IN VARCHAR2,
+        p_adopterIsResponsible IN NUMBER,
+        p_adopterIsAwareOfTheCosts IN NUMBER,
+        p_peopleLivingInAdopterHouse IN INT,
+        p_peopleIsAwareOfAdoption IN NUMBER,
+        p_hasChildrenAtHouse IN NUMBER,
+        p_animalAloneTime IN VARCHAR2,
+        p_adoptionDate IN DATE,
+        p_animalId IN NUMBER
+    ) AS
+    BEGIN
+        INSERT INTO adoption(adoption_id, adopterName, adopterAge, adopterEmail, adopterZipcode,
+                             adopterAddress, adopterPhone, adopterTypeOfResidence,
+                             adopterHouseHasAutomaticGate, adopterHouseHasPool,
+                             adopterHouseHasNetOnWindows, adopterComments, adopterQtyAnimals,
+                             adopterExperiences, animalPlace, adopterIsResponsible,
+                             adopterIsAwareOfTheCosts, peopleLivingInAdopterHouse,
+                             peopleIsAwareOfAdoption, hasChildrenAtHouse, animalAloneTime,
+                             adoptionDate, animalId)
+        VALUES(adoption_seq.nextval, p_adopterName, p_adopterAge, p_adopterEmail, p_adopterZipcode,
+               p_adopterAddress, p_adopterPhone, p_adopterTypeOfResidence,
+               p_adopterHouseHasAutomaticGate, p_adopterHouseHasPool,
+               p_adopterHouseHasNetOnWindows, p_adopterComments, p_adopterQtyAnimals,
+               p_adopterExperiences, p_animalPlace, p_adopterIsResponsible,
+               p_adopterIsAwareOfTheCosts, p_peopleLivingInAdopterHouse,
+               p_peopleIsAwareOfAdoption, p_hasChildrenAtHouse, p_animalAloneTime,
+               p_adoptionDate, p_animalId);
+
+        DBMS_OUTPUT.PUT_LINE('AdoÃ§Ã£o cadastrada com sucesso.');
+    END save_adoption;
+
+END adoption_admin;
+
 SET SERVEROUTPUT ON;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

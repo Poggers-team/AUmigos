@@ -170,12 +170,6 @@
 <section class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="container py-50 px-4 bg-white rounded shadow-lg" id="formtable">
         <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
-            <c:if test="${result == 'notRegistered'}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    E-mail já cadastrado. Tente novamente.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </c:if>
 
             <div class="text-center mb-4">
                 <h2 class="display-6">Registre-se</h2>
@@ -236,7 +230,14 @@
 <footer>
     <%@ include file="components/footer.jsp" %>
 </footer>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="assets/js/userRegister.js"></script>
+<c:if test="${result == 'notRegistered'}">
+    <script>
+        window.onload = () => alert('E-mail já cadastrado. Tente novamente.');
+    </script>
+</c:if>
 </body>
 </html>

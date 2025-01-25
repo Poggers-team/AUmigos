@@ -4,6 +4,7 @@ import br.org.aumigos.model.adoption.Adoption;
 import br.org.aumigos.utils.DataSourceSearcher;
 
 import javax.sql.DataSource;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -18,33 +19,33 @@ public class AdoptionDao {
     }
 
     public boolean save(Adoption adoption) throws SQLException {
-        Connection conn = null;
-        String adoptionSql = "insert into Adoption (adopterName, adopterAge, adopterEmail, adopterZipcode, adopterAddress, adopterPhone, adopterTypeOfResidence, adopterHouseHasAutomaticGate, " +
-                "adopterHouseHasPool, adopterHouseHasNetOnWindows, adopterComments, adopterQtyAnimals, adopterExperiences, animalPlace, adopterIsResponsible, " +
-                "adopterIsAwareOfTheCosts, peopleLivingInAdopterHouse, peopleIsAwareOfAdoption, hasChildrenAtHouse, animalAloneTime, adoptionDate, animalId) " +
-                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//        String adoptionSql = "insert into Adoption (adopterName, adopterAge, adopterEmail, adopterZipcode, adopterAddress, adopterPhone, adopterTypeOfResidence, adopterHouseHasAutomaticGate, " +
+//                "adopterHouseHasPool, adopterHouseHasNetOnWindows, adopterComments, adopterQtyAnimals, adopterExperiences, animalPlace, adopterIsResponsible, " +
+//                "adopterIsAwareOfTheCosts, peopleLivingInAdopterHouse, peopleIsAwareOfAdoption, hasChildrenAtHouse, animalAloneTime, adoptionDate, animalId) " +
+//                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        Connection conn = null;
         try {
             conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(adoptionSql);
+            CallableStatement cs = conn.prepareCall("{call adoption_admin.save_adoption(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            populateCallableStatementForAdoption(adoption, cs);
             conn.setAutoCommit(false);
 
-            populatePreparedStatementForAdoption(adoption, ps);
-            ps.executeUpdate();
+            AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
+            if(!animalDao.setAnimalAsAdopted(adoption.getAnimal().getId())) throw new SQLException();
+            cs.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
             if(conn != null) conn.rollback();
             throw new RuntimeException("Error ao salvar dados", e);
         } finally {
             conn.setAutoCommit(true);
-            AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-            animalDao.setAnimalAsAdopted(adoption.getAnimal().getId());
         }
 
         return true;
     }
 
-    private void populatePreparedStatementForAdoption(Adoption a, PreparedStatement ps) throws SQLException {
+    private void populateCallableStatementForAdoption(Adoption a, PreparedStatement ps) throws SQLException {
         ps.setString(1, a.getName());
         ps.setInt(2, a.getAge());
         ps.setString(3, a.getEmail());
