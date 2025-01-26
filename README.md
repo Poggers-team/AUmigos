@@ -3,7 +3,7 @@ Trabalho para a matéria de ARQWEB2
 
 ## Pré requisitos:
 Ter o apache maven e sql developer instalado na máquina.<br>
-# Para o banco de dados:
+## Para o banco de dados:
   execute o local host.sql.
   execute o AUMIGOS.sql.
   verifique seu serviço quando for realizar a conexão, se é padrão xe ou se é XEPDB1.
