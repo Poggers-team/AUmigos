@@ -64,7 +64,6 @@ public class AnimalRegisterHelper implements Helper {
 
         if(!name.isEmpty()) a.setName(name);
         else a.setName("Sem nome");
-        a.setName(name);
         a.setType(type);
         a.setBreed(breed);
         a.setGender(gender);
