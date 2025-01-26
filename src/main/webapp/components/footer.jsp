@@ -56,9 +56,13 @@
 
         <!-- Linha Inferior -->
         <div class="footer-bottom">
-            <p>© 2024 ONG AUmigos. Todos os direitos reservados. Feito com 💜 </p>
+            <p>© <span id="year"></span> ONG AUmigos. Todos os direitos reservados. Feito com 💜 </p>
         </div>
     </div>
 </footer>
+
+<script>
+    document.getElementById('year').innerHTML = new Date().getFullYear().toString();
+</script>
 </body>
 </html>

@@ -29,10 +29,3 @@ const idadeValor = document.getElementById('idade-valor');
 idadeSlider.addEventListener('input', function() {
     idadeValor.textContent = this.value;
 });
-
-const distanciaSlider = document.getElementById('distancia');
-const distanciaValor = document.getElementById('distancia-valor');
-
-distanciaSlider.addEventListener('input', function() {
-    distanciaValor.textContent = this.value;
-});
