@@ -53,7 +53,7 @@ CREATE TABLE animal (
     contactPhone VARCHAR2(20) NOT NULL,
     image CLOB NOT NULL,
     fileName VARCHAR2(50) NOT NULL,
-    color VARCHAR2(20),
+    color VARCHAR2(20) NOT NULL,
     story CLOB,
     announcementDate DATE NOT NULL
 );
@@ -154,6 +154,7 @@ END user_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY user_admin AS
+-- Procedimento para salvar usuário
     PROCEDURE save_user (
         p_name_user IN VARCHAR2,
         p_email IN VARCHAR2,
@@ -161,10 +162,13 @@ CREATE OR REPLACE PACKAGE BODY user_admin AS
         p_dateOfBirth IN DATE,
         p_gender IN VARCHAR2
     ) AS
-        v_count NUMBER;
+        v_count NUMBER; -- variável para saber se o usuário já existe
     BEGIN
+        -- Chamando a função user_exists e passando para a variável v_count
         v_count := user_exists(p_email);
 
+        /* Caso o usuário exista, é lançado uma exceção,
+        caso contrário o usuário é criado. */
         IF v_count > 0 THEN
             RAISE_APPLICATION_ERROR(-400, 'UsuÃ¡rio jÃ¡ cadastrado.');
         ELSE
@@ -175,23 +179,29 @@ CREATE OR REPLACE PACKAGE BODY user_admin AS
         END IF;
     END save_user;
 
+/* Procedimento que verifica se email e senha passados corresponde as informações
+no banco para autenticar o login de um usuário */
     PROCEDURE get_user_by_email_and_password (
         p_email IN VARCHAR2,
         p_password IN VARCHAR2,
         p_cursor OUT SYS_REFCURSOR
     ) IS
     BEGIN
+        -- Verifica por todo o banco verificando as credenciais
         OPEN p_cursor FOR
             SELECT user_id, user_name, email
             FROM app_user
             WHERE email = p_email AND user_password = p_password;
     END get_user_by_email_and_password;
 
+-- Função que procura se um usuário existe
     FUNCTION user_exists (
         p_user_email IN VARCHAR2
     ) RETURN NUMBER IS
         v_count NUMBER;
     BEGIN
+        /* Se já houver um email cadastrado ele retorna o contador,
+        para confirmar que já existe um usuário usando aquele email */
         SELECT COUNT(*)
         INTO v_count
         FROM app_user
@@ -218,6 +228,7 @@ END voluntary_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
+-- Procedimento para salvar um voluntário
     PROCEDURE save_voluntary (
         p_voluntary_name IN VARCHAR2,
         p_email IN VARCHAR2,
@@ -227,8 +238,11 @@ CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
     ) AS
         v_count NUMBER;
     BEGIN
+        -- Chamando a função voluntary_exists e passando para a variável v_count
         v_count := voluntary_exists(p_email);
 
+        /* Caso o usuário exista, é lançado uma mensagem,
+        caso contrário o voluntário é registrado. */
         IF v_count > 0 THEN
             DBMS_OUTPUT.PUT_LINE('Voluntï¿½rio jï¿½ cadastrado.');
         ELSE
@@ -239,11 +253,14 @@ CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
         END IF;
     END save_voluntary;
 
+-- Função que procura se um voluntário existe
     FUNCTION voluntary_exists (
         p_voluntary_email IN VARCHAR2
     ) RETURN NUMBER IS
         v_count NUMBER;
     BEGIN
+        /* Se já houver um email cadastrado ele retorna o contador,
+        para confirmar que já existe um voluntário usando aquele email */
         SELECT COUNT(*)
         INTO v_count
         FROM voluntary
@@ -297,6 +314,7 @@ END animal_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY animal_admin AS
+-- Procedimento para salvar um animal
     PROCEDURE save_animal (
         p_animal_name IN VARCHAR2,
         p_animal_type IN VARCHAR2,
@@ -322,6 +340,7 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
         p_announcementDate IN DATE
     ) AS
     BEGIN
+        -- Para cadastrar um animal não é necessário validações
         INSERT INTO animal(animal_name, animal_type, breed, gender, animal_size,
                            age, castrated, adopted, vaccinated, dewormed, temperament, socialization,
                            address, city, contactName, contactEmail, contactPhone, image, fileName,
@@ -334,31 +353,38 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
         DBMS_OUTPUT.PUT_LINE('Animal cadastrado com sucesso.');
     END save_animal;
 
+-- Procedimento para dizer que um animal está adotado
     PROCEDURE set_animal_as_adopted (
         p_animal_id IN NUMBER
     ) AS
     BEGIN
+        /* Atualização do adopted para 1 (animal adotado)
+        na tabela animal*/
         UPDATE Animal
         SET adopted = 1
         WHERE animal_id = p_animal_id;
     END set_animal_as_adopted;
 
+-- Procedimento que recupera um animal pelo seu id
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
         p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
+        -- Verifica por todo o banco se há um animal com o id passado
         OPEN p_result FOR
             SELECT *
             FROM animal
             WHERE animal_id = p_animal_id;
     END get_animal_by_id;
 
+-- Procedimento que verifica o status de adoção do animal
     PROCEDURE get_animals_by_adopted_status (
         p_adopted IN NUMBER,
         p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
+        -- Verifica por todo o banco os animais já adotados
         OPEN p_result FOR
             SELECT *
             FROM animal
@@ -397,6 +423,7 @@ END adoption_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY adoption_admin AS
+-- Procedimento para salvar as informações do responsável pelo animal
     PROCEDURE save_adoption(
         p_adopterName IN VARCHAR2,
         p_adopterAge IN VARCHAR2,
@@ -422,6 +449,7 @@ CREATE OR REPLACE PACKAGE BODY adoption_admin AS
         p_animalId IN NUMBER
     ) AS
     BEGIN
+        -- Para cadastrar as informações do responsável não é necessário validações
         INSERT INTO adoption(adopterName, adopterAge, adopterEmail, adopterZipcode,
                              adopterAddress, adopterPhone, adopterTypeOfResidence,
                              adopterHouseHasAutomaticGate, adopterHouseHasPool,
@@ -441,6 +469,5 @@ CREATE OR REPLACE PACKAGE BODY adoption_admin AS
 
         DBMS_OUTPUT.PUT_LINE('AdoÃ§Ã£o cadastrada com sucesso.');
     END save_adoption;
-
 END adoption_admin;
 /
