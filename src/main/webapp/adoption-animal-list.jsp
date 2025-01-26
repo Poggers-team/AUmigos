@@ -413,9 +413,6 @@
     <%@ include file="components/header.jsp" %>
 </header>
 
-<c:if test="${empty animals}">
-    <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
-</c:if>
 <div class="main-content">
 <aside class="filters">
     <h2>Filtros</h2>
@@ -484,7 +481,9 @@
 
 
     <div class="cards">
-
+        <c:if test="${empty animals}">
+            <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
+        </c:if>
         <c:forEach var="animal" items="${animals}">
             <div class="card"
                  data-image="data:image/jpeg;base64,${animal.image}"
