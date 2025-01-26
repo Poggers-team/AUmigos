@@ -1,3 +1,13 @@
+/*
+O banco de dados a seguir tem como objetivo o armazenamento de informações
+da aplicação "ONG AUmigos", uma ONG que busca encontrar um lar para nossos
+amigos peludos, o banco de dados é composto pelas tabelas app_user (usuário),
+animal (animais resgatados), voluntary (voluntários para a ONG), adoption 
+(pessoa que deseja adotar um animal), ademais para melhor organização, as
+operações foram armazenadas em pacotes (user_admin, animal_admin, voluntary_admin, 
+adoption_admin), cada um respeitando sua responsabilidade de acordo com o objeto.
+*/
+
 BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE adoption CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP TABLE animal CASCADE CONSTRAINTS';
