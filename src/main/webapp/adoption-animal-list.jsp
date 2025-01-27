@@ -550,7 +550,7 @@
             document.getElementById('modal-animal-description').innerText = animalData.description;
             document.getElementById('modal-animal-size').innerText = animalData.size.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
             document.getElementById('modal-animal-age').innerText = animalData.age;
-            document.getElementById('modal-animal-gender').innerText = animalData.gender.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
+            document.getElementById('modal-animal-gender').innerText = animalData.gender.charAt(0).toUpperCase() + animalData.gender.slice(1).toLowerCase();
 
             document.getElementById('adopt-button').onclick = () => {
                 window.location.href = 'FrontController?action=animalAdopt&id=' + animalData.id;
