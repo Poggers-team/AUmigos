@@ -77,15 +77,15 @@
             <c:set var="counter" value="0" />
             <c:forEach var="animal" items="${animals}">
                 <c:if test="${counter lt 4}">
-                    <div class="card">
-                        <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
+                    <div class="card" data-type="${animal.type}">
+                        <img class="card-img" src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
                         <div class="card-info">
                             <div class="card-info-left">
                                 <h3>${animal.name}</h3>
                                 <p>${animal.city}</p>
                             </div>
                             <div class="card-icon">
-                                <img src="assets/icons/star.svg" alt="Ícone de estrela">
+                                <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone dinâmico">
                                 <c:if test="${animal.daysAgo == 0}">
                                     <span>Hoje</span>
                                 </c:if>
@@ -98,6 +98,7 @@
                     <c:set var="counter" value="${counter + 1}" />
                 </c:if>
             </c:forEach>
+
 
         </div>
         <br><br>
@@ -223,7 +224,7 @@
                     return;
                 }
 
-                const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+                const url = https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json;
 
                 console.log("URL de requisição montada:", url);
 
@@ -231,7 +232,7 @@
                     const response = await fetch(url);
 
                     if (!response.ok) {
-                        throw new Error(`Erro na API OpenStreetMap: ${response.statusText}`);
+                        throw new Error(Erro na API OpenStreetMap: ${response.statusText});
                     }
 
                     const data = await response.json();
@@ -290,4 +291,3 @@
 
 </body>
 </html>
-
