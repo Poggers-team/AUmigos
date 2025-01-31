@@ -472,10 +472,10 @@
         <option value="grande">Grande</option>
     </select>
 
-<label for="idade">Idade Máxima: <span id="idade-valor">8</span> anos</label>
+<label for="idade">Idade Máxima: <span id="idade-valor">15</span> anos</label>
 <div class="range-container">
     <span class="range-min">1</span>
-    <input type="range" id="idade" name="idade" min="1" max="15" value="8" class="custom-slider">
+    <input type="range" id="idade" name="idade" min="1" max="15" value="15" class="custom-slider">
     <span class="range-max">15</span>
 </div>
     <br>
@@ -641,8 +641,8 @@ const filters = {
 
         document.getElementById('porte').value = '';
 
-        document.getElementById('idade').value = 8;
-        document.getElementById('idade-valor').textContent = 8;
+        document.getElementById('idade').value = 15;
+        document.getElementById('idade-valor').textContent = 15;
         filterAnimals();
     });
 
