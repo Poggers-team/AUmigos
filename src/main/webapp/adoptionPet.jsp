@@ -7,8 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adotar Pet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <title>Animais para Adoção</title>
+    <link rel="stylesheet" href="assets/css/adoption-animal-list.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fredoka+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,721 +17,765 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f5f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .sidebar {
-            position: relative;
-            background: linear-gradient(to top, rgba(35, 7, 53, 1), rgba(35, 7, 53, 0)); /* Degradê roxo */
-            color: #fff;
-            width: 35%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            padding: 30px;
-        }
-
-.sidebar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
-    background-color: rgba(35, 7, 53, 0.7);
-    z-index: 1;
-}
-
-.animal-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-}
-
-.sidebar h1 {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    font-family: 'Fredoka One', cursive;
-    font-size: 3.5rem;
-    text-align: center;
-    margin: 0;
-    width: 90%;
-}
-
-.info-container {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    text-align: center;
-    z-index: 2;
-}
-
-.info-container p {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #e2e2e2;
-    margin: 5px 0;
-}
-
-
-.info-container p strong {
-    font-weight: bold;
-}
-
-.info-container p {
-    font-size: 1.5rem;
-    font-weight: normal;
-    color: #e2e2e2;
-    margin: 5px 0;
-}
-
-
-
-        .form-container {
-            width: 65%;
-            background-color: #f4f5f7;
-            padding: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        .form-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #6c6c6c;
-            background-color: #ece5f0;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .form-step {
+        .modal {
             display: none;
-        }
+            position: fixed;
+            z-index: 1000;
+            left: 0;
 
-        .form-step.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .form-group select,
-        .form-group input[type="file"] {
+            top: 0;
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
         }
 
-        .button-group {
+        .modal-content {
             display: flex;
-            justify-content: space-between;
-            position: absolute;
-            bottom: 40px;
-            left: 150px;
-            right: 150px;
+            position: relative;
+            flex-direction: row;
+            background-color: #fff;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 900px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .btn {
-            text-decoration: none;
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .close-button:hover {
+            color: #9C0376;
+        }
+
+        #modal-animal-image {
+
+        }
+
+
+        .modal-body {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .modal-left {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-left img {
+            width: 100%;  !important;
+            height: 250px !important;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .modal-right {
+            flex: 1.5;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-right h2 {
+            color: #9C0376;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-right p {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .modal-right ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-right ul li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .modal-right ul li span {
+            font-weight: normal;
+            color: #555;
+        }
+
+
+        #adopt-button {
+            background-color: #230735;
+            color: #fff;
             padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+            border: none;
+            border-radius: 5px;
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: auto;
         }
 
-        .btn-back {
-            background-color: #fff;
-            color: #230735;
-            border: 2px solid #230735;
-            text-align: left;
+        #adopt-button:hover {
+            background-color: #6d014e;
         }
 
-        .btn-back:hover {
-            background-color: #f0f0f0;
-        }
 
-        .btn-next {
-            background-color: #230735;
-            color: #fff;
-            border: none;
-            text-align: right;
-        }
-
-        .btn-next:hover {
-            background-color: #7a025b;
-        } .form-instructions {
-              font-size: 0.9rem;
-              color: #6c6c6c;
-              background-color: #f2e8f5;
-              padding: 15px;
-              border-radius: 8px;
-              margin-bottom: 20px;
-              text-align: center;
-          }
-
-        .upload-area {
-            border: 2px dashed #c3b2d5;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            background-color: #f7edf8;
-            cursor: pointer;
-        }
-
-        .upload-placeholder {
-            font-size: 0.9rem;
-            color: #6c6c6c;
-        }
-
-        .upload-placeholder span {
-            display: block;
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: #9e9e9e;
-        }
-
-        .upload-area:hover {
-            border-color: #7a025b;
-        }
-
-        #image {
-            display: none; /
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="number"],
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            background-color: #fff;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
             color: #333;
+            line-height: 1.6;
+            padding-top: 90px;
         }
 
-        .form-group input[type="text"]::placeholder {
-            color: #9e9e9e;
-            font-size: 0.9rem;
-        }
-
-        .form-group input[type="number"]::placeholder {
-            color: #9e9e9e;
-            font-size: 0.9rem;
-        }
-
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            resize: none;
-            background-color: #fff;
-            color: #333;
-        }
-
-        .form-group textarea::placeholder {
-            color: #9e9e9e;
-            font-size: 0.9rem;
-        }
-
-        .checkbox-group {
+        .main-content {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 50px auto;
+            padding: 20px;
         }
 
-        .checkbox-group label {
-            background-color: #f7edf8;
-            color: #6c6c6c;
-            padding: 10px 15px;
-            border: 1px solid #c3b2d5;
-            border-radius: 5px;
-            font-size: 0.9rem;
+        .filters {
+            width: 600px;
+            max-width: 300px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+            height: 100%;
+            position: sticky;
+            top: 0;
+            border-radius: 4px;
+        }
+
+
+        .filters h2 {
+            margin-bottom: 20px;
+            color: #230735;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .filters label {
+            display: block;
+            margin-bottom: 10px;
+            color: #230735;
+            font-size: 1rem;
+        }
+
+        .filters input[type="text"],
+        .filters select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .filters input:focus,
+        .filters select:focus,
+        .filters textarea:focus {
+            border-color: #9C0376;
+            outline: none;
+        }
+
+        .filters button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #230735;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .filters button:hover {
+            background-color: #9C0376;
+        }
+
+        .filters .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .filters .filter-option span {
+            margin-left: 10px;
+            color: #230735;
+            font-size: 1rem;
+        }
+
+        .filters .switch-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .filters .switch {
+            position: relative;
             display: inline-block;
-            user-select: none;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            width: 60px;
+            height: 24px;
         }
 
-        .checkbox-group input[type="checkbox"] {
-            display: none;
+        .filters .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        .checkbox-group input[type="checkbox"]:checked + label {
-            background-color: #7a025b;
-            color: #fff;
-            border-color: #7a025b;
+        .filters .switch .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 50px;
         }
 
-        .checkbox-group label:hover {
-            background-color: #e8d4ec;
-            border-color: #7a025b;
+        .filters .switch input:checked + .slider {
+            background-color: #230735;
+        }
+
+        .filters .switch .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        .filters .switch input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
 
-        .checkbox-group label.selected {
-            background-color: #7a025b;
-            color: #fff;
-            border-color: #7a025b;
+        @media (max-width: 1200px) {
+            .cards {
+                grid-template-columns: repeat(3, 1fr); 
+            }
         }
 
-        input[type="radio"] {
-            accent-color: #7a025b;
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr); 
+            }
         }
 
-        .form-group label input[type="radio"] {
-            margin-right: 10px;
+        @media (max-width: 480px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
         }
 
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            height: 400px;
+            width: 265px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+        .card-img {
+            width: 100%;  !important;
+            height: 250px !important;
+            border-bottom: 4px solid #230735 !important;
+            object-fit: cover;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            width: 100%; 
+            justify-content: center; 
+            margin-top: 20px; 
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            padding: 1px; 
+            gap: 1px; 
+        }
+
+        .card-info h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #230735;
+            margin: 0; 
+        }
+
+        .card-info p {
+            font-size: 1rem;
+            color: #555;
+            margin: 0; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+        }
+
+        .card-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .card-icon img {
+            width: 25px;
+            height: 25px;
+        }
+        .range-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .range-min, .range-max {
+            font-size: 14px;
+            color: #333;
+            padding-top: 3px;
+        }
+
+        .range-min {
+            padding-right: 7px;
+        }
+
+        .range-max {
+            padding-left: 7px;
+        }
+
+        .cleanbutton:hover {
+            transform: scale(1.015);
+            transition: 0.2s;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            width: 25rem;
+        }
+
+        input[type="range"]:focus {
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            background-color: #cacaca99;
+            border-radius: 0.5rem;
+            height: 0.5rem;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -5px;
+            background-color: #362b3d;
+            border-radius: 2rem;
+            height: 1.2rem;
+            width: 1.2rem;
+        }
+
+        input[type="range"]::-moz-range-track {
+            background-color: #362b3d;
+            border-radius: 0.5rem;
+            height: 0.5rem;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            background-color: #cacaca99;
+            border: none;
+            border-radius: 2rem;
+            height: 1.2rem;
+            width: 1.2rem;
+        }
     </style>
-
     <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
-    <div class="container">
+<header>
+    <%@ include file="components/header.jsp" %>
+</header>
 
-        <div class="sidebar">
-            <h1>${animal.name}</h1>
-            <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
-            <div class="info-container">
-            <p><b>Espécie:</b>
-                <c:if test="${animal.type == 'CACHORRO'}">
-                    Cachorro
-                </c:if>
-                <c:if test="${animal.type == 'GATO'}">
-                    Gato
-                </c:if>
-                <c:if test="${animal.type == 'OUTRO'}">
-                    Outro
-                </c:if>
-            </p>
+<c:if test="${empty animals}">
+    <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
+</c:if>
+<div class="main-content">
+    <aside class="filters">
+        <h2>Filtros</h2>
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" name="cidade" placeholder="Digite a cidade">
 
-            <p><b>Raça:</b> ${animal.breed}</p>
-
-            <p><b>Gênero:</b>
-                <c:if test="${animal.gender == 'MACHO'}">
-                    Macho
-                </c:if>
-                <c:if test="${animal.gender == 'FEMEA'}">
-                    Fêmea
-                </c:if>
-            </p>
-
-            <p><b>Porte:</b>
-                <c:if test="${animal.size == 'PEQUENO'}">
-                    Pequeno
-                </c:if>
-                <c:if test="${animal.size == 'MEDIO'}">
-                    Médio
-                </c:if>
-                <c:if test="${animal.size == 'GRANDE'}">
-                    Grande
-                </c:if>
-            </p>
-
-            <p><b>Idade:</b> ${animal.age}</p>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" placeholder="Digite o nome">
+        <label>Espécie:</label>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="especie" value="cachorro" id="cachorro">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Cachorro</span>
         </div>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="especie" value="gato" id="gato">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Gato</span>
         </div>
-        
 
-    <div class="form-container">
-        <form id="multiStepForm" action="FrontController?action=animalUpdate" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="animal-id" name="animal-id" value="${animal.id}">
-            <!-- Etapa 1 -->
-            <div class="form-step active">
-                <h1>Precisamos te conhecer!</h1>
-                <br>
-                <p class="form-title">Como você se chama?</p>
-                <div class="form-group">
-                    <label for="name">Nome completo:</label>
-                    <input type="text" id="name" name="name" placeholder="Digite seu nome..." required>
-                </div>
-                <p class="form-title">Somente maiores de 21 anos podem adotar, ok?</p>
-                <div class="form-group">
-                    <label for="age">Idade:</label>
-                    <input type="number" id="age" name="age" placeholder="Digite sua idade..." required>
-                </div>
-                <p class="form-title">Essencial para mantermos a comunicação com você!</p>
-                <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required>
+        <label>Gênero:</label>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="genero" value="macho" id="macho">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Macho</span>
+        </div>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="genero" value="femea" id="femea">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Fêmea</span>
+        </div>
+
+        <label for="porte">Porte:</label>
+        <select id="porte" name="porte" class="porte">
+            <option value="">Todos</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="medio">Médio</option>
+            <option value="grande">Grande</option>
+        </select>
+
+        <label for="idade">Idade Máxima: <span id="idade-valor">20</span> anos</label>
+        <div class="range-container">
+            <span class="range-min">1</span>
+            <input type="range" id="idade" name="idade" min="1" max="20" value="20" class="custom-slider">
+            <span class="range-max">20</span>
+        </div>
+        <br>
+        <button type="button" id="limpar-filtros" class="cleanbutton">Limpar Filtros</button>
+    </aside>
+
+
+    <div class="cards">
+        <c:forEach var="animal" items="${animals}">
+            <div class="card"
+                 data-image="data:image/jpeg;base64,${animal.image}"
+                 data-id="${animal.id}"
+                 data-name="${animal.name}"
+                 data-description="${animal.story}"
+                 data-gender="${animal.gender}"
+                 data-size="${animal.size}"
+                 data-type="${animal.type}"
+                 data-age="${animal.age}"
+                 data-city="${animal.city}">
+                <img class="card-img" src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
+                <div class="card-info">
+                    <h3>${animal.name}</h3>
+                    <p>${animal.city}</p>
+                    <div class="card-icon">
+                        <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone dinâmico">
+                        <c:if test="${animal.daysAgo == 0}">
+                                 <span>Hoje</span>
+                        </c:if>
+                        <c:if test="${animal.daysAgo != 0}">
+                        <span>${animal.daysAgo} dias atrás</span>
+                        </c:if>
+                    </div>
+
                 </div>
             </div>
+        </c:forEach>
+    </div>
 
-            <div class="form-step">
-                <h1>Precisamos te conhecer!</h1>
-                <br>
-                <div class="form-group">
-                    <label for="zipcode">CEP:</label>
-                    <input type="text" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="10" required>
-                </div>
-                <p class="form-title">(Rua, número, bairro, cidade, estado)</p>
-                <div class="form-group">
-                    <label for="address">Endereço:</label>
-                    <input type="text" id="address" name="address" placeholder="Digite seu endereço..." required>
-                </div>
-                <p class="form-title">Para estabelecermos um contato!</p>
-                <div class="form-group">
-                    <label for="tel">Telefone:</label>
-                    <input type="tel" id="tel" name="tel" placeholder="Digite seu telefone..." max="8" required>
-                </div>
+</div>
+
+<div id="animal-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div class="modal-body">
+            <div class="modal-left">
+                <img id="modal-animal-image" src="" alt="Animal">
             </div>
+            <div class="modal-right">
+                <h2 id="modal-animal-name"></h2>
+                <p id="modal-animal-description"></p>
+                <ul>
+                    <li><strong>Idade:</strong> <span id="modal-animal-age"></span></li>
+                    <li><strong>Porte:</strong> <span id="modal-animal-size"></span></li>
+                    <li><strong>Gênero:</strong> <span id="modal-animal-gender"></span></li>
+                </ul>
+                <button id="adopt-button">Adotar</button>
 
-            <div class="form-step">
-                <h1>Fale sobre seu lar!</h1>
-                <br>
-                <div class="form-group">
-                    <label>O animal irá morar em:</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="residence" value="CASA" required style="margin-right: 10px; font-weight: 100;"> Casa
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="residence" value="CASA_CONDOMINIO" style="margin-right: 10px; font-weight: 100;"> Casa em condomínio
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="residence" value="APARTAMENTO" style="margin-right: 10px; font-weight: 100;"> Apartamento
-                        </label>
-                    </div>
-                </div>
-            
-                <div class="form-group">
-                    <label>Sua casa possui portão automático?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="automaticGate" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="automaticGate" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-            
-                <div class="form-group">
-                    <label>Sua casa possui piscina?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="pool" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="pool" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-            
-                <div class="form-group">
-                    <label>Sua casa possui rede nas janelas?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="windowNet" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="windowNet" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-
-                <p class="form-title">Caso você tenha algo a mais para nos falar, nos conte agora!</p>
-                <div class="form-group">
-                    <label for="comments">Comentários:</label>
-                    <input type="text" id="comments" name="comments" required>
-                </div>
             </div>
-            
-            <div class="form-step">
-                <h1>Fale sobre sua relação com outros animais!</h1>
-                <br>
-                <div class="form-group">
-                    <label>Existem outros animais na casa? Se sim, quantos?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsInHouse" value="0" required style="margin-right: 10px; font-weight: 100;"> 0
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsInHouse" value="1" style="margin-right: 10px; font-weight: 100;"> 1
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsInHouse" value="2" style="margin-right: 10px; font-weight: 100;"> 2
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsInHouse" value="3" style="margin-right: 10px; font-weight: 100;"> 3
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalsInHouse" value="4" style="margin-right: 10px; font-weight: 100;"> 4 ou mais
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="animalsExperience">Como foram suas experiências com outros animais?</label>
-                    <input type="text" id="animalsExperience" name="animalsExperience" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="animalPlace">O animal irá viver no quintal ou dentro de casa?</label>
-                    <input type="text" id="animalPlace" name="animalPlace" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Você será o responsável pelo animal adotado?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalResponsible" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="animalResponsible" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Você está ciente dos custos relacionados ao animal?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="awareOfCosts" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="awareOfCosts" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Etapa 7 -->
-            <div class="form-step">
-                <h1>Qual a rotina da sua casa?</h1>
-                <br>
-                <div class="form-group">
-                    <label>Quantas outras pessoas moram com você?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleInHouse" value="0" required style="margin-right: 10px; font-weight: 100;"> 0
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleInHouse" value="1" style="margin-right: 10px; font-weight: 100;"> 1
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleInHouse" value="2" style="margin-right: 10px; font-weight: 100;"> 2
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleInHouse" value="3" style="margin-right: 10px; font-weight: 100;"> 3
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleInHouse" value="4" style="margin-right: 10px; font-weight: 100;"> 4 ou mais
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Essas pessoas estão cientes e concordam com a adoção?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleAdoption" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="peopleAdoption" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Existem crianças que frequentam sua casa?</label>
-                    <div style="display: block;">
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="childrenInHouse" value="true" required style="margin-right: 10px; font-weight: 100;"> Sim
-                        </label>
-                        <label style="display: flex; align-items: center; margin-bottom: 8px; font-weight: 100;">
-                            <input type="radio" name="childrenInHouse" value="false" style="margin-right: 10px; font-weight: 100;"> Não
-                        </label>
-                    </div>
-                </div>
-
-                <p class="form-title">Um animal não suporta muito tempo sozinho. Ele precisa de você!</p>
-                <div class="form-group">
-                    <label for="aloneTime">Quanto tempo o animal ficará sozinho?</label>
-                    <input type="text" id="aloneTime" name="aloneTime" required>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button type="button" class="btn btn-back" id="prevBtn" disabled>Voltar</button>
-                <button type="button" class="btn btn-next" id="nextBtn">Prosseguir</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<c:if test="${result == 'notRegistered'}">
-    <script>
-        alert("O telefone cadastrado é inválido.");
-    </script>
-</c:if>
 
+<footer>
+    <%@ include file="components/footer.jsp" %>
+</footer>
+<script src="assets/js/adoption-animal-list.js"></script>
 <script>
-    function submitForm(event) {
-        event.preventDefault();
+    document.querySelectorAll('.card').forEach(card => {
+        const observerOptions = {
+            root: null,
+            threshold: 0.5,
+        };
 
-        document.getElementById('loader').style.display = 'block';
-
-        const formData = new FormData(document.getElementById('multiStepForm'));
-
-        fetch('frontController?action=animalUpdate', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('loader').style.display = 'none';
-
-                if (data.success) {
-                    document.getElementById('successMessage').style.display = 'block';
-                    // Redireciona para a página de sucesso
-                    window.location.href = "sucesso.jsp";
-                } else {
-                    document.getElementById('errorMessage').style.display = 'block';
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
                 }
-            })
-            .catch(error => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('errorMessage').style.display = 'block';
             });
-    }
+        }, observerOptions);
 
+        const cards = document.querySelectorAll(".card");
+        cards.forEach(card => observer.observe(card));
 
-    const steps = document.querySelectorAll('.form-step');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    let currentStep = 0;
+        card.addEventListener('click', () => {
+            const animalData = {
+                id: card.dataset.id,
+                image: card.dataset.image,
+                name: card.dataset.name,
+                description: card.dataset.description,
+                gender: card.dataset.gender,
+                size: card.dataset.size,
+                age: card.dataset.age
+            };
 
-    function updateStep() {
-        steps.forEach((step, index) => {
-            step.classList.toggle('active', index === currentStep);
+            document.getElementById('modal-animal-image').src = animalData.image;
+            document.getElementById('modal-animal-name').innerText = animalData.name;
+            document.getElementById('modal-animal-description').innerText = animalData.description;
+            document.getElementById('modal-animal-size').innerText = animalData.size.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
+            document.getElementById('modal-animal-age').innerText = animalData.age;
+            document.getElementById('modal-animal-gender').innerText = animalData.gender.charAt(0).toUpperCase() + animalData.gender.slice(1).toLowerCase();
+
+            document.getElementById('adopt-button').onclick = () => {
+                window.location.href = 'FrontController?action=animalAdopt&id=' + animalData.id;
+            };
+
+            document.getElementById('animal-modal').style.display = 'flex';
         });
 
-        prevBtn.disabled = currentStep === 0;
+        document.querySelector('.close-button').addEventListener('click', () => {
+            document.getElementById('animal-modal').style.display = 'none';
+        });
 
-        if (currentStep === steps.length - 1) {
-            nextBtn.textContent = 'Enviar';
-            nextBtn.setAttribute('name', 'action');
-            nextBtn.setAttribute('value', 'animalRegister');
-            nextBtn.setAttribute('type', 'submit');
-        } else {
-            nextBtn.textContent = 'Prosseguir';
-            nextBtn.removeAttribute('name');
-            nextBtn.removeAttribute('value');
-            nextBtn.setAttribute('type', 'button'); // Define como botão padrão nos outros steps
-        }
-    }
-
-    nextBtn.addEventListener('click', () => {
-        if (currentStep < steps.length - 1) {
-            currentStep++;
-        } else {
-            document.getElementById('multiStepForm').submit();
-        }
-        updateStep();
-    });
-
-    prevBtn.addEventListener('click', () => {
-        if (currentStep > 0) {
-            currentStep--;
-        }
-        updateStep();
-    });
-
-    const fileInput = document.getElementById('image');
-    const uploadArea = document.getElementById('uploadArea');
-    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-
-    uploadArea.addEventListener('click', () => {
-        fileInput.click();
-    });
-
-    fileInput.addEventListener('change', () => {
-        if (fileInput.files.length > 0) {
-            const fileName = fileInput.files[0].name;
-            uploadPlaceholder.innerHTML = `<p>Imagem selecionada: ${fileName}</p>`;
-            uploadArea.style.borderColor = '#7a025b';
-        }
-    });
-
-    uploadArea.addEventListener('dragover', (event) => {
-        event.preventDefault();
-        uploadArea.style.borderColor = '#7a025b';
-        uploadPlaceholder.innerHTML = `<p>Solte o arquivo aqui</p>`;
-    });
-
-    uploadArea.addEventListener('dragleave', () => {
-        uploadArea.style.borderColor = '#c3b2d5';
-        uploadPlaceholder.innerHTML = `<span>Arraste uma imagem nesta área, ou clique para selecionar uma imagem.</span>`;
-    });
-
-    uploadArea.addEventListener('drop', (event) => {
-        event.preventDefault();
-        const files = event.dataTransfer.files;
-        if (files.length > 0) {
-            fileInput.files = files;
-            const fileName = files[0].name;
-            uploadPlaceholder.innerHTML = `<p>Imagem selecionada: ${fileName}</p>`;
-            uploadArea.style.borderColor = '#7a025b';
-        }
-    });
-
-    document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach((checkbox) => {
-        checkbox.addEventListener('change', function () {
-            const label = this.nextElementSibling;
-            if (this.checked) {
-                label.classList.add('selected');
-            } else {
-                label.classList.remove('selected');
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('animal-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const animals = document.querySelectorAll('.card');
+
+        const filters = {
+            cidade: document.getElementsById('cidade'),
+            nome: document.getElementById('nome'),
+            genero: document.getElementsByName('genero'),
+            especie: document.getElementsByName('especie'),
+            porte: document.getElementById('porte'),
+            idade: document.getElementById('idade'),
+        };
+
+        const filterAnimals = () => {
+            animals.forEach(card => {
+                const city = card.dataset.city.toLowerCase();
+                const name = card.dataset.name.toLowerCase();
+                const gender = card.dataset.gender.toLowerCase();
+                const type = card.dataset.type.toLowerCase();
+                const size = card.dataset.size.toLowerCase();
+                const age = parseInt(card.dataset.age, 10);
+
+                const cidadeFilter = filters.cidade?.value.toLowerCase() || '';
+                const nomeFilter = filters.nome?.value.toLowerCase() || '';
+                const generoFilter = Array.from(filters.genero).find(r => r.checked)?.value.toLowerCase() || '';
+                const especieFilter = Array.from(filters.especie).find(r => r.checked)?.value.toLowerCase() || '';
+                const porteFilter = filters.porte?.value.toLowerCase() || '';
+                const idadeFilter = parseInt(filters.idade?.value || 0, 10);
+
+                let isVisible = true;
+
+                if (cidadeFilter && !city.includes(cidadeFilter)) isVisible = false;
+                if (nomeFilter && !name.includes(nomeFilter)) isVisible = false;
+                if (generoFilter && gender !== generoFilter) isVisible = false;
+                if (especieFilter && type !== especieFilter) isVisible = false;
+                if (porteFilter && size !== porteFilter) isVisible = false;
+                if (idadeFilter && age > idadeFilter) isVisible = false;
+
+                card.style.display = isVisible ? 'block' : 'none';
+            });
+        };
+
+
+        filters.cidade?.addEventListener('input', filterAnimals);
+        filters.nome?.addEventListener('input', filterAnimals);
+        filters.genero?.forEach(r => r.addEventListener('change', filterAnimals));
+        filters.especie?.forEach(r => r.addEventListener('change', filterAnimals));
+        filters.porte?.addEventListener('change', filterAnimals);
+        filters.idade?.addEventListener('input', () => {
+            document.getElementById('idade-valor').textContent = filters.idade.value;
+            filterAnimals();
+        });
+
+        filterAnimals();
+
+        document.getElementById('limpar-filtros').addEventListener('click', function() {
+
+            document.getElementById('cidade').value = '';
+            document.getElementById('nome').value = '';
+
+            document.querySelectorAll('input[name="especie"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            document.querySelectorAll('input[name="genero"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            document.getElementById('porte').value = '';
+
+            document.getElementById('idade').value = 20;
+            document.getElementById('idade-valor').textContent = 20;
+            filterAnimals();
+        });
+
+    });
+
+
+    function toggleSpeciesSelection(selectedSpecies) {
+        const speciesOptions = document.querySelectorAll('input[name="especie"]');
+        speciesOptions.forEach(species => {
+            if (species !== selectedSpecies) {
+                species.checked = false;
+            }
+        });
+    }
+
+    function toggleGenderSelection(selectedGender) {
+        const genderOptions = document.querySelectorAll('input[name="genero"]');
+        genderOptions.forEach(gender => {
+            if (gender !== selectedGender) {
+                gender.checked = false;
+            }
+        });
+    }
+
+    const cachorro = document.getElementById('cachorro');
+    const gato = document.getElementById('gato');
+    const macho = document.getElementById('macho');
+    const femea = document.getElementById('femea');
+
+    if (cachorro) {
+        cachorro.addEventListener('change', function () {
+            if (this.checked) {
+                toggleSpeciesSelection(this);
+            }
+        });
+    }
+
+    if (gato) {
+        gato.addEventListener('change', function () {
+            if (this.checked) {
+                toggleSpeciesSelection(this);
+            }
+        });
+    }
+
+    if (macho) {
+        macho.addEventListener('change', function () {
+            if (this.checked) {
+                toggleGenderSelection(this);
+            }
+        });
+    }
+
+    if (femea) {
+        femea.addEventListener('change', function () {
+            if (this.checked) {
+                toggleGenderSelection(this);
+            }
+        });
+    }
 
 
 </script>
