@@ -58,6 +58,10 @@
             color: #9C0376;
         }
 
+        #modal-animal-image {
+
+        }
+
 
         .modal-body {
             display: flex;
@@ -76,8 +80,9 @@
         }
 
         .modal-left img {
-            max-width: 100%;
-            height: auto;
+            width: 100%;  !important;
+            height: 250px !important;
+            object-fit: cover;
             border-radius: 10px;
         }
 
@@ -128,6 +133,7 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: auto;
         }
 
         #adopt-button:hover {
@@ -281,50 +287,91 @@
         }
 
 
-        .card {
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
+        @media (max-width: 1200px) {
+            .cards {
+                grid-template-columns: repeat(3, 1fr); 
+            }
         }
 
-        .card img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #ddd;
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            height: 400px;
+            width: 265px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+        .card-img {
+            width: 100%;  !important;
+            height: 250px !important;
+            border-bottom: 4px solid #230735 !important;
+            object-fit: cover;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            width: 100%; 
+            justify-content: center; 
+            margin-top: 20px; 
         }
 
         .card-info {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 15px;
-            position: relative;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            padding: 1px; 
+            gap: 1px; 
         }
 
         .card-info h3 {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
             color: #230735;
-            margin-bottom: 10px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            margin: 0; 
         }
 
         .card-info p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #555;
-            margin-bottom: 10px;
-        }
-
-        .card-info span {
-            font-size: 0.8rem;
-            color: #aaa;
+            margin: 0; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
         }
 
         .card-icon {
@@ -337,7 +384,6 @@
             width: 25px;
             height: 25px;
         }
-
         .range-container {
             display: flex;
             align-items: center;
@@ -359,52 +405,52 @@
             padding-left: 7px;
         }
 
-    .cleanbutton:hover {
-        transform: scale(1.015);
-        transition: 0.2s;
-    }
+        .cleanbutton:hover {
+            transform: scale(1.015);
+            transition: 0.2s;
+        }
 
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      background: transparent;
-      cursor: pointer;
-      width: 25rem;
-    }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            width: 25rem;
+        }
 
-    input[type="range"]:focus {
-      outline: none;
-    }
+        input[type="range"]:focus {
+            outline: none;
+        }
 
-    input[type="range"]::-webkit-slider-runnable-track {
-      background-color: #cacaca99;
-      border-radius: 0.5rem;
-      height: 0.5rem;
-    }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background-color: #cacaca99;
+            border-radius: 0.5rem;
+            height: 0.5rem;
+        }
 
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      margin-top: -5px;
-      background-color: #362b3d;
-      border-radius: 2rem;
-      height: 1.2rem;
-      width: 1.2rem;
-    }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -5px;
+            background-color: #362b3d;
+            border-radius: 2rem;
+            height: 1.2rem;
+            width: 1.2rem;
+        }
 
-    input[type="range"]::-moz-range-track {
-        background-color: #362b3d;
-      border-radius: 0.5rem;
-      height: 0.5rem;
-    }
+        input[type="range"]::-moz-range-track {
+            background-color: #362b3d;
+            border-radius: 0.5rem;
+            height: 0.5rem;
+        }
 
-    input[type="range"]::-moz-range-thumb {
-        background-color: #cacaca99;
-      border: none;
-      border-radius: 2rem;
-      height: 1.2rem;
-      width: 1.2rem;
-    }
+        input[type="range"]::-moz-range-thumb {
+            background-color: #cacaca99;
+            border: none;
+            border-radius: 2rem;
+            height: 1.2rem;
+            width: 1.2rem;
+        }
     </style>
     <link rel="icon" href="assets/img/favicon.png">
 </head>
@@ -417,74 +463,73 @@
     <h2 class="nothing-animal">Nenhum animal foi cadastrado.</h2>
 </c:if>
 <div class="main-content">
-<aside class="filters">
-    <h2>Filtros</h2>
-    <label for="cidade">Cidade:</label>
-    <input type="text" id="cidade" name="cidade" placeholder="Digite a cidade">
+    <aside class="filters">
+        <h2>Filtros</h2>
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" name="cidade" placeholder="Digite a cidade">
 
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" placeholder="Digite o nome">
-    <label>Espécie:</label>
-    <div class="filter-option">
-        <div class="switch-container">
-            <label class="switch">
-                <input type="checkbox" name="especie" value="cachorro" id="cachorro">
-                <span class="slider"></span>
-            </label>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" placeholder="Digite o nome">
+        <label>Espécie:</label>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="especie" value="cachorro" id="cachorro">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Cachorro</span>
         </div>
-        <span>Cachorro</span>
-    </div>
-    <div class="filter-option">
-        <div class="switch-container">
-            <label class="switch">
-                <input type="checkbox" name="especie" value="gato" id="gato">
-                <span class="slider"></span>
-            </label>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="especie" value="gato" id="gato">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Gato</span>
         </div>
-        <span>Gato</span>
-    </div>
 
-    <label>Gênero:</label>
-    <div class="filter-option">
-        <div class="switch-container">
-            <label class="switch">
-                <input type="checkbox" name="genero" value="macho" id="macho">
-                <span class="slider"></span>
-            </label>
+        <label>Gênero:</label>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="genero" value="macho" id="macho">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Macho</span>
         </div>
-        <span>Macho</span>
-    </div>
-    <div class="filter-option">
-        <div class="switch-container">
-            <label class="switch">
-                <input type="checkbox" name="genero" value="femea" id="femea">
-                <span class="slider"></span>
-            </label>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="genero" value="femea" id="femea">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Fêmea</span>
         </div>
-        <span>Fêmea</span>
-    </div>
 
-    <label for="porte">Porte:</label>
-    <select id="porte" name="porte" class="porte">
-        <option value="">Todos</option>
-        <option value="pequeno">Pequeno</option>
-        <option value="medio">Médio</option>
-        <option value="grande">Grande</option>
-    </select>
+        <label for="porte">Porte:</label>
+        <select id="porte" name="porte" class="porte">
+            <option value="">Todos</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="medio">Médio</option>
+            <option value="grande">Grande</option>
+        </select>
 
-<label for="idade">Idade Máxima: <span id="idade-valor">15</span> anos</label>
-<div class="range-container">
-    <span class="range-min">1</span>
-    <input type="range" id="idade" name="idade" min="1" max="15" value="15" class="custom-slider">
-    <span class="range-max">15</span>
-</div>
-    <br>
-    <button type="button" id="limpar-filtros" class="cleanbutton">Limpar Filtros</button>
-</aside>
+        <label for="idade">Idade Máxima: <span id="idade-valor">20</span> anos</label>
+        <div class="range-container">
+            <span class="range-min">1</span>
+            <input type="range" id="idade" name="idade" min="1" max="20" value="20" class="custom-slider">
+            <span class="range-max">20</span>
+        </div>
+        <br>
+        <button type="button" id="limpar-filtros" class="cleanbutton">Limpar Filtros</button>
+    </aside>
 
 
     <div class="cards">
-
         <c:forEach var="animal" items="${animals}">
             <div class="card"
                  data-image="data:image/jpeg;base64,${animal.image}"
@@ -496,14 +541,25 @@
                  data-type="${animal.type}"
                  data-age="${animal.age}"
                  data-city="${animal.city}">
-                <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
+                <img class="card-img" src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
                 <div class="card-info">
                     <h3>${animal.name}</h3>
                     <p>${animal.city}</p>
+                    <div class="card-icon">
+                        <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone dinâmico">
+                        <c:if test="${animal.daysAgo == 0}">
+                                 <span>Hoje</span>
+                        </c:if>
+                        <c:if test="${animal.daysAgo != 0}">
+                        <span>${animal.daysAgo} dias atrás</span>
+                        </c:if>
+                    </div>
+
                 </div>
             </div>
         </c:forEach>
     </div>
+
 </div>
 
 <div id="animal-modal" class="modal">
@@ -535,6 +591,23 @@
 <script src="assets/js/adoption-animal-list.js"></script>
 <script>
     document.querySelectorAll('.card').forEach(card => {
+        const observerOptions = {
+            root: null,
+            threshold: 0.5,
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const cards = document.querySelectorAll(".card");
+        cards.forEach(card => observer.observe(card));
+
         card.addEventListener('click', () => {
             const animalData = {
                 id: card.dataset.id,
@@ -551,7 +624,7 @@
             document.getElementById('modal-animal-description').innerText = animalData.description;
             document.getElementById('modal-animal-size').innerText = animalData.size.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
             document.getElementById('modal-animal-age').innerText = animalData.age;
-            document.getElementById('modal-animal-gender').innerText = animalData.gender.charAt(0).toUpperCase() + animalData.size.slice(1).toLowerCase();
+            document.getElementById('modal-animal-gender').innerText = animalData.gender.charAt(0).toUpperCase() + animalData.gender.slice(1).toLowerCase();
 
             document.getElementById('adopt-button').onclick = () => {
                 window.location.href = 'FrontController?action=animalAdopt&id=' + animalData.id;
@@ -572,122 +645,138 @@
         });
     });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const animals = document.querySelectorAll('.card');
+    document.addEventListener('DOMContentLoaded', () => {
+        const animals = document.querySelectorAll('.card');
 
-const filters = {
-     cidade: document.getElementById('cidade'), 
-     nome: document.getElementById('nome'),
-     genero: document.getElementsByName('genero'),
-     especie: document.getElementsByName('especie'),
-     porte: document.getElementById('porte'),
-     idade: document.getElementById('idade'),
- };
+        const filters = {
+            cidade: document.getElementsById('cidade'),
+            nome: document.getElementById('nome'),
+            genero: document.getElementsByName('genero'),
+            especie: document.getElementsByName('especie'),
+            porte: document.getElementById('porte'),
+            idade: document.getElementById('idade'),
+        };
 
- const filterAnimals = () => {
-     animals.forEach(card => {
-         const city = card.dataset.city.toLowerCase();
-         const name = card.dataset.name.toLowerCase();
-         const gender = card.dataset.gender.toLowerCase();
-         const type = card.dataset.type.toLowerCase();
-         const size = card.dataset.size.toLowerCase();
-         const age = parseInt(card.dataset.age, 10);
+        const filterAnimals = () => {
+            animals.forEach(card => {
+                const city = card.dataset.city.toLowerCase();
+                const name = card.dataset.name.toLowerCase();
+                const gender = card.dataset.gender.toLowerCase();
+                const type = card.dataset.type.toLowerCase();
+                const size = card.dataset.size.toLowerCase();
+                const age = parseInt(card.dataset.age, 10);
 
-         const cidadeFilter = filters.cidade?.value.toLowerCase() || '';
-         const nomeFilter = filters.nome?.value.toLowerCase() || '';
-         const generoFilter = Array.from(filters.genero).find(r => r.checked)?.value.toLowerCase() || '';
-         const especieFilter = Array.from(filters.especie).find(r => r.checked)?.value.toLowerCase() || '';
-         const porteFilter = filters.porte?.value.toLowerCase() || '';
-         const idadeFilter = parseInt(filters.idade?.value || 0, 10);
+                const cidadeFilter = filters.cidade?.value.toLowerCase() || '';
+                const nomeFilter = filters.nome?.value.toLowerCase() || '';
+                const generoFilter = Array.from(filters.genero).find(r => r.checked)?.value.toLowerCase() || '';
+                const especieFilter = Array.from(filters.especie).find(r => r.checked)?.value.toLowerCase() || '';
+                const porteFilter = filters.porte?.value.toLowerCase() || '';
+                const idadeFilter = parseInt(filters.idade?.value || 0, 10);
 
-         let isVisible = true;
+                let isVisible = true;
 
-         if (cidadeFilter && !city.includes(cidadeFilter)) isVisible = false;
-         if (nomeFilter && !name.includes(nomeFilter)) isVisible = false;
-         if (generoFilter && gender !== generoFilter) isVisible = false;
-         if (especieFilter && type !== especieFilter) isVisible = false;
-         if (porteFilter && size !== porteFilter) isVisible = false;
-         if (idadeFilter && age > idadeFilter) isVisible = false;
+                if (cidadeFilter && !city.includes(cidadeFilter)) isVisible = false;
+                if (nomeFilter && !name.includes(nomeFilter)) isVisible = false;
+                if (generoFilter && gender !== generoFilter) isVisible = false;
+                if (especieFilter && type !== especieFilter) isVisible = false;
+                if (porteFilter && size !== porteFilter) isVisible = false;
+                if (idadeFilter && age > idadeFilter) isVisible = false;
 
-         card.style.display = isVisible ? 'block' : 'none';
-     });
- };
+                card.style.display = isVisible ? 'block' : 'none';
+            });
+        };
 
 
-    filters.cidade?.addEventListener('input', filterAnimals);
-    filters.nome?.addEventListener('input', filterAnimals);
-    filters.genero?.forEach(r => r.addEventListener('change', filterAnimals));
-    filters.especie?.forEach(r => r.addEventListener('change', filterAnimals));
-    filters.porte?.addEventListener('change', filterAnimals);
-    filters.idade?.addEventListener('input', () => {
-        document.getElementById('idade-valor').textContent = filters.idade.value;
-        filterAnimals();
-    });
-
-    filterAnimals();
-
-    document.getElementById('limpar-filtros').addEventListener('click', function() {
-
-        document.getElementById('cidade').value = '';
-        document.getElementById('nome').value = '';
-
-        document.querySelectorAll('input[name="especie"]').forEach(radio => {
-            radio.checked = false;
+        filters.cidade?.addEventListener('input', filterAnimals);
+        filters.nome?.addEventListener('input', filterAnimals);
+        filters.genero?.forEach(r => r.addEventListener('change', filterAnimals));
+        filters.especie?.forEach(r => r.addEventListener('change', filterAnimals));
+        filters.porte?.addEventListener('change', filterAnimals);
+        filters.idade?.addEventListener('input', () => {
+            document.getElementById('idade-valor').textContent = filters.idade.value;
+            filterAnimals();
         });
 
-        document.querySelectorAll('input[name="genero"]').forEach(radio => {
-            radio.checked = false;
+        filterAnimals();
+
+        document.getElementById('limpar-filtros').addEventListener('click', function() {
+
+            document.getElementById('cidade').value = '';
+            document.getElementById('nome').value = '';
+
+            document.querySelectorAll('input[name="especie"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            document.querySelectorAll('input[name="genero"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            document.getElementById('porte').value = '';
+
+            document.getElementById('idade').value = 20;
+            document.getElementById('idade-valor').textContent = 20;
+            filterAnimals();
         });
 
-        document.getElementById('porte').value = '';
-
-        document.getElementById('idade').value = 15;
-        document.getElementById('idade-valor').textContent = 15;
-        filterAnimals();
     });
 
-});
 
-
-function toggleSpeciesSelection(selectedSpecies) {
-    const speciesOptions = document.querySelectorAll('input[name="especie"]');
-    speciesOptions.forEach(species => {
-        if (species !== selectedSpecies) {
-            species.checked = false;
-        }
-    });
-}
-
-function toggleGenderSelection(selectedGender) {
-    const genderOptions = document.querySelectorAll('input[name="genero"]');
-    genderOptions.forEach(gender => {
-        if (gender !== selectedGender) {
-            gender.checked = false;
-        }
-    });
-}
-
-document.getElementById('cachorro').addEventListener('change', function() {
-    if (this.checked) {
-        toggleSpeciesSelection(this);
+    function toggleSpeciesSelection(selectedSpecies) {
+        const speciesOptions = document.querySelectorAll('input[name="especie"]');
+        speciesOptions.forEach(species => {
+            if (species !== selectedSpecies) {
+                species.checked = false;
+            }
+        });
     }
-});
-document.getElementById('gato').addEventListener('change', function() {
-    if (this.checked) {
-        toggleSpeciesSelection(this);
-    }
-});
 
-document.getElementById('macho').addEventListener('change', function() {
-    if (this.checked) {
-        toggleGenderSelection(this);
+    function toggleGenderSelection(selectedGender) {
+        const genderOptions = document.querySelectorAll('input[name="genero"]');
+        genderOptions.forEach(gender => {
+            if (gender !== selectedGender) {
+                gender.checked = false;
+            }
+        });
     }
-});
-document.getElementById('femea').addEventListener('change', function() {
-    if (this.checked) {
-        toggleGenderSelection(this);
+
+    const cachorro = document.getElementById('cachorro');
+    const gato = document.getElementById('gato');
+    const macho = document.getElementById('macho');
+    const femea = document.getElementById('femea');
+
+    if (cachorro) {
+        cachorro.addEventListener('change', function () {
+            if (this.checked) {
+                toggleSpeciesSelection(this);
+            }
+        });
     }
-});
+
+    if (gato) {
+        gato.addEventListener('change', function () {
+            if (this.checked) {
+                toggleSpeciesSelection(this);
+            }
+        });
+    }
+
+    if (macho) {
+        macho.addEventListener('change', function () {
+            if (this.checked) {
+                toggleGenderSelection(this);
+            }
+        });
+    }
+
+    if (femea) {
+        femea.addEventListener('change', function () {
+            if (this.checked) {
+                toggleGenderSelection(this);
+            }
+        });
+    }
+
 
 </script>
 </body>
