@@ -446,6 +446,9 @@ nav ul li:hover ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .card {
@@ -457,11 +460,13 @@ nav ul li:hover ul {
     text-align: center;
 }
 
-.card img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ddd;
+.card-img {
+    width: 100%;  !important;
+    height: 250px !important;
+    border-bottom: 4px solid #230735 !important;
+    object-fit: cover;
 }
+
 
 .card-info {
     padding: 15px;
