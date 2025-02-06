@@ -317,6 +317,7 @@
             height: 200px !important;
             border-bottom: 4px solid #230735 !important;
             object-fit: cover;
+            margin-bottom: -10px;
         }
 
         .cards {
@@ -333,8 +334,6 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 10px;
-            gap: 1px;
         }
 
         .card-info h3 {
