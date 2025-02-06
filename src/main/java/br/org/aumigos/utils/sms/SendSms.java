@@ -16,25 +16,24 @@ public class SendSms {
 
         try (InputStream input = SendSms.class.getClassLoader().getResourceAsStream("config.properties")) {
             properties.load(input);
-        }
+            String authKey = properties.getProperty("AUTH-KEY");
 
-        String authKey = properties.getProperty("AUTH-KEY");
+            SmsPayload payload = new SmsPayload("AUmigos", receiver, content);
 
-        SmsPayload payload = new SmsPayload("AUmigos", receiver, content);
+            Gson gson = new Gson();
 
-        Gson gson = new Gson();
+            String payloadJson = gson.toJson(payload);
 
-        String payloadJson = gson.toJson(payload);
+            var client = HttpClient.newHttpClient();
 
-        var client = HttpClient.newHttpClient();
+            var request = HttpRequest.newBuilder(
+                            URI.create("https://sms.comtele.com.br/api/v2/send"))
+                    .header("Content-Type", "application/json")
+                    .header("auth-key", authKey)
+                    .POST(HttpRequest.BodyPublishers.ofString(payloadJson))
+                    .build();
 
-        var request = HttpRequest.newBuilder(
-                URI.create("https://sms.comtele.com.br/api/v2/send"))
-                .header("Content-Type", "application/json")
-                .header("auth-key", authKey)
-                .POST(HttpRequest.BodyPublishers.ofString(payloadJson))
-                .build();
-
-        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (NullPointerException ignored) { }
     }
 }
