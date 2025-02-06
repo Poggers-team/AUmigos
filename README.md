@@ -2,7 +2,7 @@
 Trabalho para a matéria de ARQWEB2
 
 ## Pré requisitos:
-Ter o apache maven e sql developer instalado na máquina.<br>
+Ter o apache maven e Oracle Database instalado na máquina.<br>
 ## Para o banco de dados:
   Execute o local host.sql.<br>
   Conecte ao AUMIGOS.<br>
