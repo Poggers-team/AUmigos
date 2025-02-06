@@ -86,7 +86,7 @@ public class AnimalDao {
     public List<Animal> getAnimalsByAdoptedStatus(boolean adopted) {
         List<Animal> animals = new ArrayList<>();
 
-        String sql = "select * from Animal where adopted = ?";
+//        String sql = "select * from Animal where adopted = ?";
         try (Connection conn = dataSource.getConnection();
              CallableStatement cs = conn.prepareCall("{call animal_admin.get_animals_by_adopted_status(?, ?)}")) {
             cs.setInt(1, adopted ? 1 : 0);

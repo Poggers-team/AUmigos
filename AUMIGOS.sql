@@ -301,10 +301,21 @@ CREATE OR REPLACE PACKAGE animal_admin AS
         p_animal_id IN NUMBER
     );
 
+    FUNCTION get_animal (
+        p_animal_id IN NUMBER
+    );
+    
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
         p_result OUT SYS_REFCURSOR
     );
+
+/*
+    PROCEDURE get_animal_by_id (
+        p_animal_id IN NUMBER,
+        p_result OUT SYS_REFCURSOR
+    );
+*/
 
     PROCEDURE get_animals_by_adopted_status (
         p_adopted IN NUMBER,
@@ -369,6 +380,35 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
         p_result OUT SYS_REFCURSOR
+    ) AS
+    BEGIN
+        -- Chamada da função get_animal para realizar a verificação
+        p_result := get_animal(p_animal_id);
+    END get_animal_by_id;
+    
+-- Função para recuperar o animal
+    FUNCTION get_animal (
+        p_animal_id IN NUMBER
+    ) RETURN SYS_REFCURSOR AS
+        -- Cursor para armazenar o resultado da consulta
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        /* Select na tabela animal para verificar se há um
+        animal com aquele id */
+        OPEN v_cursor FOR
+            SELECT * FROM animal WHERE animal_id = p_animal_id;
+            
+            IF NOT EXISTS (SELECT 1 FROM animal WHERE id = p_animal_id) THEN
+                DBMS_OUTPUT.PUT_LINE('Animal não encontrado.');
+            END IF;
+        -- Retorna o cursor para o procedimento get_animal_by_id
+        RETURN v_cursor;
+    END get_animal;
+
+/*
+    PROCEDURE get_animal_by_id (
+        p_animal_id IN NUMBER,
+        p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
         -- Verifica por todo o banco se há um animal com o id passado
@@ -377,6 +417,7 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
             FROM animal
             WHERE animal_id = p_animal_id;
     END get_animal_by_id;
+*/
 
 -- Procedimento que verifica o status de adoção do animal
     PROCEDURE get_animals_by_adopted_status (
@@ -418,7 +459,6 @@ CREATE OR REPLACE PACKAGE adoption_admin AS
         p_adoptionDate IN DATE,
         p_animalId IN NUMBER
     );
-
 END adoption_admin;
 /
 
