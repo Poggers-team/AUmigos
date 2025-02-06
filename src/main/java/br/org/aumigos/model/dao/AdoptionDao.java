@@ -1,7 +1,6 @@
 package br.org.aumigos.model.dao;
 
 import br.org.aumigos.model.adoption.Adoption;
-import br.org.aumigos.utils.DataSourceSearcher;
 
 import javax.sql.DataSource;
 import java.sql.CallableStatement;
@@ -30,9 +29,6 @@ public class AdoptionDao {
             CallableStatement cs = conn.prepareCall("{call adoption_admin.save_adoption(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
             populateCallableStatementForAdoption(adoption, cs);
             conn.setAutoCommit(false);
-
-            AnimalDao animalDao = new AnimalDao(DataSourceSearcher.getInstance().getDataSource());
-            if(!animalDao.setAnimalAsAdopted(adoption.getAnimal().getId())) throw new SQLException();
             cs.executeUpdate();
             conn.commit();
         } catch (SQLException e) {

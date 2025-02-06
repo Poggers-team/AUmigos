@@ -1,10 +1,10 @@
 /*
-O banco de dados a seguir tem como objetivo o armazenamento de informações
-da aplicação "ONG AUmigos", uma ONG que busca encontrar um lar para nossos
-amigos peludos, o banco de dados é composto pelas tabelas app_user (usuário),
-animal (animais resgatados), voluntary (voluntários para a ONG), adoption 
-(pessoa que deseja adotar um animal), ademais para melhor organização, as
-operações foram armazenadas em pacotes (user_admin, animal_admin, voluntary_admin, 
+O banco de dados a seguir tem como objetivo o armazenamento de informaï¿½ï¿½es
+da aplicaï¿½ï¿½o "ONG AUmigos", uma ONG que busca encontrar um lar para nossos
+amigos peludos, o banco de dados ï¿½ composto pelas tabelas app_user (usuï¿½rio),
+animal (animais resgatados), voluntary (voluntï¿½rios para a ONG), adoption 
+(pessoa que deseja adotar um animal), ademais para melhor organizaï¿½ï¿½o, as
+operaï¿½ï¿½es foram armazenadas em pacotes (user_admin, animal_admin, voluntary_admin, 
 adoption_admin), cada um respeitando sua responsabilidade de acordo com o objeto.
 */
 
@@ -13,10 +13,23 @@ BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE animal CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP TABLE voluntary CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP TABLE app_user CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE app_user_log CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP SEQUENCE user_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE voluntary_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE animal_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE adoption_seq';
+    EXECUTE IMMEDIATE 'DROP SEQUENCE app_user_log_seq';
+    EXECUTE IMMEDIATE 'DROP PACKAGE user_admin';
+    EXECUTE IMMEDIATE 'DROP PACKAGE voluntary_admin';
+    EXECUTE IMMEDIATE 'DROP PACKAGE animal_admin';
+    EXECUTE IMMEDIATE 'DROP PACKAGE adoption_admin';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_app_user_id';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_voluntary_id';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_animal_id';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_adoption_id';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_set_animal_as_adopted';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_app_user_log_id';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_app_user_log';
 EXCEPTION
     WHEN OTHERS THEN
         NULL;
@@ -24,12 +37,12 @@ END;
 /
 
 CREATE TABLE app_user(
-     user_id NUMBER(20) PRIMARY KEY,
-     user_name VARCHAR2(50) NOT NULL,
-     email VARCHAR2(50) NOT NULL,
-     user_password VARCHAR2(50) NOT NULL,
-     dateOfBirth DATE NOT NULL,
-     gender VARCHAR2(20) NOT NULL
+    user_id NUMBER(20) PRIMARY KEY,
+    user_name VARCHAR2(50) NOT NULL,
+    email VARCHAR2(50) NOT NULL,
+    user_password VARCHAR2(50) NOT NULL,
+    dateOfBirth DATE NOT NULL,
+    gender VARCHAR2(20) NOT NULL
 );
 
 CREATE TABLE animal (
@@ -95,42 +108,28 @@ CREATE TABLE adoption (
       CONSTRAINT fk_animal FOREIGN KEY (animalId) REFERENCES animal(animal_id)
 );
 
+CREATE TABLE app_user_log (
+    log_id NUMBER(20),
+    user_id NUMBER(20),
+    action_type VARCHAR2(10),
+    action_timestamp TIMESTAMP,
+    old_user_name VARCHAR2(50),
+    old_email VARCHAR2(50),
+    old_user_password VARCHAR2(50),
+    old_dateOfBirth DATE,
+    old_gender VARCHAR2(20),
+    new_user_name VARCHAR2(50),
+    new_email VARCHAR2(50),
+    new_user_password VARCHAR2(50),
+    new_dateOfBirth DATE,
+    new_gender VARCHAR2(20)
+);
+
 CREATE SEQUENCE user_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE voluntary_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE animal_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE adoption_seq START WITH 1 INCREMENT BY 1;
-
-CREATE OR REPLACE TRIGGER trg_app_user_id
-    BEFORE INSERT ON app_user
-    FOR EACH ROW
-BEGIN
-    :NEW.user_id := user_seq.nextval;
-END;
-/
-
-CREATE OR REPLACE TRIGGER trg_voluntary_id
-    BEFORE INSERT ON voluntary
-    FOR EACH ROW
-BEGIN
-    :NEW.voluntary_id := voluntary_seq.nextval;
-END;
-/
-
-CREATE OR REPLACE TRIGGER trg_animal_id
-    BEFORE INSERT ON animal
-    FOR EACH ROW
-BEGIN
-    :NEW.animal_id := animal_seq.nextval;
-END;
-/
-
-CREATE OR REPLACE TRIGGER trg_adoption_id
-    BEFORE INSERT ON adoption
-    FOR EACH ROW
-BEGIN
-    :NEW.adoption_id := adoption_seq.nextval;
-END;
-/
+CREATE SEQUENCE app_user_log_seq START WITH 1 INCREMENT BY 1;
 
 CREATE OR REPLACE PACKAGE user_admin AS
     PROCEDURE save_user (
@@ -154,7 +153,7 @@ END user_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY user_admin AS
--- Procedimento para salvar usuário
+-- Procedimento para salvar usuï¿½rio
     PROCEDURE save_user (
         p_name_user IN VARCHAR2,
         p_email IN VARCHAR2,
@@ -162,13 +161,13 @@ CREATE OR REPLACE PACKAGE BODY user_admin AS
         p_dateOfBirth IN DATE,
         p_gender IN VARCHAR2
     ) AS
-        v_count NUMBER; -- variável para saber se o usuário já existe
+        v_count NUMBER; -- variï¿½vel para saber se o usuï¿½rio jï¿½ existe
     BEGIN
-        -- Chamando a função user_exists e passando para a variável v_count
+        -- Chamando a funï¿½ï¿½o user_exists e passando para a variï¿½vel v_count
         v_count := user_exists(p_email);
 
-        /* Caso o usuário exista, é lançado uma exceção,
-        caso contrário o usuário é criado. */
+        /* Caso o usuï¿½rio exista, ï¿½ lanï¿½ado uma exceï¿½ï¿½o,
+        caso contrï¿½rio o usuï¿½rio ï¿½ criado. */
         IF v_count > 0 THEN
             RAISE_APPLICATION_ERROR(-400, 'UsuÃ¡rio jÃ¡ cadastrado.');
         ELSE
@@ -179,8 +178,8 @@ CREATE OR REPLACE PACKAGE BODY user_admin AS
         END IF;
     END save_user;
 
-/* Procedimento que verifica se email e senha passados corresponde as informações
-no banco para autenticar o login de um usuário */
+/* Procedimento que verifica se email e senha passados corresponde as informaï¿½ï¿½es
+no banco para autenticar o login de um usuï¿½rio */
     PROCEDURE get_user_by_email_and_password (
         p_email IN VARCHAR2,
         p_password IN VARCHAR2,
@@ -194,14 +193,14 @@ no banco para autenticar o login de um usuário */
             WHERE email = p_email AND user_password = p_password;
     END get_user_by_email_and_password;
 
--- Função que procura se um usuário existe
+-- Funï¿½ï¿½o que procura se um usuï¿½rio existe
     FUNCTION user_exists (
         p_user_email IN VARCHAR2
     ) RETURN NUMBER IS
         v_count NUMBER;
     BEGIN
-        /* Se já houver um email cadastrado ele retorna o contador,
-        para confirmar que já existe um usuário usando aquele email */
+        /* Se jï¿½ houver um email cadastrado ele retorna o contador,
+        para confirmar que jï¿½ existe um usuï¿½rio usando aquele email */
         SELECT COUNT(*)
         INTO v_count
         FROM app_user
@@ -228,7 +227,7 @@ END voluntary_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
--- Procedimento para salvar um voluntário
+-- Procedimento para salvar um voluntÃ¡rio
     PROCEDURE save_voluntary (
         p_voluntary_name IN VARCHAR2,
         p_email IN VARCHAR2,
@@ -238,11 +237,11 @@ CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
     ) AS
         v_count NUMBER;
     BEGIN
-        -- Chamando a função voluntary_exists e passando para a variável v_count
+        -- Chamando a funÃ§Ã£o voluntary_exists e passando para a variÃ¡vel v_count
         v_count := voluntary_exists(p_email);
 
-        /* Caso o usuário exista, é lançado uma mensagem,
-        caso contrário o voluntário é registrado. */
+        /* Caso o usuÃ¡rio exista, Ã© lanÃ§ado uma mensagem,
+        caso contrÃ¡rio o voluntÃ¡rio Ã© registrado. */
         IF v_count > 0 THEN
             DBMS_OUTPUT.PUT_LINE('Voluntï¿½rio jï¿½ cadastrado.');
         ELSE
@@ -253,14 +252,14 @@ CREATE OR REPLACE PACKAGE BODY voluntary_admin AS
         END IF;
     END save_voluntary;
 
--- Função que procura se um voluntário existe
+-- FunÃ§Ã£o que procura se um voluntï¿½rio existe
     FUNCTION voluntary_exists (
         p_voluntary_email IN VARCHAR2
     ) RETURN NUMBER IS
         v_count NUMBER;
     BEGIN
-        /* Se já houver um email cadastrado ele retorna o contador,
-        para confirmar que já existe um voluntário usando aquele email */
+        /* Se jÃ¡ houver um email cadastrado ele retorna o contador,
+        para confirmar que jÃ¡ existe um voluntÃ¡rio usando aquele email */
         SELECT COUNT(*)
         INTO v_count
         FROM voluntary
@@ -295,10 +294,6 @@ CREATE OR REPLACE PACKAGE animal_admin AS
         p_color IN VARCHAR2,
         p_story IN CLOB,
         p_announcementDate IN DATE
-    );
-
-    PROCEDURE set_animal_as_adopted (
-        p_animal_id IN NUMBER
     );
 
     FUNCTION get_animal (
@@ -351,7 +346,7 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
         p_announcementDate IN DATE
     ) AS
     BEGIN
-        -- Para cadastrar um animal não é necessário validações
+        -- Para cadastrar um animal nÃ£o Ã© necessÃ¡rio validaÃ§Ãµes
         INSERT INTO animal(animal_name, animal_type, breed, gender, animal_size,
                            age, castrated, adopted, vaccinated, dewormed, temperament, socialization,
                            address, city, contactName, contactEmail, contactPhone, image, fileName,
@@ -364,42 +359,30 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
         DBMS_OUTPUT.PUT_LINE('Animal cadastrado com sucesso.');
     END save_animal;
 
--- Procedimento para dizer que um animal está adotado
-    PROCEDURE set_animal_as_adopted (
-        p_animal_id IN NUMBER
-    ) AS
-    BEGIN
-        /* Atualização do adopted para 1 (animal adotado)
-        na tabela animal*/
-        UPDATE Animal
-        SET adopted = 1
-        WHERE animal_id = p_animal_id;
-    END set_animal_as_adopted;
-
 -- Procedimento que recupera um animal pelo seu id
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
         p_result OUT SYS_REFCURSOR
     ) AS
     BEGIN
-        -- Chamada da função get_animal para realizar a verificação
+        -- Chamada da funï¿½ï¿½o get_animal para realizar a verificaï¿½ï¿½o
         p_result := get_animal(p_animal_id);
     END get_animal_by_id;
     
--- Função para recuperar o animal
+-- Funï¿½ï¿½o para recuperar o animal
     FUNCTION get_animal (
         p_animal_id IN NUMBER
     ) RETURN SYS_REFCURSOR AS
         -- Cursor para armazenar o resultado da consulta
         v_cursor SYS_REFCURSOR;
     BEGIN
-        /* Select na tabela animal para verificar se há um
+        /* Select na tabela animal para verificar se hï¿½ um
         animal com aquele id */
         OPEN v_cursor FOR
             SELECT * FROM animal WHERE animal_id = p_animal_id;
             
             IF NOT EXISTS (SELECT 1 FROM animal WHERE id = p_animal_id) THEN
-                DBMS_OUTPUT.PUT_LINE('Animal não encontrado.');
+                DBMS_OUTPUT.PUT_LINE('Animal nï¿½o encontrado.');
             END IF;
         -- Retorna o cursor para o procedimento get_animal_by_id
         RETURN v_cursor;
@@ -411,7 +394,7 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
         p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
-        -- Verifica por todo o banco se há um animal com o id passado
+        -- Verifica por todo o banco se hÃ¡ um animal com o id passado
         OPEN p_result FOR
             SELECT *
             FROM animal
@@ -419,13 +402,13 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
     END get_animal_by_id;
 */
 
--- Procedimento que verifica o status de adoção do animal
+-- Procedimento que verifica o status de adoÃ§Ã£o do animal
     PROCEDURE get_animals_by_adopted_status (
         p_adopted IN NUMBER,
         p_result OUT SYS_REFCURSOR
     ) IS
     BEGIN
-        -- Verifica por todo o banco os animais já adotados
+        -- Verifica por todo o banco os animais jÃ¡ adotados
         OPEN p_result FOR
             SELECT *
             FROM animal
@@ -463,7 +446,7 @@ END adoption_admin;
 /
 
 CREATE OR REPLACE PACKAGE BODY adoption_admin AS
--- Procedimento para salvar as informações do responsável pelo animal
+-- Procedimento para salvar as informaÃ§Ãµes do responsÃ¡vel pelo animal
     PROCEDURE save_adoption(
         p_adopterName IN VARCHAR2,
         p_adopterAge IN VARCHAR2,
@@ -489,7 +472,7 @@ CREATE OR REPLACE PACKAGE BODY adoption_admin AS
         p_animalId IN NUMBER
     ) AS
     BEGIN
-        -- Para cadastrar as informações do responsável não é necessário validações
+        -- Para cadastrar as informaÃ§Ãµes do responsÃ¡vel nÃ£o Ã© necessÃ¡rio validaÃ§Ãµes
         INSERT INTO adoption(adopterName, adopterAge, adopterEmail, adopterZipcode,
                              adopterAddress, adopterPhone, adopterTypeOfResidence,
                              adopterHouseHasAutomaticGate, adopterHouseHasPool,
@@ -510,4 +493,90 @@ CREATE OR REPLACE PACKAGE BODY adoption_admin AS
         DBMS_OUTPUT.PUT_LINE('AdoÃ§Ã£o cadastrada com sucesso.');
     END save_adoption;
 END adoption_admin;
+/
+
+CREATE OR REPLACE TRIGGER trg_app_user_id
+    BEFORE INSERT ON app_user
+    FOR EACH ROW
+BEGIN
+    :NEW.user_id := user_seq.nextval;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_voluntary_id
+    BEFORE INSERT ON voluntary
+    FOR EACH ROW
+BEGIN
+    :NEW.voluntary_id := voluntary_seq.nextval;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_animal_id
+    BEFORE INSERT ON animal
+    FOR EACH ROW
+BEGIN
+    :NEW.animal_id := animal_seq.nextval;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_adoption_id
+    BEFORE INSERT ON adoption
+    FOR EACH ROW
+BEGIN
+    :NEW.adoption_id := adoption_seq.nextval;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_set_animal_as_adopted
+    AFTER INSERT ON adoption
+    FOR EACH ROW
+BEGIN
+    UPDATE Animal
+        SET adopted = 1
+        WHERE animal_id = :NEW.animalId;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_app_user_log_id
+    BEFORE INSERT ON app_user_log
+    FOR EACH ROW
+BEGIN
+    :NEW.log_id := app_user_log_seq.nextval;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_app_user_log
+AFTER INSERT OR UPDATE OR DELETE ON app_user
+FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        INSERT INTO app_user_log (
+            user_id, action_type, action_timestamp,
+            new_user_name, new_email, new_user_password, new_dateOfBirth, new_gender
+        ) VALUES (
+            :NEW.user_id, 'CREATE', SYSTIMESTAMP,
+            :NEW.user_name, :NEW.email, :NEW.user_password, :NEW.dateOfBirth, :NEW.gender
+        );
+
+    ELSIF UPDATING THEN
+        INSERT INTO app_user_log (
+            user_id, action_type, action_timestamp,
+            old_user_name, old_email, old_user_password, old_dateOfBirth, old_gender,
+            new_user_name, new_email, new_user_password, new_dateOfBirth, new_gender
+        ) VALUES (
+            :OLD.user_id, 'UPDATE', SYSTIMESTAMP,
+            :OLD.user_name, :OLD.email, :OLD.user_password, :OLD.dateOfBirth, :OLD.gender,
+            :NEW.user_name, :NEW.email, :NEW.user_password, :NEW.dateOfBirth, :NEW.gender
+        );
+
+    ELSIF DELETING THEN
+        INSERT INTO app_user_log (
+            user_id, action_type, action_timestamp,
+            old_user_name, old_email, old_user_password, old_dateOfBirth, old_gender
+        ) VALUES (
+            :OLD.user_id, 'DELETE', SYSTIMESTAMP,
+            :OLD.user_name, :OLD.email, :OLD.user_password, :OLD.dateOfBirth, :OLD.gender
+        );
+    END IF;
+END;
 /
