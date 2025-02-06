@@ -239,6 +239,10 @@ nav ul li:hover ul {
     margin-bottom: 30px;
 }
 
+.card-link {
+    text-decoration: none;
+}
+
 .hero .buttons {
     display: flex;
     gap: 15px;
