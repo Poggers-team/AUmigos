@@ -84,7 +84,17 @@
                                     <p>${animal.city}</p>
                                 </div>
                                 <div class="card-icon">
-                                    <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone dinâmico">
+                                    <c:choose>
+                                        <c:when test="${animal.type == 'CACHORRO'}">
+                                            <img class="animal-icon" src="assets/icons/dog.svg" alt="Ícone de cachorro">
+                                        </c:when>
+                                        <c:when test="${animal.type == 'GATO'}">
+                                            <img class="animal-icon" src="assets/icons/cat.svg" alt="Ícone de gato">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone estrelaa">
+                                        </c:otherwise>
+                                    </c:choose>
                                     <c:if test="${animal.daysAgo == 0}">
                                         <span>Hoje</span>
                                     </c:if>
