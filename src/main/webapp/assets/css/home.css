@@ -918,44 +918,44 @@ footer {
 
     .hero-container {
         margin-top: 50px;
-        flex-direction: column; 
+        flex-direction: column;
         text-align: center;
     }
 
     .hero .content {
-        margin-bottom: 20px; 
+        margin-bottom: 20px;
     }
 
     .hero h1 {
-        font-size: 1.8rem; 
+        font-size: 1.8rem;
     }
-    
+
     .hero .btn small {
-         font-size: 0.7rem; 
+         font-size: 0.7rem;
      }
 
     .hero p {
         font-size: 0.9rem;
     }
     .hero .buttons {
-        flex-direction: column; 
+        flex-direction: column;
     }
 
     .hero .btn {
-        width: 100%; 
+        width: 100%;
         max-width: none;
     }
 
     .hero .btn img {
-        margin-right: 5px; 
+        margin-right: 5px;
     }
 
     .hero .btn span {
-        font-size: 0.9rem; 
+        font-size: 0.9rem;
     }
 
     .hero-image {
         margin-top: -50px;
-        max-width: 300px; 
+        max-width: 300px;
     }
 }
