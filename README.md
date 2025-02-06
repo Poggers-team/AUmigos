@@ -2,8 +2,14 @@
 Trabalho para a matéria de ARQWEB2
 
 ## Pré requisitos:
-Ter o apache maven instalado na máquina.<br>
-OPCIONAL:
+Ter o apache maven e Oracle Database instalado na máquina.<br>
+## Para o banco de dados:
+  Execute o local host.sql.<br>
+  Conecte ao AUMIGOS.<br>
+  Execute o AUMIGOS.sql.<br>
+  OBS: Verifique seu serviço quando for realizar a conexão, se é padrão xe ou se é XEPDB1.<br>
+  
+## OPCIONAL:
 Ter uma conta na [comtele](https://comtele.com.br), para envios de sms na aplicação é necessário definir um arquivo config.properties no diretório (src/main/resources/config.properties) e colocar o AUTH-KEY=chave_de_api
 
 ## Devs:

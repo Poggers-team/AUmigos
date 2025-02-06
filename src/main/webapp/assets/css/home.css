@@ -109,14 +109,15 @@ nav ul li {
 
 .menu li ul {
     display: none;
-    position: static;
-    top: 100%;
+    position: absolute;
+    top: calc(100% + 10px);
     left: 0;
     background-color: #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     z-index: 10;
     padding: 10px 0;
+    min-width: 180px;
 }
 
 .menu li ul li {
@@ -208,7 +209,7 @@ nav ul li:hover ul {
 }
 
 .hero {
-    padding: 80px 200px;
+    padding: 100px 20px;
     background-color: #f8f9fa;
 }
 
@@ -216,18 +217,18 @@ nav ul li:hover ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
+    gap: 100px;
+    flex-wrap: nowrap;
 }
 
 .hero .content {
     flex: 1;
-    margin-right: 500px;
 }
 
 .hero h1 {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 3.3rem;
+    font-weight: 1000;
+    font-size: 3rem;
     color: #1E1E1E;
     margin-bottom: 20px;
 }
@@ -247,12 +248,12 @@ nav ul li:hover ul {
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 15px;
     border-radius: 8px;
     font-weight: bold;
     transition: all 0.3s ease;
-    width: 220px;
+    width: 240px;
     text-align: left;
 }
 
@@ -276,11 +277,18 @@ nav ul li:hover ul {
     background-color: #f8f9fa;
 }
 
+.hero .btn img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
 .hero .btn span {
     font-size: 1rem;
     font-weight: 700;
-    margin-left: 3px;
+    line-height: 1.2;
 }
+
 .hero .btn small {
     display: block;
     font-size: 0.8rem;
@@ -288,15 +296,11 @@ nav ul li:hover ul {
     color: #aaa;
 }
 
-.hero .btn img {
-    width: 46px;
-    height: 37px;
-}
-
 .hero-image {
-    margin-left: -300px;
-    width: 70%;
-    max-width: 600px;
+    flex: 1;
+    max-width: 500px;
+    height: auto;
+    object-fit: contain;
 }
 
 .section {
@@ -444,8 +448,10 @@ nav ul li:hover ul {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
+    margin-top: 30px;
+    justify-content: center;
 }
 
 .card {
@@ -455,13 +461,18 @@ nav ul li:hover ul {
     overflow: hidden;
     position: relative;
     text-align: center;
+    height: 330px;
+    width: 265px;
+    margin: 0 auto;
 }
 
-.card img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ddd;
+.card-img {
+    width: 100%;  !important;
+    height: 250px !important;
+    border-bottom: 4px solid #230735 !important;
+    object-fit: cover;
 }
+
 
 .card-info {
     padding: 15px;
@@ -903,5 +914,48 @@ footer {
 
     .menu li ul {
         position: static;
+    }
+
+    .hero-container {
+        margin-top: 50px;
+        flex-direction: column; 
+        text-align: center;
+    }
+
+    .hero .content {
+        margin-bottom: 20px; 
+    }
+
+    .hero h1 {
+        font-size: 1.8rem; 
+    }
+    
+    .hero .btn small {
+         font-size: 0.7rem; 
+     }
+
+    .hero p {
+        font-size: 0.9rem;
+    }
+    .hero .buttons {
+        flex-direction: column; 
+    }
+
+    .hero .btn {
+        width: 100%; 
+        max-width: none;
+    }
+
+    .hero .btn img {
+        margin-right: 5px; 
+    }
+
+    .hero .btn span {
+        font-size: 0.9rem; 
+    }
+
+    .hero-image {
+        margin-top: -50px;
+        max-width: 300px; 
     }
 }

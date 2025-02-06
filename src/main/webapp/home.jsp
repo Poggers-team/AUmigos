@@ -12,7 +12,6 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fredoka+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 
@@ -73,32 +72,32 @@
             <a href="#" class="link-region">Ver na minha região</a>
         </div>
         <div class="cards">
-            <!-- Itera sobre a lista de animais -->
             <c:set var="counter" value="0" />
             <c:forEach var="animal" items="${animals}">
                 <c:if test="${counter lt 4}">
-                    <div class="card">
-                        <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
-                        <div class="card-info">
-                            <div class="card-info-left">
-                                <h3>${animal.name}</h3>
-                                <p>${animal.city}</p>
-                            </div>
-                            <div class="card-icon">
-                                <img src="assets/icons/star.svg" alt="Ícone de estrela">
-                                <c:if test="${animal.daysAgo == 0}">
-                                    <span>Hoje</span>
-                                </c:if>
-                                <c:if test="${animal.daysAgo != 0}">
-                                    <span>${animal.daysAgo} dias atrás</span>
-                                </c:if>
+                    <a href="FrontController?action=animalList&adopted=false" class="card-link">
+                        <div class="card" data-type="${animal.type}">
+                            <img class="card-img" src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
+                            <div class="card-info">
+                                <div class="card-info-left">
+                                    <h3>${animal.name}</h3>
+                                    <p>${animal.city}</p>
+                                </div>
+                                <div class="card-icon">
+                                    <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone dinâmico">
+                                    <c:if test="${animal.daysAgo == 0}">
+                                        <span>Hoje</span>
+                                    </c:if>
+                                    <c:if test="${animal.daysAgo != 0}">
+                                        <span>${animal.daysAgo} dias atrás</span>
+                                    </c:if>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <c:set var="counter" value="${counter + 1}" />
                 </c:if>
             </c:forEach>
-
         </div>
         <br><br>
         <div class="section-footer">
@@ -223,7 +222,7 @@
                     return;
                 }
 
-                const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+                const url = https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json;
 
                 console.log("URL de requisição montada:", url);
 
@@ -231,7 +230,7 @@
                     const response = await fetch(url);
 
                     if (!response.ok) {
-                        throw new Error(`Erro na API OpenStreetMap: ${response.statusText}`);
+                        throw new Error(Erro na API OpenStreetMap: ${response.statusText});
                     }
 
                     const data = await response.json();
@@ -290,4 +289,3 @@
 
 </body>
 </html>
-
