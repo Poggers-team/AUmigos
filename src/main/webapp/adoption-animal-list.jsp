@@ -286,25 +286,6 @@
             transform: translateX(26px);
         }
 
-
-        @media (max-width: 1200px) {
-            .cards {
-                grid-template-columns: repeat(3, 1fr); 
-            }
-        }
-
-        @media (max-width: 768px) {
-            .cards {
-                grid-template-columns: repeat(2, 1fr); 
-            }
-        }
-
-        @media (max-width: 480px) {
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .card.visible {
             opacity: 1;
             transform: translateY(0);
@@ -318,43 +299,42 @@
         .card {
             background-color: #f9f9f9;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
             text-align: center;
-            height: 400px;
-            width: 265px;
+            width: 100%;
+            max-width: 250px;
+            position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
 
-        .card img {
+        .card-img {
             width: 100%;  !important;
-            height: 250px !important;
+            height: 200px !important;
             border-bottom: 4px solid #230735 !important;
             object-fit: cover;
         }
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px; 
-            width: 100%; 
-            justify-content: center; 
-            margin-top: 20px; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
         }
 
         .card-info {
             display: flex;
             flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            padding: 1px; 
-            gap: 1px; 
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            gap: 1px;
         }
 
         .card-info h3 {
@@ -362,15 +342,15 @@
             font-weight: bold;
             font-size: 1.2rem;
             color: #230735;
-            margin: 0; 
+            margin: 0;
         }
 
         .card-info p {
             font-size: 1rem;
             color: #555;
-            margin: 0; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
 
@@ -381,8 +361,8 @@
         }
 
         .card-icon img {
-            width: 25px;
-            height: 25px;
+            width: 30px !important;
+            height: 30px !important;
         }
 
         .range-container {
@@ -457,6 +437,148 @@
             text-align: left;
         }
 
+        .animal-icon {
+            width: 28px !important;
+            height: 28px !important;
+            margin-left: 30px !important;
+            display: block;
+        }
+        .cards-container {
+            width: 100%;
+        }
+
+        .section-title {
+            width: 100%;
+            padding: 10px;
+            font-size: 2rem;
+            font-family: 'Poppins', sans-serif;
+            color: #230735;
+        }
+
+        .card-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                padding: 10px;
+                gap: 15px;
+            }
+
+            .filters {
+                width: 100%;
+                max-width: none;
+                position: relative;
+                top: auto;
+                border-radius: 8px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .cards {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .card {
+                max-width: 100%;
+            }
+
+            .card-img {
+                height: 150px;
+            }
+
+            .section-title {
+                width: 100%;
+                padding: 10px;
+                font-size: 2rem;
+                font-family: 'Poppins', sans-serif;
+                align-items: center;
+                text-align: center;
+                color: #230735;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filters {
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .filters h2 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            .filters label {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+
+            .filters input[type="text"],
+            .filters select {
+                font-size: 0.9rem;
+                padding: 8px;
+                border-radius: 6px;
+            }
+
+            .filters .filter-option {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .filters .switch-container {
+                flex-shrink: 0;
+            }
+
+            .filters button {
+                font-size: 1rem;
+                padding: 10px;
+                background-color: #6d014e;
+                border-radius: 8px;
+            }
+
+            .section-title {
+                width: 100%;
+                padding: 10px;
+                font-size: 2rem;
+                font-family: 'Poppins', sans-serif;
+                align-items: center;
+                text-align: center;
+                color: #230735;
+            }
+
+            .range-container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 5px;
+            }
+
+            .range-container span {
+                font-size: 0.8rem;
+                margin: 0;
+                text-align: center;
+            }
+
+            #idade {
+                width: 100%;
+            }
+        }
     </style>
     <link rel="icon" href="assets/img/favicon.png">
 </head>
@@ -534,28 +656,43 @@
         <button type="button" id="limpar-filtros" class="cleanbutton">Limpar Filtros</button>
     </aside>
 
-
-    <div class="cards">
-        <c:forEach var="animal" items="${animals}">
-            <div class="card"
-                 data-image="data:image/jpeg;base64,${animal.image}"
-                 data-id="${animal.id}"
-                 data-name="${animal.name}"
-                 data-description="${animal.story}"
-                 data-gender="${animal.gender}"
-                 data-size="${animal.size}"
-                 data-type="${animal.type}"
-                 data-age="${animal.age}"
-                 data-city="${animal.city}">
-                <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
-                <div class="card-info">
-                    <h3>${animal.name}<p>${animal.city}</p></h3>
+    <div class="cards-container">
+        <h2 class="section-title">Animais para Adoção</h2>
+        <div class="cards">
+            <c:forEach var="animal" items="${animals}">
+                <div class="card"
+                     data-image="data:image/jpeg;base64,${animal.image}"
+                     data-id="${animal.id}"
+                     data-name="${animal.name}"
+                     data-description="${animal.story}"
+                     data-gender="${animal.gender}"
+                     data-size="${animal.size}"
+                     data-type="${animal.type}"
+                     data-age="${animal.age}"
+                     data-city="${animal.city}">
+                    <img class="card-img" src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
+                    <div class="card-info">
+                        <h3>${animal.name}<p>${animal.city}</p></h3>
+                        <div class="card-icon">
+                            <c:choose>
+                                <c:when test="${animal.type == 'CACHORRO'}">
+                                    <img class="animal-icon" src="assets/icons/dog.svg" alt="Ícone de cachorro">
+                                </c:when>
+                                <c:when test="${animal.type == 'GATO'}">
+                                    <img class="animal-icon" src="assets/icons/cat.svg" alt="Ícone de gato">
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="animal-icon" src="assets/icons/star.svg" alt="Ícone estrela">
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </c:forEach>
+            </c:forEach>
+        </div>
     </div>
-    
-   
+
+
 
 </div>
 
@@ -714,9 +851,9 @@
             document.getElementById('idade').value = 20;
             document.getElementById('idade-valor').textContent = 20;
             filterAnimals();
-    });
+        });
 
-});
+    });
 
     function toggleSpeciesSelection(selectedSpecies) {
         const speciesOptions = document.querySelectorAll('input[name="especie"]');
