@@ -33,25 +33,83 @@
         }
 
         .sidebar {
-            background-color: #230735;
+            position: relative;
+            background: linear-gradient(to top, rgba(35, 7, 53, 1), rgba(35, 7, 53, 0)); /* Degradê roxo */
             color: #fff;
-            padding: 100px;
             width: 35%;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            padding: 30px;
         }
 
-        .sidebar h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
+.sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
+    background-color: rgba(35, 7, 53, 0.7);
+    z-index: 1;
+}
 
-        .sidebar p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #e2e2e2;
-        }
+.animal-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.sidebar h1 {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
+    text-align: center;
+    margin: 0;
+    width: 90%;
+}
+
+.info-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    z-index: 2;
+}
+
+.info-container p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e2e2e2;
+    margin: 5px 0;
+}
+
+
+.info-container p strong {
+    font-weight: bold;
+}
+
+.info-container p {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #e2e2e2;
+    margin: 5px 0;
+}
+
+
 
         .form-container {
             width: 65%;
@@ -279,8 +337,8 @@
         <div class="sidebar">
             <h1>${animal.name}</h1>
             <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
-
-            <p>Espécie:
+            <div class="info-container">
+            <p><b>Espécie:</b>
                 <c:if test="${animal.type == 'CACHORRO'}">
                     Cachorro
                 </c:if>
@@ -292,9 +350,9 @@
                 </c:if>
             </p>
 
-            <p>Raça: ${animal.breed}</p>
+            <p><b>Raça:</b> ${animal.breed}</p>
 
-            <p>Gênero:
+            <p><b>Gênero:</b>
                 <c:if test="${animal.gender == 'MACHO'}">
                     Macho
                 </c:if>
@@ -303,7 +361,7 @@
                 </c:if>
             </p>
 
-            <p>Porte:
+            <p><b>Porte:</b>
                 <c:if test="${animal.size == 'PEQUENO'}">
                     Pequeno
                 </c:if>
@@ -315,30 +373,8 @@
                 </c:if>
             </p>
 
-            <p>Idade: ${animal.age}</p>
-
-            <h2>Características:</h2>
-
-            <c:if test="${animal.castrated == true}">
-                <p>Castrado</p>
-            </c:if>
-
-            <c:if test="${animal.vaccinated == true}">
-                <p>Vacinado</p>
-            </c:if>
-
-            <c:if test="${animal.dewormed == true}">
-                <p>Vermifugado</p>
-            </c:if>
-
-            <p>Temperamento: ${animal.temperament}</p>
-
-            <p>Socialização: ${animal.socialization}</p>
-
-            <p>Cor: ${animal.color}</p>
-
-            <p>História: ${animal.story}</p>
-
+            <p><b>Idade:</b> ${animal.age}</p>
+        </div>
         </div>
         
 
@@ -505,7 +541,6 @@
                 </div>
             </div>
 
-            <!-- Etapa 7 -->
             <div class="form-step">
                 <h1>Qual a rotina da sua casa?</h1>
                 <br>
