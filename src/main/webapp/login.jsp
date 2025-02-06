@@ -153,6 +153,44 @@
             margin-bottom: 8px;
         }
 
+        .login-img {
+            max-width: 70%;
+        }
+
+        @media (max-width: 1366px) {
+            .login-img {
+                max-width: 60%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .login-img {
+                max-width: 50%;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .img-container {
+                display: none !important;
+            }
+            .form-container {
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .form-container label,
+            .form-container input,
+            .form-container p {
+                font-size: 0.9rem;
+            }
+        }
 
     </style>
 </head>
@@ -162,59 +200,67 @@
         <%@ include file="components/header.jsp" %>
     </header>
     <section>
-        <div class="container py-5 h-100">
-            <div class="col-lg-6 offset-lg-3 col-sm-12">
-                <c:choose>
-                    <c:when test="${result == 'registered'}">
-                        <div class="alert alert-success alert-dismissible fade show"
-                             role="alert">
-                            Usuário cadastrado com sucesso. Faça o login.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                        </div>
-                    </c:when>
-                    <c:when test="${result == 'loginError'}">
-                        <div class="alert alert-danger alert-dismissible fade show"
-                             role="alert">
-                            E-mail e/ou senha inválidos.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                        </div>
-                    </c:when>
-                </c:choose>
+<div class="container py-5 h-100">
+    <div class="col-lg-6 offset-lg-3 col-sm-12">
+        <c:choose>
+            <c:when test="${result == 'registered'}">
+                <div class="alert alert-success alert-dismissible fade show"
+                     role="alert">
+                    Usuário cadastrado com sucesso. Faça o login.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+            </c:when>
+            <c:when test="${result == 'loginError'}">
+                <div class="alert alert-danger alert-dismissible fade show"
+                     role="alert">
+                    E-mail e/ou senha inválidos.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+            </c:when>
+        </c:choose>
+    </div>
+    <br>
+    <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="d-flex flex-wrap w-100">
+            <!-- Imagem - Some em telas menores -->
+            <div class="col-lg-6 col-md-5 d-flex justify-content-center align-items-center img-container">
+                <img src="assets/img/img-login.jpg"
+                     class="img-fluid login-img" alt="Imagem de login">
             </div>
-            <div class="row d-flex align-items-center justify-content-center h-100 login-form">
-                <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="assets/img/img-login.jpg"
-                         class="img-fluid" alt="Phone image" width="80%">
-                </div>
-                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" id="forms">
-                    <h2>Entre com sua conta!</h2>
-                    <br>
-                    <form action="FrontController" method="post">
-                        <!-- Email input -->
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <label class="form-label" for="email">Email:</label>
-                            <input type="email" id="email" name="email" class="form-control form-control-lg" required/>
-                        </div>
+            <!-- Formulário -->
+            <div class="col-lg-6 col-md-7 col-sm-12 d-flex flex-column justify-content-center px-4 form-container">
+                <h2 class="text-center">Entre com sua conta!</h2>
+                <br>
+                <form action="FrontController" method="post">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="email">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control form-control-lg" required/>
+                    </div>
 
-                        <!-- Password input -->
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <label class="form-label" for="password">Senha:</label>
-                            <input type="password" id="password" name="password" class="form-control form-control-lg" required/>
-                        </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="password">Senha:</label>
+                        <input type="password" id="password" name="password" class="form-control form-control-lg" required/>
+                    </div>
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn-login" name="action" value="login">Entrar</button>
-                    </form>
-                    <br>
-                    <p>Não possui cadastro?
-                        <a href="user-register.jsp" class="link-primary">Registre-se!</a>
-                    </p>
-                </div>
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary w-100" name="action" value="login">Entrar</button>
+                </form>
+                <br>
+                <p class="text-center">Não possui cadastro?
+                    <a href="user-register.jsp" class="link-primary">Registre-se!</a>
+                </p>
             </div>
         </div>
+    </div>
+</div>
+
+
     </section>
+    <br><br>
     <footer>
         <%@ include file="components/footer.jsp" %>
     </footer>
