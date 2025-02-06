@@ -452,6 +452,11 @@
             height: 1.2rem;
             width: 1.2rem;
         }
+
+        .card-info {
+            text-align: left;
+        }
+
     </style>
     <link rel="icon" href="assets/img/favicon.png">
 </head>
@@ -519,11 +524,11 @@
             <option value="grande">Grande</option>
         </select>
 
-        <label for="idade">Idade Máxima: <span id="idade-valor">8</span> anos</label>
+        <label for="idade">Idade Máxima: <span id="idade-valor">20</span> anos</label>
         <div class="range-container">
             <span class="range-min">1</span>
-            <input type="range" id="idade" name="idade" min="1" max="15" value="8" class="custom-slider">
-            <span class="range-max">15</span>
+            <input type="range" id="idade" name="idade" min="1" max="20" value="20" class="custom-slider">
+            <span class="range-max">20</span>
         </div>
         <br>
         <button type="button" id="limpar-filtros" class="cleanbutton">Limpar Filtros</button>
@@ -544,13 +549,13 @@
                  data-city="${animal.city}">
                 <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
                 <div class="card-info">
-                    <h3>${animal.name}</h3>
-
+                    <h3>${animal.name}<p>${animal.city}</p></h3>
                 </div>
-                <p>${animal.city}</p>
             </div>
         </c:forEach>
     </div>
+    
+   
 
 </div>
 
@@ -706,13 +711,12 @@
 
             document.getElementById('porte').value = '';
 
-            document.getElementById('idade').value = 8;
-            document.getElementById('idade-valor').textContent = 8;
+            document.getElementById('idade').value = 20;
+            document.getElementById('idade-valor').textContent = 20;
             filterAnimals();
-        });
-
     });
 
+});
 
     function toggleSpeciesSelection(selectedSpecies) {
         const speciesOptions = document.querySelectorAll('input[name="especie"]');
