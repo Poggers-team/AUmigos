@@ -326,7 +326,7 @@
                 </div>
                 <div class="form-group">
                     <label for="age">Idade</label>
-                    <input type="number" id="age" name="age" placeholder="Digite a idade do pet" required>
+                    <input type="number" id="age" name="age" max="20" placeholder="Digite a idade do pet" required oninput="checkAge()">
                 </div>
                 <div class="form-group">
                     <label for="size">Porte</label>
@@ -464,6 +464,14 @@
 </div>
 
 <script>
+        function checkAge() {
+            var ageInput = document.getElementById("age");
+            if (ageInput.value > 20) {
+                alert("A idade máxima permitida é 20!");
+                ageInput.value = 20;
+            }
+        }
+
     function submitForm(event) {
         event.preventDefault();
 
