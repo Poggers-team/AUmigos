@@ -298,7 +298,7 @@ CREATE OR REPLACE PACKAGE animal_admin AS
 
     FUNCTION get_animal (
         p_animal_id IN NUMBER
-    );
+    ) RETURN SYS_REFCURSOR;
     
     PROCEDURE get_animal_by_id (
         p_animal_id IN NUMBER,
@@ -375,16 +375,21 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
     ) RETURN SYS_REFCURSOR AS
         -- Cursor para armazenar o resultado da consulta
         v_cursor SYS_REFCURSOR;
+        v_count  NUMBER; -- Variável para contar o número de animais encontrados
     BEGIN
-        /* Select na tabela animal para verificar se h� um
-        animal com aquele id */
+        -- Verifica se o animal existe
+        SELECT COUNT(*) INTO v_count FROM animal WHERE animal_id = p_animal_id;
+
+        IF v_count = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('Animal não encontrado.');
+            RETURN NULL;
+        END IF;
+
+        -- Abre o cursor com o resultado da consulta
         OPEN v_cursor FOR
             SELECT * FROM animal WHERE animal_id = p_animal_id;
-            
-            IF NOT EXISTS (SELECT 1 FROM animal WHERE id = p_animal_id) THEN
-                DBMS_OUTPUT.PUT_LINE('Animal n�o encontrado.');
-            END IF;
-        -- Retorna o cursor para o procedimento get_animal_by_id
+
+        -- Retorna o cursor
         RETURN v_cursor;
     END get_animal;
 
