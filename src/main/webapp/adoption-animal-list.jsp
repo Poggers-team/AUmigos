@@ -711,7 +711,7 @@
                     <li><strong>Gênero:</strong> <span id="modal-animal-gender"></span></li>
                 </ul>
                 <button id="adopt-button">Adotar</button>
-
+               <!-- <button id="delete-button">Deletar</button> -->
             </div>
         </div>
     </div>
@@ -762,6 +762,10 @@
             document.getElementById('adopt-button').onclick = () => {
                 window.location.href = 'FrontController?action=animalAdopt&id=' + animalData.id;
             };
+
+//            document.getElementById('delete-button').onclick = () => {
+//                window.location.href = 'FrontController?action=deleteAnimal&id=' + animalData.id;
+//           };
 
             document.getElementById('animal-modal').style.display = 'flex';
         });
