@@ -14,11 +14,13 @@ BEGIN
     EXECUTE IMMEDIATE 'DROP TABLE voluntary CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP TABLE app_user CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP TABLE app_user_log CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE animal_log CASCADE CONSTRAINTS';
     EXECUTE IMMEDIATE 'DROP SEQUENCE user_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE voluntary_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE animal_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE adoption_seq';
     EXECUTE IMMEDIATE 'DROP SEQUENCE app_user_log_seq';
+    EXECUTE IMMEDIATE 'DROP SEQUENCE animal_log_seq';
     EXECUTE IMMEDIATE 'DROP PACKAGE user_admin';
     EXECUTE IMMEDIATE 'DROP PACKAGE voluntary_admin';
     EXECUTE IMMEDIATE 'DROP PACKAGE animal_admin';
@@ -30,6 +32,8 @@ BEGIN
     EXECUTE IMMEDIATE 'DROP TRIGGER trg_set_animal_as_adopted';
     EXECUTE IMMEDIATE 'DROP TRIGGER trg_app_user_log_id';
     EXECUTE IMMEDIATE 'DROP TRIGGER trg_app_user_log';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_animal_log_id';
+    EXECUTE IMMEDIATE 'DROP TRIGGER trg_animal_log';
 EXCEPTION
     WHEN OTHERS THEN
         NULL;
@@ -125,11 +129,86 @@ CREATE TABLE app_user_log (
     new_gender VARCHAR2(20)
 );
 
+CREATE TABLE animal_log (
+    log_id NUMBER(20) PRIMARY KEY,
+    animal_id NUMBER(20) NOT NULL,
+    operation VARCHAR2(10) NOT NULL, 
+    modified_at TIMESTAMP NOT NULL,
+
+    
+    old_animal_name VARCHAR2(20),
+    new_animal_name VARCHAR2(20),
+
+    old_animal_type VARCHAR2(10),
+    new_animal_type VARCHAR2(10),
+
+    old_breed VARCHAR2(20),
+    new_breed VARCHAR2(20),
+
+    old_gender VARCHAR2(20),
+    new_gender VARCHAR2(20),
+
+    old_animal_size VARCHAR2(10),
+    new_animal_size VARCHAR2(10),
+
+    old_age INT,
+    new_age INT,
+
+    old_castrated NUMBER(1),
+    new_castrated NUMBER(1),
+
+    old_adopted NUMBER(1),
+    new_adopted NUMBER(1),
+
+    old_vaccinated NUMBER(1),
+    new_vaccinated NUMBER(1),
+
+    old_dewormed NUMBER(1),
+    new_dewormed NUMBER(1),
+
+    old_temperament CLOB,
+    new_temperament CLOB,
+
+    old_socialization CLOB,
+    new_socialization CLOB,
+
+    old_address VARCHAR2(100),
+    new_address VARCHAR2(100),
+
+    old_city VARCHAR2(50),
+    new_city VARCHAR2(50),
+
+    old_contactName VARCHAR2(50),
+    new_contactName VARCHAR2(50),
+
+    old_contactEmail VARCHAR2(100),
+    new_contactEmail VARCHAR2(100),
+
+    old_contactPhone VARCHAR2(20),
+    new_contactPhone VARCHAR2(20),
+
+    old_image CLOB,
+    new_image CLOB,
+
+    old_fileName VARCHAR2(50),
+    new_fileName VARCHAR2(50),
+
+    old_color VARCHAR2(20),
+    new_color VARCHAR2(20),
+
+    old_story CLOB,
+    new_story CLOB,
+
+    old_announcementDate DATE,
+    new_announcementDate DATE
+);
+
 CREATE SEQUENCE user_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE voluntary_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE animal_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE adoption_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE app_user_log_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE animal_log_seq START WITH 1 INCREMENT BY 1;
 
 CREATE OR REPLACE PACKAGE user_admin AS
     PROCEDURE save_user (
@@ -578,6 +657,14 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER trg_animal_log_id
+    BEFORE INSERT ON animal_log
+    FOR EACH ROW
+BEGIN
+    :NEW.log_id := animal_log_seq.nextval;
+END;
+/
+
 CREATE OR REPLACE TRIGGER trg_app_user_log
 AFTER INSERT OR UPDATE OR DELETE ON app_user
 FOR EACH ROW
@@ -611,5 +698,74 @@ BEGIN
             :OLD.user_name, :OLD.email, :OLD.user_password, :OLD.dateOfBirth, :OLD.gender
         );
     END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_animal_log
+AFTER INSERT OR UPDATE OR DELETE ON animal
+FOR EACH ROW
+DECLARE
+    v_operation VARCHAR2(10);
+BEGIN
+    IF INSERTING THEN
+        v_operation := 'INSERT';
+    ELSIF UPDATING THEN
+        v_operation := 'UPDATE';
+    ELSIF DELETING THEN
+        v_operation := 'DELETE';
+    END IF;
+
+    -- Inserção na tabela de logs
+    INSERT INTO animal_log (
+        animal_id, operation, modified_at,
+        old_animal_name, new_animal_name,
+        old_animal_type, new_animal_type,
+        old_breed, new_breed,
+        old_gender, new_gender,
+        old_animal_size, new_animal_size,
+        old_age, new_age,
+        old_castrated, new_castrated,
+        old_adopted, new_adopted,
+        old_vaccinated, new_vaccinated,
+        old_dewormed, new_dewormed,
+        old_temperament, new_temperament,
+        old_socialization, new_socialization,
+        old_address, new_address,
+        old_city, new_city,
+        old_contactName, new_contactName,
+        old_contactEmail, new_contactEmail,
+        old_contactPhone, new_contactPhone,
+        old_image, new_image,
+        old_fileName, new_fileName,
+        old_color, new_color,
+        old_story, new_story,
+        old_announcementDate, new_announcementDate
+    ) VALUES ( 
+        COALESCE(:OLD.animal_id, :NEW.animal_id), 
+        v_operation, SYSTIMESTAMP,
+
+        :OLD.animal_name, :NEW.animal_name,
+        :OLD.animal_type, :NEW.animal_type,
+        :OLD.breed, :NEW.breed,
+        :OLD.gender, :NEW.gender,
+        :OLD.animal_size, :NEW.animal_size,
+        :OLD.age, :NEW.age,
+        :OLD.castrated, :NEW.castrated,
+        :OLD.adopted, :NEW.adopted,
+        :OLD.vaccinated, :NEW.vaccinated,
+        :OLD.dewormed, :NEW.dewormed,
+        :OLD.temperament, :NEW.temperament,
+        :OLD.socialization, :NEW.socialization,
+        :OLD.address, :NEW.address,
+        :OLD.city, :NEW.city,
+        :OLD.contactName, :NEW.contactName,
+        :OLD.contactEmail, :NEW.contactEmail,
+        :OLD.contactPhone, :NEW.contactPhone,
+        :OLD.image, :NEW.image,
+        :OLD.fileName, :NEW.fileName,
+        :OLD.color, :NEW.color,
+        :OLD.story, :NEW.story,
+        :OLD.announcementDate, :NEW.announcementDate
+    );
 END;
 /
