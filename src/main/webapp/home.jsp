@@ -12,6 +12,7 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fredoka+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
 
@@ -67,9 +68,7 @@
         <div class="section-header">
             <div class="section-header-left">
                 <h2>Encontre seu Novo Amigo!</h2>
-                <p>Pets anunciados em <span id="user-location">São Paulo</span>.</p>
             </div>
-            <a href="#" class="link-region">Ver na minha região</a>
         </div>
         <div class="cards">
             <c:set var="counter" value="0" />
@@ -206,82 +205,6 @@
 </footer>
 
 <script>
-    document.querySelector('.link-region').addEventListener('click', function (event) {
-        event.preventDefault();
-
-        const locationElement = document.getElementById('user-location');
-        locationElement.textContent = "Obtendo sua localização...";
-
-        if (!navigator.geolocation) {
-            locationElement.textContent = "Seu navegador não suporta Geolocalização.";
-            console.error("Geolocalização não é suportada pelo navegador.");
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            async function (position) {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-
-                console.log("Latitude capturada:", latitude);
-                console.log("Longitude capturada:", longitude);
-
-                if (!latitude || !longitude) {
-                    console.error("Erro: Coordenadas inválidas capturadas.");
-                    locationElement.textContent = "Erro ao capturar coordenadas.";
-                    return;
-                }
-
-                const url = https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json;
-
-                console.log("URL de requisição montada:", url);
-
-                try {
-                    const response = await fetch(url);
-
-                    if (!response.ok) {
-                        throw new Error(Erro na API OpenStreetMap: ${response.statusText});
-                    }
-
-                    const data = await response.json();
-                    console.log("Resposta recebida da API:", data);
-
-                    const address = data.address || {};
-                    const city = address.city || address.town || address.village || "Localização não identificada";
-
-                    locationElement.textContent = city;
-                } catch (error) {
-                    console.error("Erro ao buscar a localização:", error.message);
-                    locationElement.textContent = "Erro ao buscar a localização.";
-                }
-            },
-            function (error) {
-                console.error("Erro ao acessar geolocalização:", error.message);
-
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        locationElement.textContent = "Permissão de localização negada.";
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        locationElement.textContent = "Localização indisponível.";
-                        break;
-                    case error.TIMEOUT:
-                        locationElement.textContent = "Tempo de solicitação esgotado.";
-                        break;
-                    default:
-                        locationElement.textContent = "Erro desconhecido ao acessar localização.";
-                }
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
-            }
-        );
-    });
-
-
-
 
     document.addEventListener("DOMContentLoaded", function () {
         const swiper = new Swiper('.swiper', {
