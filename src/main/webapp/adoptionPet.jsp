@@ -366,6 +366,53 @@
             }
         }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    height: auto;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    width: 35%;
+    height: 100vh;
+    background: linear-gradient(to top, rgba(35, 7, 53, 1), rgba(35, 7, 53, 0));
+    color: #fff;
+    padding: 30px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+@media (max-width: 720px) {
+    .form-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .form-step {
+        width: 100%;
+    }
+}
+
+.form-step h1 {
+    margin-top: 40px;
+}
+
 
     </style>
 
