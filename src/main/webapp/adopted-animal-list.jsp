@@ -199,7 +199,14 @@
             <c:forEach var="animal" items="${animals}">
                 <div class="card" data-type="${animal.type}">
                     <img class="card-img" src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}">
-                    <div class="card-badge">Adotado ${animal.daysAgo == 0 ? 'Hoje' : animal.daysAgo + ' dias atrás'}</div>
+                    <div class="card-badge"><span>Adotado </span>
+                        <c:if test="${animal.adoptionDaysAgo == 0}">
+                            <span>hoje</span>
+                        </c:if>
+                        <c:if test="${animal.adoptionDaysAgo != 0}">
+                            <span>${animal.adoptionDaysAgo} dias atrás</span>
+                        </c:if>
+                    </div>
                     <div class="card-info">
                         <div class="card-info-left">
                             <h3>${animal.name}</h3>
