@@ -101,9 +101,7 @@
         }
 
         .button-group {
-            display: flex;
             justify-content: space-between;
-            position: absolute;
             bottom: 40px;
             left: 150px;
             right: 150px;
@@ -259,6 +257,46 @@
             color: #fff;
             border-color: #7a025b;
         }
+
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 480px) {
+
+}
+
+.button-group {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 50px;
+    padding: 10px 0;
+}
+
+
+.btn-back {
+    margin-left: 5%;
+}
+.btn-next {
+    margin-right: 5%;
+}
+
+@media (max-width: 720px) {
+    .sidebar {
+        display: none;
+    }
+}
 
     </style>
 
