@@ -279,24 +279,24 @@
         <form id="multiStepForm" action="FrontController" method="POST" enctype="multipart/form-data">
 <%--            <input type="hidden" name="action" value="animalRegister">--%>
             <!-- Etapa 1 -->
-            <div class="form-step active">
-                <p class="form-title">Vamos começar com algumas informações básicas.</p>
-                <div class="form-group">
-                    <label for="type">Espécie</label>
-                    <select id="type" name="type" required>
-                        <option value="CACHORRO">Cachorro</option>
-                        <option value="GATO">Gato</option>
-                        <option value="OUTRO">Outro</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="gender">Gênero</label>
-                    <select id="gender" name="gender" required>
-                        <option value="MACHO">Macho</option>
-                        <option value="FEMEA">Fêmea</option>
-                    </select>
-                </div>
-            </div>
+              <div class="form-step active">
+                            <p class="form-title">Vamos começar com algumas informações básicas.</p>
+                            <div class="form-group">
+                                <label for="type">Espécie</label>
+                                <select id="type" name="type" required>
+                                    <option value="CACHORRO">Cachorro</option>
+                                    <option value="GATO">Gato</option>
+                                    <option value="OUTRO">Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gênero</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="MACHO">Macho</option>
+                                    <option value="FEMEA">Fêmea</option>
+                                </select>
+                            </div>
+               </div>
 
             <div class="form-step">
                 <p class="form-title">Adicione uma foto do pet</p>
@@ -453,8 +453,6 @@
             </div>
 
 
-
-
             <div class="button-group">
                 <button type="button" class="btn btn-back" id="prevBtn" >Voltar</button>
                 <button type="button" class="btn btn-next" id="nextBtn">Prosseguir</button>
@@ -464,13 +462,6 @@
 </div>
 
 <script>
-        function checkAge() {
-            var ageInput = document.getElementById("age");
-            if (ageInput.value > 20) {
-                alert("A idade máxima permitida é 20!");
-                ageInput.value = 20;
-            }
-        }
 
     function submitForm(event) {
         event.preventDefault();
@@ -526,6 +517,10 @@
     }
 
     nextBtn.addEventListener('click', () => {
+
+    if (!validateStep(currentStep)) {
+                return;
+            }
         if (currentStep < steps.length - 1) {
             currentStep++;
         } else {
@@ -542,6 +537,35 @@
             window.location.href = "FrontController?action=home";
         }
     });
+
+    function validateStep(stepIndex) {
+            const currentStepFields = steps[stepIndex].querySelectorAll('input, select, textarea');
+            let isValid = true;
+
+            currentStepFields.forEach((field) => {
+                const errorMessage = field.nextElementSibling;
+
+                if (errorMessage && errorMessage.classList.contains('error-message')) {
+                    errorMessage.remove();
+                }
+
+
+                if (!field.checkValidity()) {
+                    isValid = false;
+
+                    const errorText = document.createElement('span');
+                    errorText.textContent = field.validationMessage || 'Campo obrigatório.';
+                    errorText.classList.add('error-message');
+                    errorText.style.color = 'Purple';
+                    errorText.style.fontSize = '0.8rem';
+                    errorText.style.marginTop = '5px';
+                    errorText.style.display = 'block';
+                    field.insertAdjacentElement('afterend', errorText);
+                }
+            });
+
+            return isValid;
+        }
 
     const fileInput = document.getElementById('image');
     const uploadArea = document.getElementById('uploadArea');
