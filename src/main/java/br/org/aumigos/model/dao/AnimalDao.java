@@ -52,11 +52,11 @@ public class AnimalDao {
     }
 
     public boolean delete(Animal animal) {
-        String sql = "delete from Animal where id = ?";
+//        String sql = "delete from Animal where id = ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, animal.getId());
-            ps.executeUpdate();
+             CallableStatement cs = conn.prepareCall("{call animal_admin.delete_animal(?)}")) {
+            cs.setLong(1, animal.getId());
+            cs.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
         }

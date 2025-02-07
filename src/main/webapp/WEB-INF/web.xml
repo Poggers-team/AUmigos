@@ -40,4 +40,8 @@
     <param-name>animalAdopt</param-name>
     <param-value>br.org.aumigos.servlets.helpers.GetAnimalToAdoptHelper</param-value>
   </context-param>
+  <context-param>
+    <param-name>deleteAnimal</param-name>
+    <param-value>br.org.aumigos.servlets.helpers.DeleteAnimalHelper</param-value>
+  </context-param>
 </web-app>
