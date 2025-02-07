@@ -33,84 +33,85 @@
             height: 100vh;
         }
 
-        .sidebar {
-            position: relative;
-            background: linear-gradient(to top, rgba(35, 7, 53, 1), rgba(35, 7, 53, 0)); /* Degradê roxo */
-            color: #fff;
-            width: 35%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            padding: 30px;
-        }
+.sidebar {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(to top, rgba(35, 7, 53, 1), rgba(35, 7, 53, 0));
+    color: #fff;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 30px;
+}
 
-        .sidebar::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
-            background-color: rgba(35, 7, 53, 0.7);
-            z-index: 1;
-        }
+.animal-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 35%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+}
 
-        .animal-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
+.sidebar::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 35%;
+    height: 100vh;
+    background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%);
+    background-color: rgba(35, 7, 53, 0.7);
+    z-index: -1;
+}
 
-        .sidebar h1 {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            font-family: 'Fredoka One', cursive;
-            font-size: 3.5rem;
-            text-align: center;
-            margin: 0;
-            width: 90%;
-        }
+.sidebar h1 {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
+    text-align: center;
+    margin: 0;
+    width: 90%;
+}
 
-        .info-container {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            text-align: center;
-            z-index: 2;
-        }
+.info-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    z-index: 2;
+}
 
-        .info-container p {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #e2e2e2;
-            margin: 5px 0;
-        }
+.info-container p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e2e2e2;
+    margin: 5px 0;
+}
 
 
-        .info-container p strong {
-            font-weight: bold;
-        }
+.info-container p strong {
+    font-weight: bold;
+}
 
-        .info-container p {
-            font-size: 1.5rem;
-            font-weight: normal;
-            color: #e2e2e2;
-            margin: 5px 0;
-            text-align: left;
-            margin-left: 25%;
-        }
+.info-container p {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #e2e2e2;
+    margin: 5px 0;
+    text-align: left;
+    margin-left: 25%;
+}
 
         .form-container {
             width: 65%;
@@ -332,6 +333,39 @@
             font-size: 30px;
             margin-bottom: 16px;
         }
+
+                
+        .button-group {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+            padding: 10px 0;
+        }
+
+        .btn-back {
+            margin-left: 5%;
+        }
+        .btn-next {
+            margin-right: 5%;
+        }
+
+        @media (max-width: 720px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
 
     </style>
 
