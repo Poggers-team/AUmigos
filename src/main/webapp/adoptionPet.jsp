@@ -36,7 +36,7 @@
             position: relative;
             background: linear-gradient(to top, rgba(35, 7, 53, 1), rgba(35, 7, 53, 0)); /* Degradê roxo */
             color: #fff;
-            width: 30%;
+            width: 35%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,71 +45,71 @@
             padding: 30px;
         }
 
-        .sidebar::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
-            background-color: rgba(35, 7, 53, 0.7);
-            z-index: 1;
-        }
+.sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
+    background-color: rgba(35, 7, 53, 0.7);
+    z-index: 1;
+}
 
-        .animal-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
+.animal-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
 
-        .sidebar h1 {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            font-family: 'Fredoka One', cursive;
-            font-size: 3.5rem;
-            text-align: center;
-            margin: 0;
-            width: 90%;
-        }
+.sidebar h1 {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
+    text-align: center;
+    margin: 0;
+    width: 90%;
+}
 
-        .info-container {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            text-align: center;
-            z-index: 2;
-        }
+.info-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    z-index: 2;
+}
 
-        .info-container p {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #e2e2e2;
-            margin: 5px 0;
-        }
-
-
-        .info-container p strong {
-            font-weight: bold;
-        }
-
-        .info-container p {
-            font-size: 1.5rem;
-            font-weight: normal;
-            color: #e2e2e2;
-            margin: 5px 0;
-        }
+.info-container p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e2e2e2;
+    margin: 5px 0;
+}
 
 
+.info-container p strong {
+    font-weight: bold;
+}
+
+.info-container p {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #e2e2e2;
+    margin: 5px 0;
+    text-align: left;
+    margin-left: 25%;
+}
 
         .form-container {
             width: 65%;
@@ -327,33 +327,24 @@
             margin-right: 10px;
         }
 
+        .info-container h2 {
+            font-size: 30px;
+            margin-bottom: 16px;
+        }
 
     </style>
 
     <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
-<div class="container">
+    <div class="container">
 
-    <div class="sidebar">
-        <h1>${animal.name}</h1>
-        <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
-        <div class="info-container">
-            <p><b>Espécie:</b>
-                <c:if test="${animal.type == 'CACHORRO'}">
-                    Cachorro
-                </c:if>
-                <c:if test="${animal.type == 'GATO'}">
-                    Gato
-                </c:if>
-                <c:if test="${animal.type == 'OUTRO'}">
-                    Outro
-                </c:if>
-            </p>
-
-            <p><b>Raça:</b> ${animal.breed}</p>
-
-            <p><b>Gênero:</b>
+        <div class="sidebar">
+            <h1>${animal.name}</h1>
+            <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
+            <div class="info-container">
+            <h2>Características:</h2>
+            <p><b>• Gênero:</b>
                 <c:if test="${animal.gender == 'MACHO'}">
                     Macho
                 </c:if>
@@ -362,7 +353,7 @@
                 </c:if>
             </p>
 
-            <p><b>Porte:</b>
+            <p><b>• Porte:</b>
                 <c:if test="${animal.size == 'PEQUENO'}">
                     Pequeno
                 </c:if>
@@ -374,10 +365,10 @@
                 </c:if>
             </p>
 
-            <p><b>Idade:</b> ${animal.age}</p>
+            <p><b>• Idade:</b> ${animal.age}</p>
         </div>
-    </div>
-
+        </div>
+        
 
     <div class="form-container">
         <form id="multiStepForm" action="FrontController?action=animalUpdate" method="POST" enctype="multipart/form-data">
@@ -408,7 +399,7 @@
                 <br>
                 <div class="form-group">
                     <label for="zipcode">CEP:</label>
-                    <input type="number" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="8" required>
+                    <input type="text" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="10" required>
                 </div>
                 <p class="form-title">(Rua, número, bairro, cidade, estado)</p>
                 <div class="form-group">
@@ -418,7 +409,7 @@
                 <p class="form-title">Para estabelecermos um contato!</p>
                 <div class="form-group">
                     <label for="tel">Telefone:</label>
-                    <input type="tel" id="tel" name="tel" placeholder="Digite seu telefone..." max="11" required>
+                    <input type="tel" id="tel" name="tel" placeholder="Digite seu telefone..." max="8" required>
                 </div>
             </div>
 
@@ -439,7 +430,7 @@
                         </label>
                     </div>
                 </div>
-
+            
                 <div class="form-group">
                     <label>Sua casa possui portão automático?</label>
                     <div style="display: block;">
@@ -451,7 +442,7 @@
                         </label>
                     </div>
                 </div>
-
+            
                 <div class="form-group">
                     <label>Sua casa possui piscina?</label>
                     <div style="display: block;">
@@ -463,7 +454,7 @@
                         </label>
                     </div>
                 </div>
-
+            
                 <div class="form-group">
                     <label>Sua casa possui rede nas janelas?</label>
                     <div style="display: block;">
@@ -482,7 +473,7 @@
                     <input type="text" id="comments" name="comments" required>
                 </div>
             </div>
-
+            
             <div class="form-step">
                 <h1>Fale sobre sua relação com outros animais!</h1>
                 <br>
@@ -577,7 +568,7 @@
                         </label>
                     </div>
                 </div>
-
+                
                 <div class="form-group">
                     <label>Existem crianças que frequentam sua casa?</label>
                     <div style="display: block;">
@@ -598,7 +589,7 @@
             </div>
 
             <div class="button-group">
-                <button type="button" class="btn btn-back" id="prevBtn">Voltar</button>
+                <button type="button" class="btn btn-back" id="prevBtn" disabled>Voltar</button>
                 <button type="button" class="btn btn-next" id="nextBtn">Prosseguir</button>
             </div>
         </form>
@@ -651,6 +642,8 @@
         steps.forEach((step, index) => {
             step.classList.toggle('active', index === currentStep);
         });
+
+        prevBtn.disabled = currentStep === 0;
 
         if (currentStep === steps.length - 1) {
             nextBtn.textContent = 'Enviar';
@@ -746,7 +739,6 @@
     }
 `;
     document.head.appendChild(style);
-
     const fileInput = document.getElementById('image');
     const uploadArea = document.getElementById('uploadArea');
     const uploadPlaceholder = document.getElementById('uploadPlaceholder');
