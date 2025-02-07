@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +103,25 @@ public class AnimalDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro durante a consulta", e);
+        }
+
+        if(adopted) {
+            for (Animal animal : animals) {
+                try (Connection conn = dataSource.getConnection();
+                CallableStatement cs = conn.prepareCall("{ ? = call adoption_admin.get_days_between_adoption_date_and_sysdate(?)}")) {
+                    cs.registerOutParameter(1, Types.INTEGER);
+                    cs.setLong(2, animal.getId());
+                    cs.execute();
+
+                    animal.setAdoptionDaysAgo(cs.getInt(1));
+                } catch (SQLException e) {
+                    throw new RuntimeException("Erro durante a consulta", e);
+                }
+            }
+        } else {
+            for(Animal animal : animals) {
+                animal.setDaysAgo(Period.between(animal.getAnnouncementDate(), LocalDate.now()).getDays());
+            }
         }
         return animals;
     }
