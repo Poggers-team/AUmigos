@@ -34,6 +34,7 @@ public class Animal implements Serializable {
     private String story;
     private LocalDate announcementDate;
     private int daysAgo;
+    private int adoptionDaysAgo;
 
     public LocalDate getAnnouncementDate() {
         return announcementDate;
@@ -225,6 +226,14 @@ public class Animal implements Serializable {
 
     public void setStory(String story) {
         this.story = story;
+    }
+
+    public int getAdoptionDaysAgo() {
+        return adoptionDaysAgo;
+    }
+
+    public void setAdoptionDaysAgo(int adoptionDaysAgo) {
+        this.adoptionDaysAgo = adoptionDaysAgo;
     }
 
     @Override
