@@ -50,7 +50,8 @@ public class AnimalAdoptHelper implements Helper {
         adoption.setAutomaticGate(automaticGate);
         adoption.setPool(pool);
         adoption.setNetOnWindows(windowNet);
-        adoption.setComments(comments);
+        if(!comments.isEmpty()) adoption.setComments(comments);
+        else adoption.setComments("Sem comentários adicionais.");
         adoption.setQtyAnimals(animalsInHouse);
         adoption.setExperiences(experiences);
         adoption.setAnimalPlace(animalPlace);
