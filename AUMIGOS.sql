@@ -668,36 +668,33 @@ END;
 CREATE OR REPLACE TRIGGER trg_app_user_log
 AFTER INSERT OR UPDATE OR DELETE ON app_user
 FOR EACH ROW
+DECLARE
+    v_operation VARCHAR2(10);
 BEGIN
     IF INSERTING THEN
-        INSERT INTO app_user_log (
-            user_id, action_type, action_timestamp,
-            new_user_name, new_email, new_user_password, new_dateOfBirth, new_gender
-        ) VALUES (
-            :NEW.user_id, 'CREATE', SYSTIMESTAMP,
-            :NEW.user_name, :NEW.email, :NEW.user_password, :NEW.dateOfBirth, :NEW.gender
-        );
-
+        v_operation := 'INSERT';
     ELSIF UPDATING THEN
-        INSERT INTO app_user_log (
-            user_id, action_type, action_timestamp,
-            old_user_name, old_email, old_user_password, old_dateOfBirth, old_gender,
-            new_user_name, new_email, new_user_password, new_dateOfBirth, new_gender
-        ) VALUES (
-            :OLD.user_id, 'UPDATE', SYSTIMESTAMP,
-            :OLD.user_name, :OLD.email, :OLD.user_password, :OLD.dateOfBirth, :OLD.gender,
-            :NEW.user_name, :NEW.email, :NEW.user_password, :NEW.dateOfBirth, :NEW.gender
-        );
-
+        v_operation := 'UPDATE';
     ELSIF DELETING THEN
-        INSERT INTO app_user_log (
-            user_id, action_type, action_timestamp,
-            old_user_name, old_email, old_user_password, old_dateOfBirth, old_gender
-        ) VALUES (
-            :OLD.user_id, 'DELETE', SYSTIMESTAMP,
-            :OLD.user_name, :OLD.email, :OLD.user_password, :OLD.dateOfBirth, :OLD.gender
-        );
+        v_operation := 'DELETE';
     END IF;
+
+    INSERT INTO app_user_log (
+        user_id, action_type, action_timestamp,
+        old_user_name, new_user_name,
+        old_email, new_email,
+        old_user_password, new_user_password,
+        old_dateOfBirth, new_dateOfBirth,
+        old_gender, new_gender
+    ) VALUES (
+        COALESCE(:OLD.user_id, :NEW.user_id),
+        v_operation, SYSTIMESTAMP,
+        :OLD.user_name, :NEW.user_name,
+        :OLD.email, :NEW.email,
+        :OLD.user_password, :NEW.user_password,
+        :OLD.dateOfBirth, :NEW.dateOfBirth,
+        :OLD.gender, :NEW.gender
+    );
 END;
 /
 
