@@ -89,6 +89,6 @@ public class AnimalRegisterHelper implements Helper {
 
         if(animalDao.save(a)) request.setAttribute("result", "registered");
 
-        return "/FrontController?action=home";
+        return "sucesso.jsp";
     }
 }
