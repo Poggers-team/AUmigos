@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
@@ -45,71 +46,71 @@
             padding: 30px;
         }
 
-.sidebar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
-    background-color: rgba(35, 7, 53, 0.7);
-    z-index: 1;
-}
+        .sidebar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(35, 7, 53, 1) 0%, rgba(35, 7, 53, 0.01) 50%); /* Degradê até a metade */
+            background-color: rgba(35, 7, 53, 0.7);
+            z-index: 1;
+        }
 
-.animal-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-}
+        .animal-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
 
-.sidebar h1 {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    font-family: 'Fredoka One', cursive;
-    font-size: 3.5rem;
-    text-align: center;
-    margin: 0;
-    width: 90%;
-}
+        .sidebar h1 {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            text-align: center;
+            margin: 0;
+            width: 90%;
+        }
 
-.info-container {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    text-align: center;
-    z-index: 2;
-}
+        .info-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            text-align: center;
+            z-index: 2;
+        }
 
-.info-container p {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #e2e2e2;
-    margin: 5px 0;
-}
+        .info-container p {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e2e2e2;
+            margin: 5px 0;
+        }
 
 
-.info-container p strong {
-    font-weight: bold;
-}
+        .info-container p strong {
+            font-weight: bold;
+        }
 
-.info-container p {
-    font-size: 1.5rem;
-    font-weight: normal;
-    color: #e2e2e2;
-    margin: 5px 0;
-    text-align: left;
-    margin-left: 25%;
-}
+        .info-container p {
+            font-size: 1.5rem;
+            font-weight: normal;
+            color: #e2e2e2;
+            margin: 5px 0;
+            text-align: left;
+            margin-left: 25%;
+        }
 
         .form-container {
             width: 65%;
@@ -337,12 +338,12 @@
     <link rel="icon" href="assets/img/favicon.png">
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-        <div class="sidebar">
-            <h1>${animal.name}</h1>
-            <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
-            <div class="info-container">
+    <div class="sidebar">
+        <h1>${animal.name}</h1>
+        <img src="data:image/jpeg;base64,${animal.image}" alt="${animal.name}" class="animal-image">
+        <div class="info-container">
             <h2>Características:</h2>
             <p><b>• Gênero:</b>
                 <c:if test="${animal.gender == 'MACHO'}">
@@ -367,8 +368,8 @@
 
             <p><b>• Idade:</b> ${animal.age}</p>
         </div>
-        </div>
-        
+    </div>
+
 
     <div class="form-container">
         <form id="multiStepForm" action="FrontController?action=animalUpdate" method="POST" enctype="multipart/form-data">
@@ -399,8 +400,18 @@
                 <br>
                 <div class="form-group">
                     <label for="zipcode">CEP:</label>
-                    <input type="number" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="8" required>
+                    <input
+                            type="text"
+                            id="zipcode"
+                            name="zipcode"
+                            placeholder="Digite seu CEP (apenas números)"
+                            pattern="\d{8}"
+                            maxlength="8"
+                            required
+                    >
+                    <span class="error-message" id="zipcode-error" style="display: none; color: Purple; font-size: 0.8rem; margin-top: 5px;">Formato: 8 dígitos (somente números).</span>
                 </div>
+
                 <p class="form-title">(Rua, número, bairro, cidade, estado)</p>
                 <div class="form-group">
                     <label for="address">Endereço:</label>
@@ -409,7 +420,15 @@
                 <p class="form-title">Para estabelecermos um contato!</p>
                 <div class="form-group">
                     <label for="tel">Telefone:</label>
-                    <input type="tel" id="tel" name="tel" placeholder="Digite seu telefone..." max="11" required>
+                    <input
+                            type="tel"
+                            id="tel"
+                            name="tel"
+                            placeholder="Digite seu telefone (XX) XXXXX-XXXX"
+                            pattern="\(\d{2}\) \d{5}-\d{4}"
+                            required
+                    >
+                    <span class="error-message" id="tel-error" style="display: none; color: Purple; font-size: 0.8rem; margin-top: 5px;">Formato: (XX) XXXXX-XXXX</span>
                 </div>
             </div>
 
@@ -430,7 +449,7 @@
                         </label>
                     </div>
                 </div>
-            
+
                 <div class="form-group">
                     <label>Sua casa possui portão automático?</label>
                     <div style="display: block;">
@@ -442,7 +461,7 @@
                         </label>
                     </div>
                 </div>
-            
+
                 <div class="form-group">
                     <label>Sua casa possui piscina?</label>
                     <div style="display: block;">
@@ -454,7 +473,7 @@
                         </label>
                     </div>
                 </div>
-            
+
                 <div class="form-group">
                     <label>Sua casa possui rede nas janelas?</label>
                     <div style="display: block;">
@@ -473,7 +492,7 @@
                     <input type="text" id="comments" name="comments" required>
                 </div>
             </div>
-            
+
             <div class="form-step">
                 <h1>Fale sobre sua relação com outros animais!</h1>
                 <br>
@@ -568,7 +587,7 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Existem crianças que frequentam sua casa?</label>
                     <div style="display: block;">
@@ -603,6 +622,36 @@
 </c:if>
 
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const telInput = document.getElementById('tel');
+        const telError = document.getElementById('tel-error');
+        const zipcodeInput = document.getElementById('zipcode');
+        const zipcodeError = document.getElementById('zipcode-error');
+
+        telInput.addEventListener('input', () => {
+            const telPattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+            if (!telPattern.test(telInput.value)) {
+                telError.style.display = 'block';
+                telInput.setCustomValidity('Formato inválido. Use: (XX) XXXXX-XXXX');
+            } else {
+                telError.style.display = 'none';
+                telInput.setCustomValidity('');
+            }
+        });
+
+        zipcodeInput.addEventListener('input', () => {
+            const zipcodePattern = /^\d{8}$/;
+            if (!zipcodePattern.test(zipcodeInput.value)) {
+                zipcodeError.style.display = 'block';
+                zipcodeInput.setCustomValidity('Formato inválido. Use 8 dígitos.');
+            } else {
+                zipcodeError.style.display = 'none';
+                zipcodeInput.setCustomValidity('');
+            }
+        });
+    });
+
+
     function submitForm(event) {
         event.preventDefault();
 
