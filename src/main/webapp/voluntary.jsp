@@ -161,7 +161,7 @@
             <input type="email" id="email" name="email" value="${voluntary.email}" placeholder="Digite seu e-mail" required>
 
             <label for="phone">Telefone (DDD + Número):</label>
-            <input type="tel" id="phone" name="phone" value="${voluntary.phone}" pattern="[0-9]{2}-[0-9]{5}-[0-9]{4}" placeholder="(XX) XXXXX-XXXX" required>
+            <input type="tel" id="phone" name="phone" value="${voluntary.phone}" pattern="\(\d{2}\) \d{5}-\d{4}" placeholder="(XX) XXXXX-XXXX" required>
 
             <label for="availability">Disponibilidade:</label>
             <select id="availability" name="availability" required>
