@@ -459,6 +459,9 @@ CREATE OR REPLACE PACKAGE adoption_admin AS
         p_adoptionDate IN DATE,
         p_animalId IN NUMBER
     );
+    FUNCTION get_days_between_adoption_date_and_sysdate(
+        p_animal_id IN NUMBER
+    ) RETURN NUMBER;
 END adoption_admin;
 /
 
@@ -509,6 +512,19 @@ CREATE OR REPLACE PACKAGE BODY adoption_admin AS
 
         DBMS_OUTPUT.PUT_LINE('Adoção cadastrada com sucesso.');
     END save_adoption;
+
+    FUNCTION get_days_between_adoption_date_and_sysdate(
+        p_animal_id IN NUMBER
+    ) RETURN NUMBER IS
+        v_days NUMBER;
+    BEGIN
+        select trunc(sysdate) - adoptionDate into v_days
+        from adoption
+        where animalId = p_animal_id;
+
+        return v_days;
+    END;
+
 END adoption_admin;
 /
 
@@ -549,8 +565,8 @@ CREATE OR REPLACE TRIGGER trg_set_animal_as_adopted
     FOR EACH ROW
 BEGIN
     UPDATE Animal
-        SET adopted = 1
-        WHERE animal_id = :NEW.animalId;
+    SET adopted = 1
+    WHERE animal_id = :NEW.animalId;
 END;
 /
 
