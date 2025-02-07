@@ -312,6 +312,10 @@ CREATE OR REPLACE PACKAGE animal_admin AS
     );
 */
 
+    PROCEDURE delete_animal (
+        p_animal_id IN NUMBER
+    );
+
     PROCEDURE get_animals_by_adopted_status (
         p_adopted IN NUMBER,
         p_result OUT SYS_REFCURSOR
@@ -406,6 +410,14 @@ CREATE OR REPLACE PACKAGE BODY animal_admin AS
             WHERE animal_id = p_animal_id;
     END get_animal_by_id;
 */
+
+-- Procedimento para deletar animal
+    PROCEDURE delete_animal (
+        p_animal_id IN NUMBER
+    ) IS
+    BEGIN
+        DELETE FROM animal WHERE p_animal_id = animal_id;
+    END delete_animal;
 
 -- Procedimento que verifica o status de adoção do animal
     PROCEDURE get_animals_by_adopted_status (
