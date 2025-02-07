@@ -112,6 +112,22 @@
         ul li {
             margin-bottom: 8px;
         }
+
+        @media (max-width: 800px) {
+            .donation-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .donation-section .donation-box {
+                width: 100%;
+            }
+        }
+
+        .donation-box img {
+            max-width: 250px;
+        }
+
     </style>
     <link rel="icon" href="assets/img/favicon.png">
 </head>
@@ -131,7 +147,7 @@
             <h2>Pix</h2>
             <p><strong>Chave Pix:</strong> ong_aumigos@pix.com</p>
             <p>Escaneie o QR Code abaixo ou copie a chave para fazer sua doação:</p>
-            <img src="assets/img/pix.svg" alt="QR Code para doação">
+            <img src="assets/img/pix.png" alt="QR Code para doação">
         </div>
 
         <div class="donation-box">
