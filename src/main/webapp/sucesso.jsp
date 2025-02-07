@@ -71,7 +71,7 @@
   <div class="success-message">
     Seu anúncio de pet foi cadastrado com sucesso! Agradecemos por contribuir para a adoção responsável de animais. Em breve, o seu pet estará disponível para o painel de adoção.
   </div>
-  <a href="home.jsp" class="success-button">Voltar à Página Inicial</a>
+  <a href="FrontController?action=home" class="success-button">Voltar à Página Inicial</a>
 </div>
 
 </body>
