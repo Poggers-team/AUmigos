@@ -399,7 +399,7 @@
                 <br>
                 <div class="form-group">
                     <label for="zipcode">CEP:</label>
-                    <input type="text" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="10" required>
+                    <input type="number" id="zipcode" name="zipcode" placeholder="Digite seu CEP..." max="8" required>
                 </div>
                 <p class="form-title">(Rua, número, bairro, cidade, estado)</p>
                 <div class="form-group">
@@ -409,7 +409,7 @@
                 <p class="form-title">Para estabelecermos um contato!</p>
                 <div class="form-group">
                     <label for="tel">Telefone:</label>
-                    <input type="tel" id="tel" name="tel" placeholder="Digite seu telefone..." max="8" required>
+                    <input type="tel" id="tel" name="tel" placeholder="Digite seu telefone..." max="11" required>
                 </div>
             </div>
 
