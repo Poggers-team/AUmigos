@@ -570,7 +570,7 @@ html, body {
                 <p class="form-title">Caso você tenha algo a mais para nos falar, nos conte agora!</p>
                 <div class="form-group">
                     <label for="comments">Comentários:</label>
-                    <input type="text" id="comments" name="comments" required>
+                    <input type="text" id="comments" name="comments">
                 </div>
             </div>
 
