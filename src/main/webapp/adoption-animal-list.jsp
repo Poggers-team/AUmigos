@@ -616,6 +616,15 @@
             </div>
             <span>Gato</span>
         </div>
+        <div class="filter-option">
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" name="especie" value="outro" id="outro">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <span>Outro</span>
+        </div>
 
         <label>Gênero:</label>
         <div class="filter-option">
@@ -878,6 +887,7 @@
 
     const cachorro = document.getElementById('cachorro');
     const gato = document.getElementById('gato');
+    const outro = document.getElementById('outro');
     const macho = document.getElementById('macho');
     const femea = document.getElementById('femea');
 
@@ -895,6 +905,14 @@
                 toggleSpeciesSelection(this);
             }
         });
+    }
+
+    if (outro) {
+        outro.addEventListener('change', function () {
+            if (this.checked) {
+                toggleSpeciesSelection(this)
+            }
+        })
     }
 
     if (macho) {
